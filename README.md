@@ -1,5 +1,5 @@
 # WEBAPDE MP - Meme Sharing Website
 
-CRUZ, Diane
-LOPEZ, Luis
-SOLIVEN, Adrienne
+CRUZ, Diane  
+LOPEZ, Luis  
+SOLIVEN, Adrienne  
