@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+  <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+
+  <style>
+    html,
+    body {
+      background-color: #121212;
+      font-family: Roboto, sans-serif;
+    }
+
+    body {
+      color: white;
+    }
+
+    nav {
+      background-color: rgba(0, 0, 0, 0)
+    }
+
+    .profile-pic {
+      height: 32px;
+      width: 32px;
+    }
+
+    .btn.btn-sharp {
+      border-radius: 0px;
+    }
+
+    .search-bar {
+      display: flex;
+      height: 50px;
+    }
+
+    .search-bar-text {
+      border-radius: 0px;
+      height: 100%;
+    }
+
+    .search-bar-button {
+      height: 100%;
+      width: 50px;
+    }
+
+    .public-div, .shared-div {
+      text-align: center;
+      padding: 0;
+    }
+
+    a > .post {
+      color: white;
+    }
+
+    .post {
+      margin: 2px;
+      height: 200px;
+      width: 200px;
+      text-overflow: ellipsis;
+      display: inline-block;
+    }
+
+    img.post-image {
+      position: relative;
+      height: inherit;
+      width: inherit;
+    }
+
+    .post-text {
+      position: relative;
+      top: 50%;
+      text-align: center;
+      align-self: center;
+      justify-content: center;
+      margin: 0 auto;
+    }
+
+    .post-image:hover {
+      opacity: .25;
+    }
+  </style>
+
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-sm">
+    <span class="navbar-brand">69GAG</span>
+    <ul class="navbar-nav ml-auto align-items-center">
+      <li class="nav-item mr-2">
+        <div class="d-flex align-items-center">
+          <img src="profile_pic.jpg" class="mr-1 profile-pic rounded-circle">
+          <div class="media-body"><a href="">limesapphire</a></div>
+        </div>
+      </li>
+      <li class="nav-item">
+        <button class="btn btn-sharp login-button" type="button">Logout</button>
+      </li>
+    </ul>
+  </nav>
+
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-1"></div>
+      <div class="col-sm-10">
+        <div class="form-group search-bar">
+          <input class="form-control search-bar-text" type="text" placeholder="Search for a username or tag">
+          <button class="btn btn-sharp search-bar-button" type="button">
+      </div>
+    </div>
+    <div class="col-sm-1"></div>
+  </div>
+  </div>
+
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col public-div">
+        <h3>Public memes</h3>
+      </div>
+      <div class="col shared-div">
+        <h3>Memes shared with me</h3>
+      </div>
+    </div>
+  </div>
+
+  <script>
+
+  for (var i=0;i<15;i++){
+    var a = document.createElement("a")
+    var a2 = document.createElement("a")
+    var post = document.createElement("div")
+    var post2 = document.createElement("div")
+    var postText = document.createElement("div")
+    var postText2 = document.createElement("div")
+    var img = document.createElement("img")
+    var img2 = document.createElement("img")
+
+    var j = Math.floor(Math.random()*4)+1
+
+    a.href = "http://www.google.com"
+    a2.href = "http://www.yahoo.com"
+    post.className = "post"
+    post2.className = "post"
+    postText.className = "post-text"
+    postText2.className = "post-text"
+    $(postText).text("Public meme")
+    $(postText2).text("Shared meme")
+    img.src = "meme"+j+".png"
+    img.className = "post-image"
+    img2.src = "meme"+j+".png"
+    img2.className = "post-image"
+    $(post).append(postText)
+    $(post).append(img)
+    $(post2).append(postText2)
+    $(post2).append(img2)
+    $(a).append(post)
+    $(a2).append(post2)
+    $(".public-div").append(a)
+    $(".shared-div").append(a2)
+  }
+
+  </script>
+
+</body>
+
+</html>
