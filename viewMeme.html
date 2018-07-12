@@ -2,17 +2,17 @@
 
 <html>
     <head>
-        
+
         <script src="jquery-3.3.1.js"></script>
-        
+
         <link href="https://fonts.googleapis.com/css?family=Passion+One" rel="stylesheet">
-        
+
         <style type="text/css">
-            
+
             body, html{
                 height: 100%;
             }
-            
+
             #header{
                 background-color: black;
                 height: 50px;
@@ -20,57 +20,57 @@
                 border-radius: 4px;
             }
 
-            
+
             #name{
-                
+
                 color: white;
                 font-family: "Roboto", sans-serif;
                 padding: 15px;
             }
-            
+
             #content{
                 width: 800px;
                 height: 100%;
                 display: flex;
                 flex-direction: column;
                 margin: 0 auto;
-                
+
                 padding: 10px;
                 box-sizing: border-box;
-                
+
             }
-            
+
             #info{
                 font-family: "Roboto", sans-serif;
                 font-weight: bold;
                /* margin: 10px;*/
             }
-            
+
             #tags{
                 font-family: "Roboto", sans-serif;
                 font-style: italic;
                 color: darkgray;
                 margin: 5px;
             }
-            
+
             #meme{
                 height: 500px;
                 width: 600px;
             }
-            
+
             #fb{
                 height: 50px;
                 width: 100px;
                 margin: 10px;
                 cursor: pointer;
             }
-            
+
             #description{
                 font-family: "Roboto", sans-serif;
                 margin-top: 10px;
                 margin-bottom: 10px;
             }
-            
+
             #btn{
                 background-color: cadetblue;
                 color: white;
@@ -82,9 +82,9 @@
                 margin-top: 5px;
                 margin-right: 5px;
                 cursor: pointer;
-                
+
             }
-            
+
             #share_btn{
                 border:solid;
                 margin-top: 14px;
@@ -98,7 +98,7 @@
                 color: white;
                 cursor: pointer;
             }
-            
+
             /* The Modal (background) */
     .modal {
         display: none; /* Hidden by default */
@@ -137,41 +137,80 @@
         text-decoration: none;
         cursor: pointer;
     }
-        
+
         </style>
-        
-        
+
+
+    </head>
+
+    <body>
+        <div id="header">
+            <div  style="cursor: pointer" id = "name">9GAG</div>
+        </div>
+
+        <div id="content">
+            <h1 id = "info">Me @ Jollibee</h1>
+
+            <img id = "meme" src="meme2.png">
+
+            <h3 style="cursor: pointer; color: dimgray"  id = "info">By Remmy Sol</h3>
+
+            <a id ="description">I look like that even with other people's food</a>
+
+            <!--
+            <div id = "share">
+                <img id = "fb" src="fb.png">
+            </div>
+            -->
+
+            <div id = "tag_btn">
+                <input id = "btn" type="button" value="#food">
+                <input id="btn" type="button" value="#hangry">
+                <input id="btn" style="background-color: lightblue" type="button" value="+">
+
+            </div>
+
+            <div id="share">
+                <button id = "share_btn" >Share</button>
+            </div>
+
+            <div id="myModal" class="modal">
+                <div class="modal-content">
+                    <span class = "close">&times;</span>
+                    <h1 >Share a Meme</h1>
+                </div>
+            </div>
+
+        </div>
+
         <script>
             // Get the modal
             var modal = document.getElementById('myModal');
 
             // Get the button that opens the modal
             var btn = document.getElementById("share_btn");
-            
-            if(btn == null){
+
+            if(btn == undefined){
                 console.log("oh no null");
             }
-        
+
 
             // Get the <span> element that closes the modal
             var span = document.getElementsByClassName("close")[0];
 
-            // When the user clicks the button, open the modal 
+            // When the user clicks the button, open the modal
             console.log("potato");
             btn.onclick = function() {
-                myFunc();
-                //modal.style.display = "block";
+
+                modal.style.display = "block";
             };
-            
-            function myFunc(){
-                console.log("squash");
-            }
-            
+
+
 
             // When the user clicks on <span> (x), close the modal
-            /*span.onclick = function() {
+            span.onclick = function() {
                 modal.style.display = "none";
-            }*/
+            }
 
             // When the user clicks anywhere outside of the modal, close it
             window.onclick = function(event) {
@@ -180,50 +219,7 @@
                 }
             }
         </script>
-    </head>
-    
-    <body>
-        <div id="header">
-            <div  style="cursor: pointer" id = "name">9GAG</div>
-        </div>
-        
-        <div id="content">
-            <h1 id = "info">Me @ Jollibee</h1>
-            
-            <img id = "meme" src="meme2.png">
-            
-            <h3 style="cursor: pointer; color: dimgray"  id = "info">By Remmy Sol</h3>
-            
-            <a id ="description">I look like that even with other people's food</a>
-            
-            <!--
-            <div id = "share">
-                <img id = "fb" src="fb.png">
-            </div>
-            -->
-            
-            <div id = "tag_btn">
-                <input id = "btn" type="button" value="#food">
-                <input id="btn" type="button" value="#hangry">
-                <input id="btn" style="background-color: lightblue" type="button" value="+">
-    
-            </div>
-            
-            <div id="share">
-                <button id = "share_btn" >Share</button>
-            </div>
-            
-            <div id="myModal" class="modal">
-                <div class="modal-content">
-                    <span class = "close">&times;</span>
-                    <h1 >Share a Meme</h1>
-                </div>
-            </div>
-            
-        </div>
-        
-        
-        
-        
+
+
     </body>
 </html>
