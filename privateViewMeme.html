@@ -1,0 +1,337 @@
+<!doctype html>
+
+<html>
+    <head>
+
+        <script src="jquery-3.3.1.js"></script>
+
+        <link href="https://fonts.googleapis.com/css?family=Passion+One" rel="stylesheet">
+
+        <style type="text/css">
+
+            body, html{
+                height: 100%;
+            }
+
+            #header{
+                background-color: black;
+                height: 50px;
+                width: 100%;
+                border-radius: 4px;
+            }
+
+
+            #name{
+
+                color: white;
+                font-family: "Roboto", sans-serif;
+                padding: 15px;
+            }
+
+            #content{
+                width: 800px;
+                height: 100%;
+                display: flex;
+                flex-direction: column;
+                margin: 0 auto;
+
+                padding: 10px;
+                box-sizing: border-box;
+
+            }
+
+            #info{
+                font-family: "Roboto", sans-serif;
+                font-weight: bold;
+               /* margin: 10px;*/
+            }
+
+            #tags{
+                font-family: "Roboto", sans-serif;
+                font-style: italic;
+                color: darkgray;
+                margin: 5px;
+            }
+
+            #meme{
+                height: 500px;
+                width: 600px;
+            }
+
+            #description{
+                font-family: "Roboto", sans-serif;
+                margin-top: 10px;
+                margin-bottom: 10px;
+            }
+
+            #btn{
+                background-color: cadetblue;
+                color: white;
+                border-radius: 8px;
+                border: none;
+                text-decoration: none;
+                padding: 5px 7px;
+                font-size: 20px;
+                margin-top: 5px;
+                margin-right: 5px;
+                cursor: pointer;
+
+            }
+
+            #share_btn{
+                border:solid;
+                margin-top: 14px;
+                margin-bottom: 10px;
+                padding: 8px 20px;
+                font-size: 25px;
+                background-color:cornflowerblue;
+                font-weight: bold;
+                font-family: Roboto, sans-serif;
+                border-radius: 8px;
+                color: white;
+                cursor: pointer;
+            }
+
+                /* The Modal (background) */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1; /* Sit on top */
+            padding-top: 100px; /* Location of the box */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgb(0,0,0); /* Fallback color */
+            background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+        }
+
+        /* Modal Content */
+        .modal-content {
+            background-color: #fefefe;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 50%;
+        }
+
+        /* The Close Button */
+        .close {
+            color: #aaaaaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #000;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        #modal_input{
+            font-family: roboto, sans-serif;
+            margin-top: 25px;
+            margin-bottom: 10px;
+        }        
+
+        #done_btn{
+            background-color: cadetblue;
+            color: white;
+            border-radius: 8px;
+            border: none;
+            text-decoration: none;
+            padding: 5px 7px;
+            font-size: 20px;
+            margin-top: 15px;
+            margin-right: 5px;
+            cursor: pointer;    
+        }
+
+        #visibility{
+            background-color: darkorange;
+            color: white;
+            border-radius: 16px;
+            border: none;
+            text-decoration: none;
+            padding: 10px 7px;
+            font-size: 15px;
+            margin-top: 0px;
+            margin-bottom: 3px;                
+        }
+            
+            ul li{
+                padding-right: 10px;
+            }
+            
+            li{
+                font-family: roboto, sans-serif;
+                padding-right: 10px;
+            }
+            
+            li:hover{
+                color: darkred
+            }
+            
+            #post_edit{
+                margin-top: 40px;
+                margin-bottom: 40px;
+                
+            }
+            
+            #edit_btn{
+                border:solid;
+                margin-top: 14px;
+                margin-bottom: 10px;
+                padding: 8px 20px;
+                font-size: 15px;
+                background-color:#50c686;
+                font-weight: bold;
+                font-family: Roboto, sans-serif;
+                border-radius: 8px;
+                color: white;
+                cursor: pointer;
+            }
+            
+            #delete_btn{
+                border:solid;
+                margin-top: 14px;
+                margin-bottom: 10px;
+                padding: 8px 20px;
+                font-size: 15px;
+                background-color:#ed8964;
+                font-weight: bold;
+                font-family: Roboto, sans-serif;
+                border-radius: 8px;
+                color: white;
+                cursor: pointer;
+            }
+            
+        </style>
+
+
+    </head>
+
+    <body>
+        <div id="header">
+            <div  style="cursor: pointer" id = "name">9GAG</div>
+        </div>
+
+        <div id="content">
+            
+            <div id="top">
+                <h1 id = "info">Me @ Jollibee</h1>
+                <input id = "visibility" type="button" value="private">
+            </div>
+
+            <img id = "meme" src="meme2.png">
+
+            <a style="cursor: pointer; color: dimgray"  id = "info" href="ViewUser.html">By limesapphire</a>
+
+            <a id ="description">I look like that even with other people's food</a>
+
+            <!--
+            <div id = "share">
+                <img id = "fb" src="fb.png">
+            </div>
+            -->
+
+            <div id = "tag_btn">
+                <input id = "btn" type="button" value="#food">
+                <input id="btn" type="button" value="#hangry">
+                <input id="btn" style="background-color: lightblue; margin-left: 40px" type="button" value="edit">
+
+            </div>
+
+            <div id="share">
+                <button id = "share_btn" >Share</button>
+            </div>
+            
+            <div id="post_edit">
+                <button id = "edit_btn">Edit Post</button>
+                <button id = "delete_btn">Delete Post</button>
+            </div>
+
+            <div id="myModal" class="modal">
+                <div class="modal-content">
+                    <span class = "close">&times;</span>
+                    <h1 id="info">Share a Meme</h1>
+                
+                    <div id="private_tags">
+                        <p id="modal_input">Tag your friends!</p>
+                        
+                        <p id ="modal_input">Shared with these users: </p>
+                        <ul id="users">
+                            <li>Toast22a</li>
+                            <li>b1gb0ss</li>
+                        </ul>
+                        
+                        <p style="color: darkgray;font-size: 13px;" id="modal_input">Enter your friend's user name</p>
+                        <input id="input" type = "text"><br>
+                        <input id="done_btn" type="button" value="Done">
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <script>
+            // Get the modal
+            var modal = document.getElementById('myModal');
+
+            // Get the button that opens the modal
+            var btn = document.getElementById("share_btn");
+            
+            
+            var done = document.getElementById("done_btn");
+            
+            var delete_btn = document.getElementById("delete_btn");
+  
+            // Get the <span> element that closes the modal
+            var span = document.getElementsByClassName("close")[0];
+
+            // When the user clicks the button, open the modal
+            btn.onclick = function() {
+
+                modal.style.display = "block";
+            };
+
+
+
+            // When the user clicks on <span> (x), close the modal
+            span.onclick = function() {
+                modal.style.display = "none";
+            }
+
+            // When the user clicks anywhere outside of the modal, close it
+            window.onclick = function(event) {
+                if (event.target == modal) {
+                    modal.style.display = "none";
+                }
+            }
+            
+            done.onclick = function(){
+                if(document.getElementById("input").value == ""){
+                  window.alert("Invalid input");  
+                }
+                
+                else{
+                  modal.style.display = "none";
+                    window.alert("Tagging users complete!");   
+                    document.getElementById("input").value = "";
+                }
+                 
+            };
+            
+            delete_btn.onclick = function(){
+                window.alert("Post deleted");
+                location.href = "homepage2.html";
+            };
+
+        </script>
+
+
+    </body>
+</html>
