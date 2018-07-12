@@ -58,20 +58,9 @@
 <body>
   <nav class="navbar navbar-expand-sm">
     <span class="navbar-brand">69GAG</span>
-    <ul class="navbar-nav">
-      <li class="nav-item">
-        <button class="btn btn-sharp" type="button">Upload a meme</button>
-      </li>
-    </ul>
     <ul class="navbar-nav ml-auto align-items-center">
-      <li class="nav-item mr-2">
-        <div class="d-flex align-items-center">
-          <img src="profile_pic.jpg" class="mr-1 nav-profile-pic rounded-circle">
-          <div class="media-body"><a href="">limesapphire</a></div>
-        </div>
-      </li>
       <li class="nav-item">
-        <button class="btn btn-sharp login-button" type="button">Logout</button>
+        <button class="btn btn-sharp login-button" type="button">Login</button>
       </li>
     </ul>
   </nav>
@@ -89,55 +78,31 @@
   </div>
   </div>
 
-  <h2 style="text-align: center;">Memes with tag #food</h2>
+  <div class="container-fluid public-div">
 
-  <div class="container-fluid">
-    <div class="row">
-      <div class="col public-div">
-        <h3>Public memes</h3>
-      </div>
-      <div class="col shared-div">
-        <h3>Memes shared with me</h3>
-      </div>
-    </div>
   </div>
 
   <script>
 
-  for (var i=0;i<8;i++){
+  for (var i=0;i<15;i++){
     var a = document.createElement("a")
-    var a2 = document.createElement("a")
     var post = document.createElement("div")
-    var post2 = document.createElement("div")
     var postText = document.createElement("div")
-    var postText2 = document.createElement("div")
     var img = document.createElement("img")
-    var img2 = document.createElement("img")
 
     var j = Math.floor(Math.random()*4)+1
 
     a.href = "http://www.google.com"
-    a2.href = "http://www.yahoo.com"
     a.className = "post-link"
-    a2.className = "post-link"
     post.className = "post-div"
-    post2.className = "post-div"
     postText.className = "post-text"
-    postText2.className = "post-text"
     $(postText).text("Name of public meme")
-    $(postText2).text("Name of shared meme")
     img.src = "meme"+j+".png"
     img.className = "post-image"
-    img2.src = "meme"+j+".png"
-    img2.className = "post-image"
     $(post).append(postText)
     $(post).append(img)
-    $(post2).append(postText2)
-    $(post2).append(img2)
     $(a).append(post)
-    $(a2).append(post2)
     $(".public-div").append(a)
-    $(".shared-div").append(a2)
   }
 
   </script>
