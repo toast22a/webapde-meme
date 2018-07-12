@@ -16,76 +16,42 @@
 
     }
 
-    .profileContainer {
+    .profile_container {
       display: block;
-      flex-direction: column;
-      /*width: 248px;
-          height: 486.33px;*/
-    }
-
-    .picture {
-      margin-left: 20px;
-      display: block;
-      flex-direction: column;
-      background-color: aliceblue;
-      width: 170px;
-      height: 170px;
+      width: 100%;
+      padding: 20px;
     }
 
     div {
       display: block;
     }
 
+    .picture {
+      width: 100%;
+    }
+
     .description {
-      margin-left: 20px;
+      margin-top: 10px;
     }
 
     .name {
+      margin-top: 10px;
       color: white;
       font-family: 'Passion One', cursive;
-      margin-left: 20px;
       font-size: 20px;
     }
 
     .socialMedia {}
 
     .history {
-      display: block;
-      width: 776px;
-      height: 78px;
       color: white;
-      flex-direction: row;
       font-size: 48px;
       font-family: 'Passion One', cursive;
 
     }
 
-    .whole_container {
-      display: flex;
-      justify-content: center;
-      align-content: center;
-      flex-direction: row;
-
-
-
-    }
-
-    .memeContainer {
-      height: 2298.5px;
-      width: 776px;
-      display: flex;
-      flex-direction: row;
-    }
-
-    .wholeHistory {
-      width: 776px;
-      height: 4155.5px;
-    }
-
-    .meme {
-      height: 167px;
-      width: 268px;
-      margin: 10px;
+    .meme_container {
+      display: inline-block;
     }
 
     h2 {
@@ -97,6 +63,38 @@
       flex-direction: row;
       justify-content: center;
       align-content: center;
+    }
+
+    .post-link {
+      margin: 2px;
+      height: 200px;
+      width: 200px;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      display: inline-block;
+    }
+
+    .post-div {
+      position: relative;
+      height: inherit;
+      width: inherit;
+    }
+
+    img.post-image {
+      position: absolute;
+      top: 0; right: 0;
+      height: inherit;
+      width: inherit;
+    }
+
+    .post-text {
+      color: white;
+      text-align: center;
+      padding-top: 25%;
+    }
+
+    .post-image:hover {
+      opacity: .25;
     }
   </style>
   <meta charset="UTF-8">
@@ -137,29 +135,32 @@
   </div>
   </div>
 
-  <div class="container-fluid allcontainer">
-    <div class="whole_container">
+  <div class="container-fluid">
+    <div class="row">
 
-      <div class="profileContainer">
-        <div class="picture"></div>
-        <div>
-          <p class="description">Korean drama lover and a big fan of game of thrones as long as its in netflix i'll watch it</p>
+      <div class="col-md-3">
+        <div class="profile_container">
+          <img src="profile_pic.jpg" class="picture rounded-circle"></img>
+          <div class="description">Korean drama lover and a big fan of game of thrones as long as its in netflix i'll watch it</div>
+          <div class="name">Remmy Sol</div>
+          <div class="socialMedia"></div>
         </div>
-        <div class="name">Remmy Sol</div>
-        <div class="socialMedia"></div>
       </div>
-      <div class="wholeHistory">
+      <div class="col-md-9">
         <div class="history">User Meme History</div>
-        <div class="memeContainer">
-          <div class="meme">
-            <h2>We love you miss  </h2>
-            <img src="meme1.png">
-          </div>
-          <div class="meme">
-            <h2>me @ Jolibee </h2>
-            <img src="meme2.png">
-          </div>
-
+        <div class="meme_container">
+          <a class="post-link" href="http://www.google.com">
+            <div class="post-div">
+              <div class="post-text">We love you miss</div>
+              <img src="meme1.png" class="post-image"></img>
+            </div>
+          </a>
+          <a class="post-link" href="http://www.google.com">
+            <div class="post-div">
+              <div class="post-text">me @ jollibee</div>
+              <img src="meme2.png" class="post-image"></img>
+            </div>
+          </a>
         </div>
       </div>
     </div>
