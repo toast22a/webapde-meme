@@ -1,0 +1,39 @@
+@import url("https://fonts.googleapis.com/css?family=Roboto");
+
+html,
+body {
+  background-color: #121212;
+  font-family: Roboto, sans-serif;
+}
+
+body {
+  color: white;
+}
+
+nav {
+  background-color: rgba(0, 0, 0, 0)
+}
+
+.nav-profile-pic {
+  height: 32px;
+  width: 32px;
+}
+
+.btn.btn-sharp {
+  border-radius: 0px;
+}
+
+.search-bar {
+  display: flex;
+  height: 50px;
+}
+
+.search-bar-text {
+  border-radius: 0px;
+  height: 100%;
+}
+
+.search-bar-button {
+  height: 100%;
+  width: 50px;
+}
