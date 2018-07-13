@@ -51,6 +51,15 @@
     .post-image:hover {
       opacity: .25;
     }
+
+    .load-more-div {
+        display: flex;
+    }
+
+    .load-more {
+        font-size: 20px;
+        margin: 30px auto;
+    }
   </style>
 
 </head>
@@ -100,43 +109,57 @@
     </div>
   </div>
 
+  <div class="container-fluid load-more-div">
+  <button class="btn btn-sharp load-more" type="button">Load more</button>
+  </div>
+
   <script>
 
-  for (var i=0;i<8;i++){
-    var a = document.createElement("a")
-    var a2 = document.createElement("a")
-    var post = document.createElement("div")
-    var post2 = document.createElement("div")
-    var postText = document.createElement("div")
-    var postText2 = document.createElement("div")
-    var img = document.createElement("img")
-    var img2 = document.createElement("img")
+  function loadMemes(){
+    for (var i=0;i<8;i++){
+      var a = document.createElement("a")
+      var a2 = document.createElement("a")
+      var post = document.createElement("div")
+      var post2 = document.createElement("div")
+      var postText = document.createElement("div")
+      var postText2 = document.createElement("div")
+      var img = document.createElement("img")
+      var img2 = document.createElement("img")
 
-    var j = Math.floor(Math.random()*4)+1
+      var j = Math.floor(Math.random()*4)+1
 
-    a.href = "http://www.google.com"
-    a2.href = "http://www.yahoo.com"
-    a.className = "post-link"
-    a2.className = "post-link"
-    post.className = "post-div"
-    post2.className = "post-div"
-    postText.className = "post-text"
-    postText2.className = "post-text"
-    $(postText).text("Name of public meme")
-    $(postText2).text("Name of shared meme")
-    img.src = "meme"+j+".png"
-    img.className = "post-image"
-    img2.src = "meme"+j+".png"
-    img2.className = "post-image"
-    $(post).append(postText)
-    $(post).append(img)
-    $(post2).append(postText2)
-    $(post2).append(img2)
-    $(a).append(post)
-    $(a2).append(post2)
-    $(".public-div").append(a)
-    $(".shared-div").append(a2)
+      a.href = "http://www.google.com"
+      a2.href = "http://www.yahoo.com"
+      a.className = "post-link"
+      a2.className = "post-link"
+      post.className = "post-div"
+      post2.className = "post-div"
+      postText.className = "post-text"
+      postText2.className = "post-text"
+      $(postText).text("Name of public meme")
+      $(postText2).text("Name of shared meme")
+      img.src = "meme"+j+".png"
+      img.className = "post-image"
+      img2.src = "meme"+j+".png"
+      img2.className = "post-image"
+      $(post).append(postText)
+      $(post).append(img)
+      $(post2).append(postText2)
+      $(post2).append(img2)
+      $(a).append(post)
+      $(a2).append(post2)
+      $(".public-div").append(a)
+      $(".shared-div").append(a2)
+    }
   }
+
+  $(".load-more").click(function(){
+      let lm = $(".load-more-div").detach()
+      loadMemes()
+      $(document.body).append(lm)
+  })
+
+  loadMemes()
 
   </script>
 

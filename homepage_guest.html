@@ -51,6 +51,15 @@
     .post-image:hover {
       opacity: .25;
     }
+
+    .load-more-div {
+        display: flex;
+    }
+
+    .load-more {
+        font-size: 20px;
+        margin: 30px auto;
+    }
   </style>
 
 </head>
@@ -80,30 +89,45 @@
 
   <div class="container-fluid public-div">
 
+
+  </div>
+
+  <div class="container-fluid load-more-div">
+  <button class="btn btn-sharp load-more" type="button">Load more</button>
   </div>
 
   <script>
 
-  for (var i=0;i<15;i++){
-    var a = document.createElement("a")
-    var post = document.createElement("div")
-    var postText = document.createElement("div")
-    var img = document.createElement("img")
+  function loadMemes(){
+      for (var i=0;i<15;i++){
+        var a = document.createElement("a")
+        var post = document.createElement("div")
+        var postText = document.createElement("div")
+        var img = document.createElement("img")
 
-    var j = Math.floor(Math.random()*4)+1
+        var j = Math.floor(Math.random()*4)+1
 
-    a.href = "http://www.google.com"
-    a.className = "post-link"
-    post.className = "post-div"
-    postText.className = "post-text"
-    $(postText).text("Name of public meme")
-    img.src = "meme"+j+".png"
-    img.className = "post-image"
-    $(post).append(postText)
-    $(post).append(img)
-    $(a).append(post)
-    $(".public-div").append(a)
+        a.href = "http://www.google.com"
+        a.className = "post-link"
+        post.className = "post-div"
+        postText.className = "post-text"
+        $(postText).text("Name of public meme")
+        img.src = "meme"+j+".png"
+        img.className = "post-image"
+        $(post).append(postText)
+        $(post).append(img)
+        $(a).append(post)
+        $(".public-div").append(a)
+      }
   }
+
+  $(".load-more").click(function(){
+      let lm = $(".load-more-div").detach()
+      loadMemes()
+      $(document.body).append(lm)
+  })
+
+  loadMemes()
 
   </script>
 
