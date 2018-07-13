@@ -11,7 +11,11 @@
   <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+
+
+
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="tags.css">
 
   <style>
 
@@ -60,16 +64,62 @@
         font-size: 20px;
         margin: 30px auto;
     }
+
+    .modal {
+      color: black;
+    }
   </style>
 
 </head>
 
 <body>
+  <div class="modal fade" id="uploadModal" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <h5 class="modal-title">Upload Meme</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+              </div>
+              <div class="modal-body">
+                  <form action="/action_page.php">
+                      <input type="file" name="pic" accept="image/*">
+                      <h5>Description</h5>
+                      <textarea rows="4" cols="50"></textarea>
+                      <h5>tags</h5>
+                      <div class="tags-input" data-name="tags-input" id='tags'>
+                          <!--<span class="tag">CSS<span class="close"></span></span>
+                              <span class="tag">JavaScript<span class="close"></span></span>
+                              <span class="tag">HTML<span class="close"></span></span><-->
+                      </div>
+                      <h5>Shared to</h5>
+                      <div class="tags-input" data-name="tags-input" id="sharedUser" Value="@user," >
+                          <!--<span class="tag">CSS<span class="close"></span></span>
+                              <span class="tag">JavaScript<span class="close"></span></span>
+                              <span class="tag">HTML<span class="close"></span></span><-->
+                      </div>
+                      <h5>Visibility</h5>
+                      <form action="">
+                          <input type="radio" name="visibility" value="public">Public
+                          <input type="radio" name="visibility" value="private" class="radioBox" checked="checked">Private<br>
+                      </form>
+
+
+
+                  </form>
+              </div>
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-primary" id="uButton" data-toggle="modal" data-target="#descriptionModal">Submit</button>
+              </div>
+
+          </div>
+      </div>
+  </div>
+
   <nav class="navbar navbar-expand-sm">
     <span class="navbar-brand">69GAG</span>
     <ul class="navbar-nav">
       <li class="nav-item">
-        <button class="btn btn-sharp" type="button">Upload a meme</button>
+        <button class="btn btn-sharp upload-button" type="button" data-toggle="modal" data-target="#uploadModal">Upload a meme</button>
       </li>
     </ul>
     <ul class="navbar-nav ml-auto align-items-center">
@@ -80,7 +130,7 @@
         </div>
       </li>
       <li class="nav-item">
-        <button class="btn btn-sharp login-button" type="button">Logout</button>
+        <button class="btn btn-sharp logout-button" type="button">Logout</button>
       </li>
     </ul>
   </nav>
@@ -115,6 +165,7 @@
 
   <script>
 
+  var memeNames = ["We love you miss", "Me @ Jollibee", "wow haha", "loool"]
   function loadMemes(){
     for (var i=0;i<8;i++){
       var a = document.createElement("a")
@@ -136,8 +187,8 @@
       post2.className = "post-div"
       postText.className = "post-text"
       postText2.className = "post-text"
-      $(postText).text("Name of public meme")
-      $(postText2).text("Name of shared meme")
+      $(postText).text(memeNames[j-1])
+      $(postText2).text(memeNames[j-1])
       img.src = "meme"+j+".png"
       img.className = "post-image"
       img2.src = "meme"+j+".png"
@@ -154,14 +205,64 @@
   }
 
   $(".load-more").click(function(){
-      let lm = $(".load-more-div").detach()
+      var lm = $(".load-more-div").detach()
       loadMemes()
       $(document.body).append(lm)
+  })
+
+  $(".logout-button").click(function(){
+    window.location.href = "homepage_guest.html"
+  })
+
+  $(document).ready(() => {
+
+    $("#uButton").click(() => {
+
+        if($('form input[type=radio]:checked').val()!=''&& $('#upload').val()!=''){
+            alert('you have successfully uploaded a meme')
+        }else{
+            alert('something is missing')
+        }
+
+        $('input.main-input').attr("placeholder", "@user,something");
+
+
+        //alert($(mainInput).val())
+        //alert($('input[name=visibility]:checked').val();)
+
+       // alert($('#upload').val())
+        /*
+        if ($('#visibility').val() === '' || $('#tag').val() === ''||$('#sharedUser').val()===0||$('#upload')files.length === 0 ) {
+            alert("missing items please fill it out");
+        }else if($('#visibility').val() != '' && $('#tags').val() != '' && $('#upload')files.length != 0 ){
+             alert("upload successfully ");
+        }*/
+        $('#uploadModal .close').click();
+    })
+
+    $('form input[type=radio]').click(function(){
+        if($(this).val()=="private"){
+            $('#sharedUser').css("visibility", "visible")
+            $('.sharedLabel').css("visibility", "visible")
+    }else{
+        $('#sharedUser').css("visibility", "hidden")
+        $('.sharedLabel').css("visibility", "hidden")
+    }
+
+
+    })
+
+
+
+
   })
 
   loadMemes()
 
   </script>
+
+  // place this at the end!
+  <script src="tags.js"></script>
 
 </body>
 
