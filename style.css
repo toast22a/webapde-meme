@@ -36,4 +36,11 @@ nav {
 .search-bar-button {
   height: 100%;
   width: 50px;
+  padding: 0;
+  background-image: url("search.png");
+}
+
+.search-bar-button-image {
+  height: 100%;
+  width: 100%;
 }
