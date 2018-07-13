@@ -102,11 +102,13 @@
             })
 
             $("#uButton").click(() => {
-                var radioValue = $('input.main-input').text();
+                
                 if($('form input[type=radio]:checked').val()!=''&& $('#upload').val()!=''){
                     alert('you have successfully uploaded a meme')
+                }else{
+                    alert('something is missing')
                 }
-                alert(radioValue);
+                
                 $('input.main-input').attr("placeholder", "@user,something");
                 
                 
