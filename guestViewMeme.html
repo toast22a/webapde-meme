@@ -109,17 +109,80 @@
                 padding-top: 10px;
             }
 
+            .modal {
+              color: black;
+            }
         </style>
 
 
     </head>
 
     <body>
-        <nav class="navbar navbar-expand-sm">
+      <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-hidden="true">
+          <div class="modal-dialog" role="documen">
+              <div class="modal-content">
+                  <div class="modal-header">
+                      <h5 class="modal-title">Login</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                  </div>
+                  <div class="modal-body">
+
+                      <div>
+                          <h5>Username</h5>
+                          <input type="text" id="lUser">
+                      </div>
+                      <div>
+                          <h5>Password</h5>
+                          <input type="password" id="lPassword">
+                      </div>
+                  </div>
+                  <div class="modal-footer">
+                      <button type="button" class="btn btn-primary mr-auto" id="lButton">Login</button>
+                      <div class="leftmost" data-toggle="modal" data-target="#signUpModal">
+                          Don't Have an Account
+                      </div>
+                  </div>
+
+              </div>
+          </div>
+      </div>
+      <div>
+
+          <div class="modal fade" id="signUpModal" tabindex="-1" role="dialog" aria-hidden="true">
+              <div class="modal-dialog" role="documen">
+                  <div class="modal-content">
+                      <div class="modal-header">
+                          <h5 class="modal-title">Sign Up</h5>
+                          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                      </div>
+                      <div class="modal-body">
+                          <div>
+                              <h5>Name</h5>
+                              <input type="text" id="sUser">
+                          </div>
+                          <div>
+                              <h5>Password</h5>
+                              <input type="password" id="sPassword">
+                          </div>
+                          <div>
+                              <h5>Description</h5>
+                              <textarea rows="4" cols="50" id='description'></textarea>
+                          </div>
+                      </div>
+                      <div class="modal-footer">
+                          <button type="button" class="btn btn-primary mr-auto" id="sButton">Sign Up</button>
+                      </div>
+
+                  </div>
+              </div>
+          </div>
+      </div>
+
+    <nav class="navbar navbar-expand-sm">
     <span class="navbar-brand"><a style="text-decoration : none; color : white;" href="index.html">168GAG</a></span>
             <ul class="navbar-nav ml-auto align-items-center">
               <li class="nav-item">
-                <button class="btn btn-sharp login-button" type="button">Login</button>
+                <button class="btn btn-sharp login-button" type="button" data-toggle="modal" data-target="#loginModal" data-dismiss="modal">Login</button>
               </li>
             </ul>
           </nav>
@@ -155,4 +218,39 @@
 
 
     </body>
+
+    <script>
+    $(document).ready(() => {
+        $("#lButton").click(() => {
+            if ($('#lUser').val() != "" && ($('#lPassword')).val() != "") {
+                $('#loginModal .close').click();
+                alert("successfully entered your Account");
+                $('#lUser').val('');
+                $('#lPassword').val('');
+                window.location.href = "homepage.html"
+            } else if ($('#lUser').val() === "") {
+                alert("please enter your username")
+            } else {
+                alert("please enter your Password")
+            }
+        })
+
+        $("#sButton").click(() => {
+            if ($('#sUser').val() != "" && ($('#sPassword')).val() != "") {
+
+                $('#loginModal .close').click();
+                $("#signUpModal .close").click();
+                alert("successfully entered your Account");
+                $('#sUser').val('');
+                $('#sPassword').val('');
+            } else if ($('#sUser').val() === "") {
+                alert("please enter your username")
+            } else {
+                alert("please enter your Password")
+            }
+        })
+
+
+    })
+    </script>
 </html>
