@@ -71,7 +71,7 @@
         </div>
       </li>
       <li class="nav-item">
-        <button class="btn btn-sharp login-button" type="button">Logout</button>
+        <button class="btn btn-sharp login-button" type="button" id = "logout_btn">Logout</button>
       </li>
     </ul>
   </nav>
@@ -107,6 +107,11 @@
       search_btn.onclick = function() {
             location.href = "searchByTag.html"
         };
+      
+      logout_btn.onclick = function(){
+            window.alert("Logged out");
+            location.href = "homepage_guest.html";
+        }
       
   for (var i=0;i<8;i++){
     var a = document.createElement("a")
