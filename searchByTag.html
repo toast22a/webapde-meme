@@ -82,7 +82,7 @@
       <div class="col-sm-10">
         <div class="form-group search-bar">
           <input class="form-control search-bar-text" type="text" placeholder="Search for memes by tag">
-          <button class="btn btn-sharp search-bar-button" type="button">
+          <button class="btn btn-sharp search-bar-button" type="button" id="search_btn">
       </div>
     </div>
     <div class="col-sm-1"></div>
@@ -104,6 +104,10 @@
 
   <script>
 
+      search_btn.onclick = function() {
+            location.href = "searchByTag.html"
+        };
+      
   for (var i=0;i<8;i++){
     var a = document.createElement("a")
     var a2 = document.createElement("a")
