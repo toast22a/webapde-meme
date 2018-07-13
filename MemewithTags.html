@@ -95,14 +95,48 @@
                     alert("please enter your Password")
                 }
             })
-
-            $("#uButton").click(() => {
-                if ($('#visibility').val() = '' || $('#tags').val() = '') {
-                    alert("missing items please fill it out\n ");
-                }
-
+            
+            $("#uploadModal").click(()=>{
+                $("#tag > .main-input").attr("placeholder", "something,")
+                $("#sharedUser > .main-input").attr("placeholder", "@user,")
             })
 
+            $("#uButton").click(() => {
+                var radioValue = $('input.main-input').text();
+                if($('form input[type=radio]:checked').val()!=''&& $('#upload').val()!=''){
+                    alert('you have successfully uploaded a meme')
+                }
+                alert(radioValue);
+                $('input.main-input').attr("placeholder", "@user,something");
+                
+                
+                //alert($(mainInput).val())
+                //alert($('input[name=visibility]:checked').val();)
+                
+               // alert($('#upload').val())
+                /*
+                if ($('#visibility').val() === '' || $('#tag').val() === ''||$('#sharedUser').val()===0||$('#upload')files.length === 0 ) {
+                    alert("missing items please fill it out");   
+                }else if($('#visibility').val() != '' && $('#tags').val() != '' && $('#upload')files.length != 0 ){
+                     alert("upload successfully "); 
+                }*/
+                $('#uploadModal .close').click();
+            })
+          
+            $('form input[type=radio]').click(function(){
+                if($(this).val()=="private"){
+                    $('#sharedUser').css("visibility", "visible")  
+                    $('.sharedLabel').css("visibility", "visible")  
+            }else{
+                $('#sharedUser').css("visibility", "hidden")   
+                $('.sharedLabel').css("visibility", "hidden")  
+            }
+
+
+            });
+                   
+                
+            
             $("#sButton").click(() => {
                 if ($('#sUser').val() != "" && ($('#sPassword')).val() != "") {
 
@@ -200,7 +234,8 @@
                 </div>
             </div>
         </div>
-        <button type="button" class="btn btn-info" data-toggle="modal" data-target="#uploadModal">Upload</button>
+         
+        <button type="button" class="btn btn-info" data-toggle="modal" data-target="#uploadModal" id="uploadButton">Upload</button>
         <div class="modal fade" id="uploadModal" tabindex="-1" role="dialog" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -210,27 +245,25 @@
                     </div>
                     <div class="modal-body">
                         <form action="/action_page.php">
-                            <input type="file" name="pic" accept="image/*">
-                            <h5>Description</h5>
-                            <textarea rows="4" cols="50"></textarea>
+                            <input type="file" name="pic" accept="image/*" id="upload">
                             <h5>tags</h5>
-                            <div class="tags-input" data-name="tags-input" id='tags'>
+                            <div class="tags-input" data-name="tags-input" id='tag' placeholder="lol">
                                 <!--<span class="tag">CSS<span class="close"></span></span>
                                     <span class="tag">JavaScript<span class="close"></span></span>
                                     <span class="tag">HTML<span class="close"></span></span><-->
                             </div>
-                            <h5>Shared to</h5>
-                            <div class="tags-input" data-name="tags-input" id="sharedUser" Value="@user," >
-                                <!--<span class="tag">CSS<span class="close"></span></span>
-                                    <span class="tag">JavaScript<span class="close"></span></span>
-                                    <span class="tag">HTML<span class="close"></span></span><-->
-                            </div>
+                            
                             <h5>Visibility</h5>
                             <form action="">
-                                <input type="radio" name="visibility" value="public">Public
+                                <input type="radio" name="visibility" value="public" checked="checked">Public
                                 <input type="radio" name="visibility" value="private" class="radioBox">Private<br>
                             </form>
-
+                            <h5 class="sharedLabel">Shared to</h5>
+                            <div class="tags-input" data-name="tags-input" id="sharedUser" Value="@user," style="visibility: hidden;" >
+                                <!--<span class="tag">CSS<span class="close"></span></span>
+                                    <span class="tag">JavaScript<span class="close"></span></span>
+                                    <span class="tag">HTML<span class="close"></span></span><-->
+                            </div>
 
 
                         </form>
