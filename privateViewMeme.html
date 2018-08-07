@@ -17,10 +17,6 @@
 
 
     <style type="text/css">
-        body,
-        html {
-            height: 100%;
-        }
 
         #header {
             background-color: black;
@@ -45,6 +41,7 @@
             height: 100%;
             display: flex;
             flex-direction: column;
+            align-items: center;
             margin: 0 auto;
 
             padding: 10px;
@@ -113,8 +110,7 @@
 
         #edit_btn {
             border: solid;
-            margin-top: 30px;
-            margin-bottom: 10px;
+            margin: 5px;
             padding: 8px 20px;
             font-size: 15px;
             background-color: #50c686;
@@ -123,13 +119,11 @@
             border-radius: 8px;
             color: white;
             cursor: pointer;
-            margin-left: 230px;
         }
 
         #delete_btn {
             border: solid;
-            margin-top: 14px;
-            margin-bottom: 10px;
+            margin: 5px;
             padding: 8px 20px;
             font-size: 15px;
             background-color: #ed8964;
@@ -138,12 +132,21 @@
             border-radius: 8px;
             color: white;
             cursor: pointer;
-            margin-left: 230px;
         }
 
         .boxhead#title{
             color: white;
             text-decoration: none;
+        }
+
+        div#content > #top {
+          text-align: center;
+        }
+
+        div.visibility {
+          color: darkorange;
+          font-size: 30px;
+          margin-bottom: 10px;
         }
 
     </style>
@@ -178,7 +181,7 @@
 
         <div id="top">
             <h1 id="info">Me @ Jollibee</h1>
-            <input id="visibility" type="button" value="private">
+            <div class="visibility">Private</div>
         </div>
 
         <img id="meme" src="meme2.png">
@@ -186,9 +189,14 @@
         <a style="cursor: pointer; color: dimgray" id="info" href="ViewUser.html">By limesapphire</a>
 
         <a id="description">I look like that even with other people's food</a>
+
+        <div>
+          <button type="button" class="btn" id="edit_btn" data-toggle="modal" data-target="#uploadModal">Edit Post</button>
+
+          <button type="button" class="btn" id="delete_btn">Delete Post</button>
+        </div>
     </div>
     <div id="post_edit">
-        <button id="edit_btn" data-toggle="modal" data-target="#uploadModal">Edit Post</button>
         <div class="modal fade" id="uploadModal" tabindex="-1" role="dialog" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -228,9 +236,6 @@
                 </div>
             </div>
 
-        </div>
-        <div>
-            <button id="delete_btn">Delete Post</button>
         </div>
 
 
