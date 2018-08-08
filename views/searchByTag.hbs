@@ -69,6 +69,16 @@
         .modal {
             color: black;
         }
+        
+        #profile_pic{
+            height : 40px;
+            width : 40px;
+        }
+        
+        #search_icon{
+            height : 25px;
+            width : 25px;   
+        }
     </style>
 
 </head>
@@ -81,37 +91,35 @@
                     <h5 class="modal-title">Upload Meme</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                 </div>
+                <form action="addMeme" method="post">
                 <div class="modal-body">
-                    <form action="/action_page.php">
-                        <input type="file" name="pic" accept="image/*">
+<!--                    <form action="/action_page.php">-->
+                        <input type="file" name="pic" accept="image/*" >
                         <h5>Description</h5>
-                        <textarea rows="4" cols="50"></textarea>
+                        <textarea rows="4" cols="50" name="description"></textarea>
                         <h5>tags</h5>
-                        <div class="tags-input" data-name="tags-input" id='tags'>
+                        <div class="tags-input" data-name="tags-input" id='tags' name ="memeTags">
                             <!--<span class="tag">CSS<span class="close"></span></span>
                               <span class="tag">JavaScript<span class="close"></span></span>
                               <span class="tag">HTML<span class="close"></span></span><-->
                         </div>
                         <h5>Shared to</h5>
-                        <div class="tags-input" data-name="tags-input" id="sharedUser" Value="@user,">
+                        <div class="tags-input" data-name="tags-input" id="sharedUser" Value="@user," name ="shared">
                             <!--<span class="tag">CSS<span class="close"></span></span>
                               <span class="tag">JavaScript<span class="close"></span></span>
                               <span class="tag">HTML<span class="close"></span></span><-->
                         </div>
                         <h5>Visibility</h5>
-                        <form action="">
+                        <form  >
                             <input type="radio" name="visibility" value="public">Public
                             <input type="radio" name="visibility" value="private" class="radioBox" checked="checked">Private<br>
                         </form>
-
-
-
-                    </form>
+<!--                    </form>-->
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" id="uButton" data-toggle="modal" data-target="#descriptionModal">Submit</button>
+                    <input type="submit" class="btn btn-primary" id="uButton" data-toggle="modal" data-target="#descriptionModal">
                 </div>
-
+                </form>
             </div>
         </div>
     </div>
@@ -127,7 +135,7 @@
         <ul class="navbar-nav ml-auto align-items-center">
             <li class="nav-item mr-2">
                 <div class="d-flex align-items-center">
-                    <img src="profile_pic.jpg" class="mr-1 nav-profile-pic rounded-circle">
+                    <img src="profile_pic.jpg" id = "profile_pic"class="mr-1 nav-profile-pic rounded-circle">
                     <div class="media-body">
 <!--
                         <form name="linkUser" action="viewUser" method="post">
@@ -136,7 +144,7 @@
                                 <a href="javascript:{}" onclick="document.getElementById('tagForm').submit(); return false;">{{tagUsername}}</a>
 -->
 <!--                            </form>-->
-                   <a href="viewUser">{{tagUsername}}<</a>
+                   <a href="viewUser">{{tagUsername}}</a>
                     </div>
                 </div>
             </li>
@@ -156,7 +164,7 @@
                    <form action="searchByTag" method="get">
                     <input class="form-control search-bar-text" type="text" placeholder="Search for memes by tag" name="searchText">
                     <button class="btn btn-sharp search-bar-button" type="submit">
-            <img class="search-bar-button-image" src="search.png">
+            <img class="search-bar-button-image" id = "search_icon" src="search.png">
                   </button>
                </form>
                 </div>

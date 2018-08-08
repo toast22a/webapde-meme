@@ -157,7 +157,7 @@ app.get("/viewUser",urlencoder,(req,res)=>{
 
 app.post("/deleteMeme",urlencoder,(req,res)=>{
     console.log("GET /deleteMeme")
-     console.log("meme has been deleted")
+    console.log("meme has been deleted")
     var username = req.session.username
     var desc = req.session.description
      res.render("homepage.hbs",{hUsername:username})
@@ -169,6 +169,30 @@ app.post("/editMeme",urlencoder,(req,res)=>{
     console.log("meme has been edited")
     var username = req.session.username
     res.render("privateViewMeme.hbs",{Username : username})
+})
+
+app.post("/addMeme",urlencoder,(req,res)=>{
+    console.log("POST  /addMeme")
+    var pic = req.body.pic
+    var desc = req.body.description
+    var tags = req.body.memeTags
+    var sharedto = req.body.shared
+    var visibility = req.body.visibility
+    var username = req.session.username
+    console.log(pic)
+    console.log(desc)
+    console.log(tags)
+    console.log(sharedto)
+    console.log(visibility)
+
+    if(pic && tags && sharedto && visibility)
+        {
+            console.log("uploaded successfully")
+            res.render("privateViewMeme.hbs",{Username : username})
+        }else{
+            console.log("missing inputs")
+        }
+
 })
 
 app.listen(3000, ()=>{

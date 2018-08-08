@@ -8,6 +8,7 @@
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="layout.css">
     <style>
         p {
             color: gainsboro;
@@ -19,6 +20,7 @@
             display: block;
             width: 100%;
             padding: 20px;
+            text-align:center;
         }
 
         div {
@@ -37,6 +39,7 @@
             margin-top: 10px;
             color: white;
             font-size: 20px;
+            text-align: center;
         }
 
         .socialMedia {}
@@ -102,6 +105,23 @@
             font-size: 20px;
             margin: 30px auto;
         }
+        
+        #profile_pic{
+            height : 40px;
+            width : 40px;
+        }
+        
+        #search_icon{
+            height : 25px;
+            width : 25px;   
+        }
+        
+        form{
+            display: flex;
+            flex-direction: row;
+        }
+        
+        
     </style>
     <meta charset="UTF-8">
     <title>Document</title>
@@ -113,11 +133,11 @@
         <ul class="navbar-nav ml-auto align-items-center">
             <li class="nav-item mr-2">
                 <div class="d-flex align-items-center">
-                    <img src="profile_pic.jpg" class="mr-1 nav-profile-pic rounded-circle">
+                    <img src="profile_pic.jpg" id = "profile_pic" class="mr-1 nav-profile-pic rounded-circle">
                     <div class="media-body">
                         
                             <!-- Your Form -->
-                            <a href="viewUser">{{viewUsername}}</a>
+                            <a href="viewUser" style="color:white;">{{viewUsername}}</a>
                         
                     </div>
                 </div>
@@ -139,7 +159,7 @@
                         <input class="form-control search-bar-text" type="text" placeholder="Search for memes by tag" name ="searchText">
                         <button class="btn btn-sharp search-bar-button" type="submit">
                     
-            <img class="search-bar-button-image" src="search.png">
+            <img class="search-bar-button-image" id = "search_icon" src="search.png">
           </button>
                     </form>
                 </div>
@@ -154,10 +174,10 @@
             <div class="col-md-3">
                 <div class="profile_container">
                     <img src="profile_pic.jpg" class="picture rounded-circle"></img>
+                    <a class="name" href="viewUser" style="color:white;font-size:30px;font-weight:bold;text-align:center;">{{viewUsername}}</a>
                     <!-- add an if else for empty-->
-                    <div class="description">{{viewDescription}}</div>
-                   
-                        <a class="name" href="viewUser">{{viewUsername}}</a>
+                    <div class="description" style="color:white;text-align:center;">{{viewDescription}}</div>
+                     
                    
                     <div class="socialMedia"></div>
                 </div>
@@ -194,6 +214,8 @@
             /*   window.location.href = "index"*/
         })
     </script>
+
+    
 </body>
 
 </html>
