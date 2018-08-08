@@ -91,37 +91,35 @@
                     <h5 class="modal-title">Upload Meme</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                 </div>
+                <form action="addMeme" method="post">
                 <div class="modal-body">
-                    <form action="/action_page.php">
-                        <input type="file" name="pic" accept="image/*">
+<!--                    <form action="/action_page.php">-->
+                        <input type="file" name="pic" accept="image/*" name="picture">
                         <h5>Description</h5>
-                        <textarea rows="4" cols="50"></textarea>
+                        <textarea rows="4" cols="50" name="description"></textarea>
                         <h5>tags</h5>
-                        <div class="tags-input" data-name="tags-input" id='tags'>
+                        <div class="tags-input" data-name="tags-input" id='tags' name ="tags">
                             <!--<span class="tag">CSS<span class="close"></span></span>
                               <span class="tag">JavaScript<span class="close"></span></span>
                               <span class="tag">HTML<span class="close"></span></span><-->
                         </div>
                         <h5>Shared to</h5>
-                        <div class="tags-input" data-name="tags-input" id="sharedUser" Value="@user,">
+                        <div class="tags-input" data-name="tags-input" id="sharedUser" Value="@user," name ="shared">
                             <!--<span class="tag">CSS<span class="close"></span></span>
                               <span class="tag">JavaScript<span class="close"></span></span>
                               <span class="tag">HTML<span class="close"></span></span><-->
                         </div>
                         <h5>Visibility</h5>
-                        <form action="">
+                        <form action="" >
                             <input type="radio" name="visibility" value="public">Public
                             <input type="radio" name="visibility" value="private" class="radioBox" checked="checked">Private<br>
                         </form>
-
-
-
-                    </form>
+<!--                    </form>-->
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" id="uButton" data-toggle="modal" data-target="#descriptionModal">Submit</button>
+                    <button type="submit" class="btn btn-primary" id="uButton" data-toggle="modal" data-target="#descriptionModal">Submit</button>
                 </div>
-
+                </form>
             </div>
         </div>
     </div>
