@@ -7,9 +7,16 @@ const {Meme} = require(path.join(__dirname, "model", "Meme.js"))
 
 const app = express()
 
-mongoose.connect("mongodb://localhost:27017/memedata", {
+//for local db
+/*mongoose.connect("mongodb://localhost:27017/memedata", {
     useNewUrlParser : true
+})*/
+
+//for MLab-hosted db
+mongoose.connect("mongodb://memeadmin:memepassword1@ds215502.mlab.com:15502/memedata", {
+  useNewUrlParser : true
 })
+
 mongoose.Promise = global.Promise
 
 let username = "Toast22A"

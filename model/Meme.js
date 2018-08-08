@@ -30,7 +30,7 @@ var MemeSchema = mongoose.Schema({
     minlength : 1,
     trim : true
   }],
-  shared : [{
+  shared_with : [{
     user_id : {type : mongoose.Schema.Types.ObjectId, required : true, unique : true},
     username: {
         type: String, //type == required property
