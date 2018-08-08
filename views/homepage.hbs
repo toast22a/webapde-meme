@@ -88,18 +88,19 @@
     <div class="modal fade" id="uploadModal" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-               <form action="addMeme" method="post">
+
                 <div class="modal-header">
                     <h5 class="modal-title">Upload Meme</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                 </div>
+                <form action="addMeme" method="post">
                 <div class="modal-body">
-                    <form action="/action_page.php">
-                        <input type="file" name="pic" accept="image/*" name="picture">
+<!--                    <form action="/action_page.php">-->
+                        <input type="file" name="pic" accept="image/*" >
                         <h5>Description</h5>
                         <textarea rows="4" cols="50" name ="description"></textarea>
                         <h5>tags</h5>
-                        <div class="tags-input" data-name="tags-input" id='tags' name="tags">
+                        <div class="tags-input" data-name="tags-input" id='tags' name="memeTags">
                             <!--<span class="tag">CSS<span class="close"></span></span>
                               <span class="tag">JavaScript<span class="close"></span></span>
                               <span class="tag">HTML<span class="close"></span></span><-->
@@ -111,17 +112,16 @@
                               <span class="tag">HTML<span class="close"></span></span><-->
                         </div>
                         <h5>Visibility</h5>
-                        <form action="">
+
                             <input type="radio" name="visibility" value="public">Public
                             <input type="radio" name="visibility" value="private" class="radioBox" checked="checked">Private<br>
-                        </form>
 
 
 
-                    </form>
+<!--                </form>-->
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary" id="uButton" data-toggle="modal" data-target="#descriptionModal">Submit</button>
+                    <input type="submit" class="btn btn-primary" id="uButton" data-toggle="modal" data-target="#descriptionModal">Submit
                 </div>
                 </form>
             </div>
@@ -250,6 +250,7 @@
 
                 if ($('form input[type=radio]:checked').val() != '' && $('#upload').val() != '') {
                     alert('you have successfully uploaded a meme')
+
                 } else {
                     alert('something is missing')
                 }
