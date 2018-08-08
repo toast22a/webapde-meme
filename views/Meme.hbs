@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+        .navbar{
+            background-color: dimgrey;
+            vertical-align: middle;
+            text-align: center;    
+            justify-content: center;
+        }
+        
+        .btn{
+             background-color: dodgerblue;
+        }
+        .goToRight{
+            display: flex;
+            right: 0px;
+        }
+        li a {
+        color: white;
+        }
+        li{
+            text-decoration: none
+        }
+        .whole{
+            width: 212px;
+        }
+        .rightMost{
+            display: flex;
+            flex-flow: row wrap;
+  /* This aligns items to the end line on main-axis */
+            justify-content: flex-end;
+            padding-right:30px; 
+            padding-top: 7.5px;
+            text-align: center;
+        }
+        .next{
+            display: inline;
+        }
+        
+        .h5{
+            font-weight: bold;
+        }
+        .modal-footer{
+            display: flex;
+        }
+        .btn btn-primary mr-auto{
+         background-color: dodgerblue;   
+        }
+        .leftmost{
+            position: absolute;
+            right: 20px;
+        }
+        .leftmost:hover{
+         text-decoration: underline;
+        }
+    </style>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src="jquery-3.3.1.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+       <nav class="navbar navbar-dark bg-dark">
+          <div class="container-fluid">
+            <div class="navbar-header">
+              <a class="navbar-brand" href="#">WebSiteName</a>
+            </div>
+            <ul class="nav navbar-nav">
+              <li class="active"><a href="#">Home</a></li>
+              <li><a href="#">Page 1</a></li>
+              <li><a href="#">Page 2</a></li>
+              <li><a href="#">Page 3</a></li>
+            </ul>
+             <div class="rightmost">
+              <button type="button" class="btn btn-default" data-toggle="modal" data-target="#loginModal">Login</button></div>
+                <!-- Modal for Login-->
+                <div class ="modal fade" id="loginModal" tabindex="-1" role="dialog"  aria-hidden="true" >
+                    <div class="modal-dialog" role="documen">
+                       <div class="modal-content">
+                         <form action="login" method="post">
+                          <div class="modal-header">
+                              <h5 class="modal-title">Login</h5>
+                          </div>
+                          <div class="modal-body">  
+                            
+                                <div>
+                                <h5>Email</h5>
+                                     <input type="text" id="lUser" name="loginUser" >
+                                </div>
+                               <div>
+                                <h5>Password</h5>
+                                <input type="password" id="lPassword" name ="loginPassword">
+                              </div>       
+                           </div>
+                           <div class="modal-footer">
+                               <button type="button" class="btn btn-primary mr-auto" id ="lButton">Login</button>
+                               <div class="leftmost">
+                                   Forgot Password
+                               </div>
+                           </div>
+                           </form>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                <button type="button" class="btn btn-info" data-toggle="modal" data-target="#signUpModal">Sign up</button>
+                <div class ="modal fade" id="signUpModal" tabindex="-1" role="dialog"  aria-hidden="true" >
+                    <div class="modal-dialog" role="documen">
+                       <div class="modal-content">
+                         <form action="register" method="post">
+                          <div class="modal-header">
+                              <h5 class="modal-title">Sign Up</h5>
+                          </div>
+                          <div class="modal-body">  
+                                <div>
+                                <h5>Name</h5>
+                                     <input type="text" id="sUser" >
+                                </div>
+                                <div>
+                                <h5>Email</h5>
+                                     <input type="text" id="sUser" >
+                                </div>
+                               <div>
+                                <h5>Password</h5>
+                                <input type="password" id="sPassword">
+                              </div>       
+                           </div>
+                           <div class="modal-footer">
+                               <button type="button" class="btn btn-primary mr-auto" id ="SButton">Signup</button>
+                           </div>
+                           </form>
+                        </div>
+                    </div>
+              </div>
+              </div>
+           </div>
+    </nav>
+    <div class="whole">
+        <div class="upperMenu">
+            <ul>
+               <div name ="">
+                <li></li>
+                </div>
+            </ul>
+        </div>
+    </div>
+    
+    <div class="container">
+    <div class="jumbotron">
+            <h1>Bootstrap Tutorial</h1> 
+            <p>Bootstrap is the most popular HTML, CSS, and JS framework for developing
+            responsive, mobile-first projects on the web.</p> 
+          </div>
+          <p>This is some text.</p> 
+          <p>This is another text.</p> 
+    </div>
+</body>
+</html>
