@@ -211,9 +211,11 @@
         <a id="description">I look like that even with other people's food</a>
 
         <div>
-          <button type="button" class="btn" id="edit_btn" data-toggle="modal" data-target="#uploadModal">Edit Post</button>
 
-          <button type="button" class="btn" id="delete_btn">Delete Post</button>
+          <button type="submit" class="btn" id="edit_btn" data-toggle="modal" data-target="#uploadModal">Edit Post</button>
+          <form action="deleteMeme" method="post">
+          <button type="submit" class="btn" id="delete_btn">Delete Post</button>
+          </form>
         </div>
     </div>
     <div id="post_edit">
@@ -252,6 +254,7 @@
                         </form>
                     </div>
                     <div class="modal-footer">
+
                         <button type="submit" class="btn btn-primary" id="uButton" data-toggle="modal" data-target="#descriptionModal">Submit</button>
                         
                     </div>
@@ -261,12 +264,6 @@
 
         </div>
 
-        <div>
-           <!-- checkkkkk thisssssssssssssssssssssssssssssssssssss-->
-            <form action="deleteMeme" method="post">
-            <button id="delete_btn">Delete Post</button>
-            </form>
-        </div>
 
     </div>
 
