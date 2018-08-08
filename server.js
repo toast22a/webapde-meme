@@ -29,7 +29,7 @@ app.set("view-engine", "hbs")
 
 app.use(express.static(__dirname + "/public"))
 
-mongoose.connect("mongodb://localhost:27017/ticketdata", {
+mongoose.connect("mongodb://localhost:27017/memedata", {
     useNewUrlParser : true
 })
 mongoose.Promise = global.Promise
@@ -44,7 +44,7 @@ app.get("/",(req,res,next)=>{
        }else{
         res.render("index.hbs")
        }
-    
+
 })
 
 //app.post("/",(req,res,next)=>{
@@ -56,13 +56,13 @@ app.get("/",(req,res,next)=>{
 //       }else{
 //        res.render("index.hbs")
 //       }
-//    
+//
 //})
 
 
 app.get("/searchByTag_guest",urlencoder,(req,res)=>{
     console.log("GET /searchByTag_guest")
-    
+
     var searched = req.query.searchText
     console.log(searched)
     res.render("searchByTag_guest.hbs",{searchTag:searched })
@@ -74,14 +74,14 @@ app.get("/guestViewMeme", (req,res)=>{
 })
 
 app.post("/login", urlencoder, (req, res) => {
-    
+
     console.log("POST /login")
     var username = req.body.loginUser;
     var pass = req.body.loginPassword;
-    
-   
+
+
     console.log(pass)
-    
+
     if(username && pass)
         {
             console.log(username+"has logged in")
