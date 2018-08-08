@@ -1,0 +1,18 @@
+body {
+    background-color: black;
+}
+
+#navbar {
+    background-color: black;
+}
+
+#navbar-brand,
+#media-body {
+    text-decoration: none;
+    color: white;
+}
+
+form {
+    display: flex;
+    flex-direction: row;
+}
