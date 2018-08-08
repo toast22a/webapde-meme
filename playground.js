@@ -21,7 +21,7 @@ mongoose.connect("mongodb://localhost:27017/memedata", {
 mongoose.Promise = global.Promise
 
 /*let username = "Toast22A"
-let password = "mypassword"
+let password = "my"
 let description = "Big big bog bog big big bog bog"
 
 let u = new User({username, password, description})
@@ -43,7 +43,7 @@ u.save().then((doc)=>{
   console.log("An error occurred: " + err)
 })*/
 
-User.findById("5b6b74263fa1ed8c44ed370b").then((doc)=>{
+User.findById("5b6b80b0d2e1448cfe113694").then((doc)=>{
   bcrypt.compare("mypassword2", doc.password).then((res)=>{
     if (res) console.log("Password matched!")
     else console.log("Password did not match...")

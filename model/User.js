@@ -20,8 +20,8 @@ var UserSchema = mongoose.Schema({
     password : {
         type : String, //type == required property
         required : true,
-        /*minlength : 8,
-        trim : true //remove whitespace*/
+        minlength : 8,
+        trim : true //remove whitespace
     },
     description : {
       type : String,
