@@ -27,6 +27,8 @@ app.use(session({
 
 app.set("view-engine", "hbs")
 
+app.use(express.static(__dirname + "/public"))
+
 mongoose.connect("mongodb://localhost:27017/ticketdata", {
     useNewUrlParser : true
 })
@@ -148,7 +150,7 @@ app.get("/viewUser",urlencoder,(req,res)=>{
     if(desc){
          res.render("ViewUser.hbs",{viewUsername : username,viewDescription:desc })
     }else{
-         res.render("ViewUser.hbs",{viewUsername : username,viewDescription: I love memes as much as i love food.})
+         res.render("ViewUser.hbs",{viewUsername : username,viewDescription: "I love memes as much as i love food."})
     }
 
 })
