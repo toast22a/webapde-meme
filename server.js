@@ -175,7 +175,7 @@ app.post("/addMeme",urlencoder,(req,res)=>{
     console.log("POST  /addMeme")
     var pic = req.body.pic
     var desc = req.body.description
-    var tags = req.body.memeTags
+    var tags = req.body.memeTags.mainInput
     var sharedto = req.body.shared
     var visibility = req.body.visibility
     var username = req.session.username
