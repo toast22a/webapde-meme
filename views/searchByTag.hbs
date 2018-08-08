@@ -69,6 +69,16 @@
         .modal {
             color: black;
         }
+        
+        #profile_pic{
+            height : 40px;
+            width : 40px;
+        }
+        
+        #search_icon{
+            height : 25px;
+            width : 25px;   
+        }
     </style>
 
 </head>
@@ -125,7 +135,7 @@
         <ul class="navbar-nav ml-auto align-items-center">
             <li class="nav-item mr-2">
                 <div class="d-flex align-items-center">
-                    <img src="profile_pic.jpg" class="mr-1 nav-profile-pic rounded-circle">
+                    <img src="profile_pic.jpg" id = "profile_pic"class="mr-1 nav-profile-pic rounded-circle">
                     <div class="media-body">
 <!--
                         <form name="linkUser" action="viewUser" method="post">
@@ -134,7 +144,7 @@
                                 <a href="javascript:{}" onclick="document.getElementById('tagForm').submit(); return false;">{{tagUsername}}</a>
 -->
 <!--                            </form>-->
-                   <a href="viewUser">{{tagUsername}}<</a>
+                   <a href="viewUser">{{tagUsername}}</a>
                     </div>
                 </div>
             </li>
@@ -154,7 +164,7 @@
                    <form action="searchByTag" method="get">
                     <input class="form-control search-bar-text" type="text" placeholder="Search for memes by tag" name="searchText">
                     <button class="btn btn-sharp search-bar-button" type="submit">
-            <img class="search-bar-button-image" src="search.png">
+            <img class="search-bar-button-image" id = "search_icon" src="search.png">
                   </button>
                </form>
                 </div>

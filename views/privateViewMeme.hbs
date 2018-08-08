@@ -154,6 +154,16 @@
             color: white;
             text-decoration: none;
         }
+        
+        #profile_pic{
+            height : 40px;
+            width : 40px;
+        }
+        
+        #search_icon{
+            height : 25px;
+            width : 25px;   
+        }
 
     </style>
 
@@ -174,7 +184,7 @@
         <ul class="navbar-nav ml-auto align-items-center">
             <li class="nav-item mr-2">
                 <div class="d-flex align-items-center">
-                    <img src="profile_pic.jpg" class="mr-1 nav-profile-pic rounded-circle">
+                    <img src="profile_pic.jpg" id="profile_pic" class="mr-1 nav-profile-pic rounded-circle">
                     <div class="media-body"><a href="ViewUser">{{Username}}</a></div>
                 </div>
             </li>
