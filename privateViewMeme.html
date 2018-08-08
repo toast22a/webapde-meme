@@ -36,23 +36,52 @@
             padding: 15px;
         }
 
-        #content {
-            width: 800px;
-            height: 100%;
+        .content {
+            width: 600px;
             display: flex;
             flex-direction: column;
             align-items: center;
             margin: 0 auto;
-
-            padding: 10px;
-            box-sizing: border-box;
-
         }
 
-        #info {
+        .top {
+          width: 100%;
+          display: flex;
+          justify-content: space-between;
+        }
+
+        .meme-title {
             font-family: "Roboto", sans-serif;
             font-weight: bold;
+            font-size: 40px;
+            align-self: center;
             /* margin: 10px;*/
+        }
+
+        div.meme-visibility {
+          display: flex;
+          align-self: center;
+          align-items: flex-end;
+        }
+
+        div.meme-visibility > img {
+          height: 40px;
+          width: 40px;
+        }
+
+        div.meme-visibility-tooltip {
+          display: none;
+          margin: 0 5px;
+          font-size: 20px;
+          background-color: rgba(255,255,255,0.4);
+          padding: 5px;
+          color: black;
+          border-radius: 10px;
+          text-align: center;
+        }
+
+        div.meme-visibility:hover div.meme-visibility-tooltip {
+          display: block;
         }
 
         #meme {
@@ -85,19 +114,6 @@
         .private {
             color: black;
             display: inline;
-        }
-
-
-        #visibility {
-            background-color: darkorange;
-            color: white;
-            border-radius: 16px;
-            border: none;
-            text-decoration: none;
-            padding: 10px 7px;
-            font-size: 15px;
-            margin-top: 0px;
-            margin-bottom: 3px;
         }
 
 
@@ -139,16 +155,6 @@
             text-decoration: none;
         }
 
-        div#content > #top {
-          text-align: center;
-        }
-
-        div.visibility {
-          color: darkorange;
-          font-size: 30px;
-          margin-bottom: 10px;
-        }
-
     </style>
 
 
@@ -177,11 +183,18 @@
         </ul>
     </nav>
 
-    <div id="content">
+    <div class="content">
 
-        <div id="top">
-            <h1 id="info">Me @ Jollibee</h1>
-            <div class="visibility">Private</div>
+        <div class="top">
+            <div class="meme-title">
+              Me @ Jollibee
+            </div>
+            <div class="meme-visibility">
+              <div class="meme-visibility-tooltip">
+                Private
+              </div>
+              <img src="lock.png">
+            </div>
         </div>
 
         <img id="meme" src="meme2.png">
