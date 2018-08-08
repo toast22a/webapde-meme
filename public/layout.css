@@ -1,0 +1,27 @@
+body {
+    background-color: black;
+}
+
+#navbar {
+    background-color: black;
+}
+
+a,
+#media-body {
+    text-decoration: none;
+    color: white;
+}
+
+a:hover {
+    text-decoration: none;
+    color: white;
+}
+
+form {
+    display: flex;
+    flex-direction: row;
+}
+
+.upload-button {
+    margin-left: 12%;
+}
