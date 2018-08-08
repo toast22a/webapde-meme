@@ -8,6 +8,8 @@ const app = express();
 const urlencoder = bodyparser.urlencoded({
     extended: false
 })
+
+app.use(express.static(__dirname + "/public"))
 app.set('views', __dirname + '/views');
 app.use(session({
     secret: "SuperSecretQuatro",
@@ -129,8 +131,8 @@ app.get("/searchByTag",urlencoder,(req,res)=>{
     var searched = req.query.searchText
     console.log(searched)
     var username = req.session.username
-    
-    res.render("searchByTag.hbs",{tagUsername:username,searchTag:searched })
+    console.log(username);
+    res.render("searchByTag.hbs",{tagUsername:username ,searchTag:searched})
 })
 
 app.get("/privateViewMeme",(req,res)=>{
@@ -145,7 +147,12 @@ app.get("/viewUser",urlencoder,(req,res)=>{
     console.log("GET /viewUser")
     var username = req.session.username
     var desc = req.session.description
-    res.render("ViewUser.hbs",{viewUsername : username,viewDescription:desc },)
+    if(desc){
+         res.render("ViewUser.hbs",{viewUsername : username,viewDescription:desc })
+    }else{
+         res.render("ViewUser.hbs",{viewUsername : username,viewDescription: I love memes as much as i love food.})
+    }
+
 })
 
 app.post("/deleteMeme",urlencoder,(req,res)=>{
