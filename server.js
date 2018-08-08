@@ -172,13 +172,18 @@ app.post("/editMeme",urlencoder,(req,res)=>{
 })
 
 app.post("/addMeme",urlencoder,(req,res)=>{
-    console.log("POST   /addMeme")
-    var pic = req.body.picture
+    console.log("POST  /addMeme")
+    var pic = req.body.pic
     var desc = req.body.description
-    var tags = req.body.tags
-    var sharedto = req.body.saved
+    var tags = req.body.memeTags
+    var sharedto = req.body.shared
     var visibility = req.body.visibility
     var username = req.session.username
+    console.log(pic)
+    console.log(desc)
+    console.log(tags)
+    console.log(sharedto)
+    console.log(visibility)
 
     if(pic && tags && sharedto && visibility)
         {
