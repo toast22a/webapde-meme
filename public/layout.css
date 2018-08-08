@@ -25,3 +25,13 @@ form {
 .upload-button {
     margin-left: 12%;
 }
+
+#profile_pic {
+    height: 40px;
+    width: 40px;
+}
+
+#search_icon {
+    height: 25px;
+    width: 25px;
+}
