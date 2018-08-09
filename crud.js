@@ -100,5 +100,36 @@ function validateLogin(body) {
 }
 
 // ========== MEME ==========
+let sampleCreateMemeBody = {
+  name : "This is my meme",
+  description : "Haha laugh at my meme",
+  owner : {
+    user_id : "5b6b8646ec3bf1941dcfb7d7",
+    username : "jenny.mochi"
+  },
+  tags : ["funny", "haha"],
+  /*shared_with : [{
 
-validateLogin(sampleValidateLoginBody)
+  }]*/
+}
+
+function createMeme(body) {
+  let createDict = {}
+  //let name = body.name
+  createDict.name = body.name
+  //let description = body.description
+  createDict.description = body.description
+  //let owner = body.owner
+  createDict.owner = body.owner
+  //if (tags) let tags = body.tags
+  if (body.tags) createDict.tags = body.tags
+  if (body.shared_with) createDict.shared_with = body.shared_with
+  let m = new Meme(createDict)
+  m.save().then((doc)=>{
+    console.log("Meme '" + doc.name + "' created successfully")
+  }, (err)=>{
+    handleError(err)
+  })
+}
+
+createMeme(sampleCreateMemeBody)
