@@ -94,6 +94,9 @@
                 <form action="addMeme" method="post">
                 <div class="modal-body">
 <!--                    <form action="/action_page.php">-->
+                       <h5>Name</h5>
+                       <input type="text" name="tagName" >
+                       <br>
                         <input type="file" name="pic" accept="image/*" >
                         <h5>Description</h5>
                         <textarea rows="4" cols="50" name="description"></textarea>
@@ -253,7 +256,7 @@
 
             $("#uButton").click(() => {
 
-                if ($('form input[type=radio]:checked').val() != '' && $('#upload').val() != '') {
+               if($('form input[type=radio]:checked').val()!=''&& $('#upload').val()!='' &&  $("#tagName").val() !="" && $("#description").val()!=""){
                     alert('you have successfully uploaded a meme')
                 } else {
                     alert('something is missing')
