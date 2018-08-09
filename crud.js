@@ -1,6 +1,7 @@
 const express = require("express")
 const mongoose = require("mongoose")
 const path = require("path")
+const bcrypt = require("bcrypt")
 
 const {User} = require(path.join(__dirname, "model", "User.js"))
 const {Meme} = require(path.join(__dirname, "model", "Meme.js"))
@@ -32,6 +33,11 @@ let sampleReadUserBody = {
 let sampleUpdateUserBody = {
   _id : "5b6b8646ec3bf1941dcfb7d7",
   description : "mochi mochi"
+}
+
+let sampleValidateLoginBody = {
+  username : "limesapphire",
+  password : "jenny.mochi"
 }
 
 function createUser(body) {
@@ -101,4 +107,22 @@ function updateUser(body) {
   })
 }
 
-readUser(sampleReadUserBody)
+function validateLogin(body) {
+  let username = body.username
+  let password = body.password
+  User.findOne({username}, "password", (err, doc)=>{
+    if (err) handleError(err)
+    else if (doc) {
+      bcrypt.compare(password, doc.password, (err, res)=>{
+        if (err) handleError(err)
+        else if (res) console.log("Login successful")
+        else console.log("Login failed : wrong password")
+      })
+    }
+    else console.log("User " + username + " not found")
+  })
+}
+
+// ========== MEME ==========
+
+validateLogin(sampleValidateLoginBody)
