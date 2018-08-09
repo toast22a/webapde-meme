@@ -137,15 +137,18 @@ let sampleCreateMemeBody = {
   }]*/
 }
 
+let sampleUpdateMemeBody = {
+  _id : "5b6b99833db4de961eb610bd",
+  name : "This is my updated meme",
+  description : "haha heehee",
+  tags : []
+}
+
 function createMeme(body) {
   let createDict = {}
-  //let name = body.name
   createDict.name = body.name
-  //let description = body.description
   createDict.description = body.description
-  //let owner = body.owner
   createDict.owner = body.owner
-  //if (tags) let tags = body.tags
   if (body.tags) createDict.tags = body.tags
   if (body.shared_with) createDict.shared_with = body.shared_with
   let m = new Meme(createDict)
@@ -156,4 +159,15 @@ function createMeme(body) {
   })
 }
 
-createMeme(sampleCreateMemeBody)
+function updateMeme(body) {
+  let _id = body._id
+  let updateDict = {}
+  if (body.name) updateDict.name = body.name
+  if (body.description) updateDict.description = body.description
+  if (body.tags) updateDict.tags = body.tags
+  if (body.shared_with) updateDict.shared_with = body.shared_with
+  Meme.findByIdAndUpdate(_id, {$set : updateDict}, {new : true}, (err, doc)=>{
+    if (err) handleError(err)
+    else console.log("Meme '" + doc.name + "' updated successfully")
+  })
+}
