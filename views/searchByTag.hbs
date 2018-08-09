@@ -256,7 +256,7 @@
 
             $("#uButton").click(() => {
 
-                if ($('form input[type=radio]:checked').val() != '' && $('#upload').val() != '') {
+               if($('form input[type=radio]:checked').val()!=''&& $('#upload').val()!='' &&  $("#tagName").val() !="" && $("#description").val()!=""){
                     alert('you have successfully uploaded a meme')
                 } else {
                     alert('something is missing')
