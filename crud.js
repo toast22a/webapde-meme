@@ -18,10 +18,15 @@ function handleError(err){
 }
 
 // ========== USER ==========
-let sampleUserBody = {
+let sampleCreateUserBody = {
   username : "limesapphire",
   password : "jenny.mochi",
   description : "programmer who dreams to be a programmer who can program the world"
+}
+
+let sampleUpdateUserBody = {
+  _id : "5b6b8646ec3bf1941dcfb7d7",
+  description : "mochi mochi"
 }
 
 function createUser(body) {
@@ -38,4 +43,15 @@ function createUser(body) {
   })
 }
 
-createUser(sampleUserBody)
+function updateUser(body) {
+  let _id = body._id
+  let toUpdate = {}
+  if (body.password) toUpdate.password = body.password
+  if (body.description) toUpdate.description = body.description
+  User.findByIdAndUpdate(_id, {$set : toUpdate}, {new : true}, (err, doc)=>{
+    if (err) handleError(err)
+    else console.log("User " + doc.username + " updated successfully")
+  })
+}
+
+updateUser(sampleUpdateUserBody)
