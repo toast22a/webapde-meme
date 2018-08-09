@@ -214,4 +214,20 @@ function updateMeme(body) {
   })
 }
 
+/*function deleteMeme(body) {
+  let _id = body._id
+  Meme.findByIdAndDelete(_id).then((doc)=>{
+    console.log("Meme '" + doc.name + "' successfully deleted")
+    doc.tags.forEach(function(tagString){
+      let tagEntry = Tag.findOne({name : tagString}).then((doc)=>{
+
+      }, (err)=>{
+        handleError(err, "deleteMeme")
+      })
+    })
+  }, (err)=>{
+    handleError(err, "updateMeme")
+  })
+}*/
+
 createMeme(sampleCreateMemeBody)
