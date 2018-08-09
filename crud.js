@@ -56,8 +56,8 @@ function createUser(body) {
 
 //how to??
 function createTag(tag,meme){
-    let name = tag.nam
-    User.find({})
+//    let name = tag.name
+//    Tag.save
 }
 
 function findByTag(tag){
