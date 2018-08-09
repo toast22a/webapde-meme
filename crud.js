@@ -65,16 +65,29 @@ function createTag(tag,meme){
         name,m_id,m_name,m_owner,m_shared_with
     })
     t.save().then((doc)=>{
-        console.log("create " + name + " created successfully")
+        console.log("created tag " + name + " created successfully \n" + "memes inside" + m_name )
     },(err)=>{
         handleError(err)
     })
 }
 
-function AddMemeOnTag(tag,meme){
 
+function AddMemeOnTag(tag_id,meme){
+    let name = tag.name
+    let m_id= meme.meme_id
+    let m_name = meme.name
+    let m_owner = meme.owner
+    let m_shared_with = meme.shared_with
+    let m =new Meme({
+        m_id,m_name,m_owner,m_shared_with
+    })
+
+    t.findOneAndUpdate({name: tag.name}, {$push: {memes: m}});
 }
 
+function DeleteMemeOnTag(tag,meme){
+
+}
 
 
 function findByTag(tag){
@@ -83,7 +96,7 @@ function findByTag(tag){
     Tag.findById(_id, "_id tags description owned_memes", (err, doc)=>{
       if (err) handleError(err)
       else if (doc) console.log(JSON.stringify(doc))
-      else console.log("Tag" + _id + " not found")
+      else console.log("tag" + _id + " not found")
     })
   }else {
     let name = tag.name
@@ -171,6 +184,9 @@ function createMeme(body) {
   }, (err)=>{
     handleError(err)
   })
+
+    createTag(body.tags,m)
+
 }
 
 createMeme(sampleCreateMemeBody)
