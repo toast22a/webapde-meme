@@ -54,6 +54,30 @@ function createUser(body) {
   })
 }
 
+//how to??
+function createTag(tag,meme){
+    let name = tag.nam
+    User.find({})
+}
+
+function findByTag(tag){
+    if (tag._id) {
+    let _id = tag._id
+    Tag.findById(_id, "_id tags description owned_memes", (err, doc)=>{
+      if (err) handleError(err)
+      else if (doc) console.log(JSON.stringify(doc))
+      else console.log("Tag" + _id + " not found")
+    })
+  }else {
+    let name = tag.name
+    Tag.findOne({name}, "_id tag name description owned_memes", (err, doc)=>{
+      if (err) handleError(err)
+      else if (doc) console.log(JSON.stringify(doc))
+      else console.log("Tag name " +name + " not found")
+    }).collation({locale : "en_US", strength : 1})
+  }
+}
+
 function readUser(body) {
   if (body._id) {
     let _id = body._id
