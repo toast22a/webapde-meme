@@ -56,9 +56,26 @@ function createUser(body) {
 
 //how to??
 function createTag(tag,meme){
-//    let name = tag.name
-//    Tag.save
+    let name = tag.name
+    let m_id= meme.meme_id
+    let m_name = meme.name
+    let m_owner = meme.owner
+    let m_shared_with = meme.shared_with
+    let t =new Tag({
+        name,m_id,m_name,m_owner,m_shared_with
+    })
+    t.save().then((doc)=>{
+        console.log("create " + name + " created successfully")
+    },(err)=>{
+        handleError(err)
+    })
 }
+
+function AddMemeOnTag(tag,meme){
+
+}
+
+
 
 function findByTag(tag){
     if (tag._id) {
