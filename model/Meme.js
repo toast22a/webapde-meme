@@ -32,14 +32,12 @@ var MemeSchema = mongoose.Schema({
     trim : true
   }],
   shared_with : [{
-    user_id : {type : mongoose.Schema.Types.ObjectId, required : true, unique : true, sparse : true},
+    user_id : {type : mongoose.Schema.Types.ObjectId, required : true},
     username: {
         type: String, //type == required property
         required: true,
         minlength: 6,
         trim: true, //remove whitespace
-        unique: true,
-        sparse : true,
         collation: {
           locale: 'en_US',
           strength: 1

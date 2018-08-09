@@ -9,12 +9,12 @@ var TagSchema = mongoose.Schema({
     trim : true,
     validate : {
       validator : function(v) {
-        return /\s/.test(v)
+        return !(/\s/.test(v))
       },
       msg : "Tag cannot contain spaces"
     }
   },
-  memes : {
+  memes : [{
     meme_id : {
       type : mongoose.Schema.Types.ObjectId,
       required : true,
@@ -28,14 +28,12 @@ var TagSchema = mongoose.Schema({
       trim : true
     },
     owner : {
-      user_id : {type : mongoose.Schema.Types.ObjectId, required : true, unique : true, sparse : true},
+      user_id : {type : mongoose.Schema.Types.ObjectId, required : true},
       username: {
           type: String, //type == required property
           required: true,
           minlength: 6,
           trim: true, //remove whitespace
-          unique: true,
-          sparse : true,
           collation: {
             locale: 'en_US',
             strength: 1
@@ -43,21 +41,19 @@ var TagSchema = mongoose.Schema({
       }
     },
     shared_with : [{
-      user_id : {type : mongoose.Schema.Types.ObjectId, required : true, unique : true},
+      user_id : {type : mongoose.Schema.Types.ObjectId, required : true},
       username: {
           type: String, //type == required property
           required: true,
           minlength: 6,
           trim: true, //remove whitespace
-          unique: true,
-          sparse : true,
           collation: {
             locale: 'en_US',
             strength: 1
           }
       }
     }]
-  }
+  }]
 })
 
 var Tag = mongoose.model("tag", TagSchema)

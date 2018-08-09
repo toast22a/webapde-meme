@@ -14,8 +14,9 @@ mongoose.connect("mongodb://localhost:27017/memedata", {
 })
 mongoose.Promise = global.Promise
 
-function handleError(err){
-  console.log("An error occurred : " + err)
+function handleError(err, functionName){
+  if (functionName) console.log("["+functionName+"] An error occurred : " + err)
+  else console.log("An error occurred : " + err)
 }
 
 // ========== USER ==========
@@ -55,34 +56,40 @@ function createUser(body) {
 }
 
 //how to??
-function createTag(tag,meme){
-    let name = tag.name
-    let m_id= meme.meme_id
-    let m_name = meme.name
-    let m_owner = meme.owner
-    let m_shared_with = meme.shared_with
+function createTag(tagString,meme){
+    let name = tagString
     let t =new Tag({
-        name,m_id,m_name,m_owner,m_shared_with
+        name
     })
     t.save().then((doc)=>{
-        console.log("created tag " + name + " created successfully \n" + "memes inside" + m_name )
+        console.log("Tag '" + doc.name + "' created successfully")
+        AddMemeOnTag(doc._id, meme)
     },(err)=>{
-        handleError(err)
+        handleError(err, "createTag")
     })
 }
 
 
 function AddMemeOnTag(tag_id,meme){
-    let name = tag.name
-    let m_id= meme.meme_id
+    let _id = tag_id
+    /*let m_id= meme.meme_id
     let m_name = meme.name
     let m_owner = meme.owner
     let m_shared_with = meme.shared_with
     let m =new Meme({
         m_id,m_name,m_owner,m_shared_with
-    })
+    })*/
+    let pseudoMeme = {}
+    pseudoMeme.meme_id = meme._id
+    pseudoMeme.name = meme.name
+    pseudoMeme.owner = meme.owner
+    pseudoMeme.shared_with = meme.shared_with
 
-    t.findOneAndUpdate({name: tag.name}, {$push: {memes: m}});
+    Tag.findByIdAndUpdate(_id, {$push: {memes: pseudoMeme}}, {new : true}).then((doc)=>{
+      console.log("Meme '" + pseudoMeme.name + "' added successfully to tag '" + doc.name + "'")
+    },(err)=>{
+      handleError(err, "AddMemeOnTag")
+    });
 }
 
 function DeleteMemeOnTag(tag,meme){
@@ -95,15 +102,15 @@ function readTag(tag){
     let _id = tag._id
     Tag.findById(_id, "_id tags description owned_memes", (err, doc)=>{
       if (err) handleError(err)
-      else if (doc) console.log(JSON.stringify(doc))
-      else console.log("tag" + _id + " not found")
+      else if (doc) console.log("Found tag '" + doc.name + "'")
+      else console.log("Tag@" + _id + " not found")
     })
   }else {
     let name = tag.name
     Tag.findOne({name}, "_id tag name description owned_memes", (err, doc)=>{
       if (err) handleError(err)
-      else if (doc) console.log(JSON.stringify(doc))
-      else console.log("Tag name " +name + " not found")
+      else if (doc) console.log("Found tag '" + doc.name + "'")
+      else console.log("Tag '" + name + "' not found")
     }).collation({locale : "en_US", strength : 1})
   }
 }
@@ -184,8 +191,13 @@ function createMeme(body) {
   let m = new Meme(createDict)
   m.save().then((doc)=>{
     console.log("Meme '" + doc.name + "' created successfully")
+    doc.tags.forEach(function(tagString){
+      let tagEntry = readTag({name : tagString})
+      if (tagEntry) AddMemeOnTag(tagEntry._id, doc)
+      else createTag(tagString, doc)
+    })
   }, (err)=>{
-    handleError(err)
+    handleError(err, "createMeme")
   })
 }
 
@@ -201,3 +213,5 @@ function updateMeme(body) {
     else console.log("Meme '" + doc.name + "' updated successfully")
   })
 }
+
+createMeme(sampleCreateMemeBody)
