@@ -2,7 +2,7 @@
 const mongoose = require("mongoose")
 const bcrypt = require("bcrypt")
 
-const saltRounds = 2
+const saltRounds = 2 // not secure -- change later
 
 //schema == structure of the mongodb document
 var UserSchema = mongoose.Schema({
