@@ -90,7 +90,7 @@ function DeleteMemeOnTag(tag,meme){
 }
 
 
-function findByTag(tag){
+function readTag(tag){
     if (tag._id) {
     let _id = tag._id
     Tag.findById(_id, "_id tags description owned_memes", (err, doc)=>{
@@ -187,9 +187,6 @@ function createMeme(body) {
   }, (err)=>{
     handleError(err)
   })
-
-    createTag(body.tags,m)
-
 }
 
 function updateMeme(body) {
