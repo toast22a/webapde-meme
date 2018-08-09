@@ -248,7 +248,7 @@
                     <div class="modal-body">
                        <h5>Name</h5>
                         <input type="text"  name="tagName">
-                        <form action="/action_page.php">
+                           <br>
                             <input type="file" name="pic" accept="image/*" id="upload">
                             <h5>Description</h5>
                             <textarea rows="4" cols="50" name ="description"></textarea>
@@ -272,7 +272,7 @@
                             </div>
 
                         
-                        </form>
+
                     </div>
                     <div class="modal-footer">
 
@@ -308,10 +308,10 @@
 
             $("#uButton").click(() => {
 
-                if($('form input[type=radio]:checked').val()!=''&& $('#upload').val()!=''){
+                if($('form input[type=radio]:checked').val()!=''|| $('#upload').val()!='' ||  &("#tagName").val() !="" || $("#description").val()!=""){
                     alert('you have successfully updates a meme')
                 }else{
-                    alert('something is missing')
+                    alert('user entered nothing')
                 }
 
                 $('input.main-input').attr("placeholder", "@user,something");
