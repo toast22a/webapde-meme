@@ -35,7 +35,7 @@ var TagSchema = mongoose.Schema({
           minlength: 6,
           trim: true, //remove whitespace
           unique: true,
-          sparse : true
+          sparse : true,
           collation: {
             locale: 'en_US',
             strength: 1
