@@ -1,0 +1,26 @@
+Viewmemespublic
+details should be at the side
+tags too big
+
+Login
+don't need the line
+center the inputs or lenghten the inputs 
+remove the login modal if u sing up 
+
+Viewmemeprivate
+lock icon nice
+contents like tags should be shown already
+
+Upload meme
+-good white
+-emphasis more than logout
+
+Logout
+-hide it
+
+homepage
+-no need to separate, maybe add lock icon when you hover
+
+icons
+-make padlock smaller
+
