@@ -94,7 +94,6 @@ UserSchema.pre("save", function(next){
   bcrypt.hash(user.password, saltRounds, function(err, hash){
     if(!err){
       user.password = hash
-      console.log("hi")
       return next()
     }
   })
