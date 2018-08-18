@@ -55,66 +55,6 @@ function createUser(body) {
   })
 }
 
-//how to??
-function createTag(tagString,meme){
-    let name = tagString
-    let t =new Tag({
-        name
-    })
-    t.save().then((doc)=>{
-        console.log("Tag '" + doc.name + "' created successfully")
-        AddMemeOnTag(doc._id, meme)
-    },(err)=>{
-        handleError(err, "createTag")
-    })
-}
-
-
-function AddMemeOnTag(tag_id,meme){
-    let _id = tag_id
-    /*let m_id= meme.meme_id
-    let m_name = meme.name
-    let m_owner = meme.owner
-    let m_shared_with = meme.shared_with
-    let m =new Meme({
-        m_id,m_name,m_owner,m_shared_with
-    })*/
-    let pseudoMeme = {}
-    pseudoMeme.meme_id = meme._id
-    pseudoMeme.name = meme.name
-    pseudoMeme.owner = meme.owner
-    pseudoMeme.shared_with = meme.shared_with
-
-    Tag.findByIdAndUpdate(_id, {$push: {memes: pseudoMeme}}, {new : true}).then((doc)=>{
-      console.log("Meme '" + pseudoMeme.name + "' added successfully to tag '" + doc.name + "'")
-    },(err)=>{
-      handleError(err, "AddMemeOnTag")
-    });
-}
-
-function DeleteMemeOnTag(tag,meme){
-
-}
-
-
-function readTag(tag){
-    if (tag._id) {
-    let _id = tag._id
-    Tag.findById(_id, "_id tags description owned_memes", (err, doc)=>{
-      if (err) handleError(err)
-      else if (doc) console.log("Found tag '" + doc.name + "'")
-      else console.log("Tag@" + _id + " not found")
-    })
-  }else {
-    let name = tag.name
-    Tag.findOne({name}, "_id tag name description owned_memes", (err, doc)=>{
-      if (err) handleError(err)
-      else if (doc) console.log("Found tag '" + doc.name + "'")
-      else console.log("Tag '" + name + "' not found")
-    }).collation({locale : "en_US", strength : 1})
-  }
-}
-
 function readUser(body) {
   if (body._id) {
     let _id = body._id
@@ -160,6 +100,68 @@ function validateLogin(body) {
   })
 }
 
+// ========== TAG ==========
+
+function createTag(tagString,meme){
+    let name = tagString
+    let t =new Tag({
+        name
+    })
+    t.save().then((doc)=>{
+        console.log("Tag '" + doc.name + "' created successfully")
+        addMemeToTag(doc._id, meme)
+    },(err)=>{
+        handleError(err, "createTag")
+    })
+}
+
+
+function addMemeToTag(tag_id,meme){
+    let _id = tag_id
+    /*let m_id= meme.meme_id
+    let m_name = meme.name
+    let m_owner = meme.owner
+    let m_shared_with = meme.shared_with
+    let m =new Meme({
+        m_id,m_name,m_owner,m_shared_with
+    })*/
+    let pseudoMeme = {}
+    pseudoMeme.meme_id = meme._id
+    pseudoMeme.name = meme.name
+    pseudoMeme.owner = meme.owner
+    pseudoMeme.shared_with = meme.shared_with
+
+    Tag.findByIdAndUpdate(_id, {$push: {memes: pseudoMeme}}, {new : true}).then((doc)=>{
+      console.log("Meme '" + pseudoMeme.name + "' added successfully to tag '" + doc.name + "'")
+    },(err)=>{
+      handleError(err, "addMemeToTag")
+    });
+}
+
+function deleteMemeFromTag(tag,meme){
+
+}
+
+function readTag(tag){
+    if (tag._id) {
+    let _id = tag._id
+    Tag.findById(_id, "_id tags description owned_memes", (err, doc)=>{
+      if (err) handleError(err)
+      else if (doc) console.log("Found tag '" + doc.name + "'")
+      else console.log("Tag@" + _id + " not found")
+    })
+  }else {
+    let name = tag.name
+    Tag.findOne({name}, "_id tag name description owned_memes", (err, doc)=>{
+      if (err) handleError(err)
+      else if (doc) console.log("Found tag '" + doc.name + "'")
+      else console.log("Tag '" + name + "' not found")
+    }).collation({locale : "en_US", strength : 1})
+  }
+}
+
+
+
 // ========== MEME ==========
 let sampleCreateMemeBody = {
   name : "This is my meme",
@@ -193,7 +195,7 @@ function createMeme(body) {
     console.log("Meme '" + doc.name + "' created successfully")
     doc.tags.forEach(function(tagString){
       let tagEntry = readTag({name : tagString})
-      if (tagEntry) AddMemeOnTag(tagEntry._id, doc)
+      if (tagEntry) addMemeToTag(tagEntry._id, doc)
       else createTag(tagString, doc)
     })
   }, (err)=>{
@@ -220,7 +222,7 @@ function updateMeme(body) {
     console.log("Meme '" + doc.name + "' successfully deleted")
     doc.tags.forEach(function(tagString){
       let tagEntry = Tag.findOne({name : tagString}).then((doc)=>{
-
+        tagEntry.memes
       }, (err)=>{
         handleError(err, "deleteMeme")
       })
