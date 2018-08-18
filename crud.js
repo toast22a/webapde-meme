@@ -116,6 +116,7 @@ function createTag(tagString,meme){
 }
 
 
+
 function addMemeToTag(tag_id,meme){
     let _id = tag_id
     /*let m_id= meme.meme_id
@@ -139,7 +140,13 @@ function addMemeToTag(tag_id,meme){
 }
 
 function deleteMemeFromTag(tag,meme){
-
+    let t_id = tag_id
+    let m_id = meme_id
+    Tag.findById(t_id, "_id tags description owned_memes", (err, doc)=>{
+         if (err) handleError(err)
+      else if (doc)
+        doc.meme.pull({_id: m_id})
+    })
 }
 
 function readTag(tag){
