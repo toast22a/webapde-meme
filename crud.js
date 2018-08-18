@@ -27,12 +27,11 @@ let sampleCreateUserBody = {
 }
 
 let sampleReadUserBody = {
-  _id : "5b6b8646ec3bf1941dcfb7d7"
-  //username : "limeSapphire"
+  username : "limesapphire"
 }
 
 let sampleUpdateUserBody = {
-  _id : "5b6b8646ec3bf1941dcfb7d7",
+  username : "limesapphire",
   description : "mochi mochi"
 }
 
@@ -74,14 +73,23 @@ function readUser(body) {
 }
 
 function updateUser(body) {
-  let _id = body._id
   let toUpdate = {}
   if (body.password) toUpdate.password = body.password
   if (body.description) toUpdate.description = body.description
-  User.findByIdAndUpdate(_id, {$set : toUpdate}, {new : true}, (err, doc)=>{
-    if (err) handleError(err)
-    else console.log("User " + doc.username + " updated successfully")
-  })
+  if (body._id) {
+    let _id = body._id
+    User.findByIdAndUpdate(_id, {$set : toUpdate}, {new : true}, (err, doc)=>{
+      if (err) handleError(err)
+      else console.log("User " + doc.username + " updated successfully")
+    })
+  }
+  else {
+    let username = body.username
+    User.findOne({username}, {$set : toUpdate}, {new : true}, (err, doc)=>{
+      if (err) handleError(err)
+      else console.log("User " + doc.username + " updated successfully")
+    }).collation({locale : "en_US", strength : 1})
+  }
 }
 
 function validateLogin(body) {
@@ -97,7 +105,7 @@ function validateLogin(body) {
       })
     }
     else console.log("User " + username + " not found")
-  })
+  }).collation({locale : "en_US", strength : 1})
 }
 
 // ========== TAG ==========
@@ -183,6 +191,10 @@ let sampleUpdateMemeBody = {
   tags : []
 }
 
+let sampleDeleteMemeBody = {
+  _id : "5b6bab0519bbe997c64adfd2"
+}
+
 function createMeme(body) {
   let createDict = {}
   createDict.name = body.name
@@ -216,20 +228,39 @@ function updateMeme(body) {
   })
 }
 
-/*function deleteMeme(body) {
+function deleteMeme(body) {
   let _id = body._id
-  Meme.findByIdAndDelete(_id).then((doc)=>{
-    console.log("Meme '" + doc.name + "' successfully deleted")
+  /*Meme.findByIdAndDelete(_id).then((result)=>{
+    console.log(result.deletedCount + " memes successfully deleted")
     doc.tags.forEach(function(tagString){
-      let tagEntry = Tag.findOne({name : tagString}).then((doc)=>{
-        tagEntry.memes
+      Tag.findOne({name : tagString}).then((tagEntry)=>{
+        tagEntry.memes.pull({meme_id : doc._id})
       }, (err)=>{
         handleError(err, "deleteMeme")
       })
     })
   }, (err)=>{
     handleError(err, "updateMeme")
+  })*/
+  Meme.findById(_id).then((doc)=>{
+    doc.tags.forEach(function(tagString){
+      Tag.findOne({name : tagString}).then((tagDoc)=>{
+        deleteMemeFromTag(tagDoc._id, doc)
+      }, (err)=>{
+        handleError(err, "deleteMeme")
+      })
+    })
+    Meme.findByIdAndDelete(doc._id).then((result)=>{
+      console.log(result.deletedCount + " memes successfully deleted")
+    }, (err)=>{
+      handleerror(err, "deleteMeme")
+    })
+  }, (err)=>{
+    handleError(err, "deleteMeme")
   })
-}*/
+}
 
-createMeme(sampleCreateMemeBody)
+
+createUser(sampleCreateUserBody)
+//createMeme(sampleCreateMemeBody)
+//deleteMeme(sampleDeleteMemeBody)
