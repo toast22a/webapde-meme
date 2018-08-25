@@ -24,7 +24,7 @@ var UserSchema = mongoose.Schema({
       trim : true
     },
     owned_memes : [{
-      meme_id : {
+      _id : {
         type : mongoose.Schema.Types.ObjectId,
         required : true,
         unique : true,
@@ -53,7 +53,7 @@ var UserSchema = mongoose.Schema({
       }]
     }],
     shared_memes : [{
-      meme_id : {
+      _id : {
         type : mongoose.Schema.Types.ObjectId,
         required : true,
         unique : true,

@@ -28,7 +28,7 @@ var TagSchema = mongoose.Schema({
       trim : true
     },
     owner : {
-      user_id : {type : mongoose.Schema.Types.ObjectId, required : true},
+      _id : {type : mongoose.Schema.Types.ObjectId, required : true},
       username: {
           type: String, //type == required property
           required: true,
@@ -41,7 +41,7 @@ var TagSchema = mongoose.Schema({
       }
     },
     shared_with : [{
-      user_id : {type : mongoose.Schema.Types.ObjectId, required : true},
+      _id : {type : mongoose.Schema.Types.ObjectId, required : true},
       username: {
           type: String, //type == required property
           required: true,

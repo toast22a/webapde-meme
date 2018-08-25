@@ -149,7 +149,7 @@ function createTag(tagString,meme){
 function addMemeToTag(tag_id,meme){
     let _id = tag_id
     let pseudoMeme = {}
-    pseudoMeme.meme_id = meme._id
+    pseudoMeme._id = meme._id
     pseudoMeme.name = meme.name
     pseudoMeme.owner = meme.owner
     pseudoMeme.shared_with = meme.shared_with
@@ -161,9 +161,9 @@ function addMemeToTag(tag_id,meme){
     });
 }
 
-function deleteMemeFromTag(tag_id, meme){
-    let m_id = meme.meme_id
-    Tag.findById(tag_id, "_id tags description owned_memes", (err, doc)=>{
+function deleteMemeFromTag(t_id, meme){
+    let m_id = meme._id
+    Tag.findById(t_id, "_id tags description owned_memes", (err, doc)=>{
       if (err) printError(err)
       else if (doc) {
         doc.memes.pull({_id: m_id})
@@ -203,7 +203,7 @@ let sampleCreateMemeBody = {
   name : "This is my meme",
   description : "Haha laugh at my meme",
   owner : {
-    user_id : "5b6b8646ec3bf1941dcfb7d7",
+    _id : "5b6b8646ec3bf1941dcfb7d7",
     username : "jenny.mochi"
   },
   tags : ["funny", "haha"],
@@ -250,14 +250,19 @@ function updateMeme(body) {
   if (body.description) updateDict.description = body.description
   if (body.tags) updateDict.tags = body.tags
   if (body.shared_with) updateDict.shared_with = body.shared_with
-  Meme.findByIdAndUpdate(_id, {$set : updateDict}, {new : true}).then((doc)=>{
-    doc.tags.forEach(function(tagString){
-
+  Meme.findById(_id).then((meme)=>{
+    Meme.findByIdAndUpdate(_id, {$set : updateDict}, {new : true}).then((newMeme)=>{
+      newMeme.tags.forEach(function(tagString){
+        deleteMemeFromTag(meme._id)
+      })
+      console.log("Meme '" + newMeme.name + "' updated successfully")
+    }, (err)=>{
+      printError(err, "updateMeme")
     })
-    console.log("Meme '" + doc.name + "' updated successfully")
   }, (err)=>{
-    printError(err)
+    printError(err, "updateMeme")
   })
+
 }
 
 function deleteMeme(body) {
