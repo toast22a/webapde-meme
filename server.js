@@ -6,6 +6,9 @@ const session = require("express-session")
 const path = require("path")
 const app = express();
 
+//const dburl = "mongodb://localhost:27017/memedata"
+const dburl = "mongodb://memeadmin:memepassword1@ds215502.mlab.com:15502/memedata"
+
 const urlencoder = bodyparser.urlencoded({
     extended: false
 })
@@ -27,10 +30,7 @@ hbs.registerPartials(path.join(__dirname, "views", "partials"))
 
 app.use(express.static(path.join(__dirname, "public")))
 
-/*mongoose.connect("mongodb://localhost:27017/memedata", {
-    useNewUrlParser : true
-})*/
-mongoose.connect("mongodb://memeadmin:memepassword1@ds215502.mlab.com:15502/memedata", {
+mongoose.connect(dburl, {
     useNewUrlParser : true
 })
 mongoose.Promise = global.Promise
