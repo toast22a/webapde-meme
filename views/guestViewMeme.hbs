@@ -41,7 +41,7 @@
         }
 
         #content {
-            width: 800px;
+            width: 75%px;
             height: 100%;
             display: flex;
             flex-direction: column;
@@ -64,6 +64,7 @@
             font-family: "Roboto", sans-serif;
             font-weight: bold;
             color: white;
+            align-self: flex-start;
             /* margin: 10px;*/
         }
 
@@ -73,11 +74,11 @@
             font-size: 1px;
             color: darkgray;
             margin: 5px;
+            align-self: flex-start;
         }
 
         #meme {
-            height: 500px;
-            width: 600px;
+            max-width: 600px;
             padding-bottom: 10px;
         }
 
@@ -88,7 +89,7 @@
             margin-bottom: 10px;
         }
 
-        #btn {
+        #tag {
             background-color: cadetblue;
             color: white;
             border-radius: 8px;
@@ -103,24 +104,14 @@
 
         }
 
-
-        #visibility {
-            background-color: forestgreen;
-            color: white;
-            border-radius: 16px;
-            border: none;
-            text-decoration: none;
-            padding: 7px 7px;
-            font-size: 15px;
-            margin-top: 0px;
-            margin-bottom: 3px;
-        }
-
-
         #tag_btn {
             padding-bottom: 90px;
             padding-top: 10px;
-
+            width: 100%;
+            align-self: flex-start;
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
         }
 
         .modal {
@@ -131,16 +122,78 @@
             font-family: "Roboto", sans-serif;
             font-weight: bold;
             font-size: 40px;
-            align-self: left;
-            text-align: left;
+            align-self: flex-start;
             /* margin: 10px;*/
         }
 
 
         .top {
-            width: 100%;
+            width: 75%;
             display: flex;
             justify-content: space-between;
+            align-self: flex-start;
+        }
+        
+        
+        div.meme-visibility {
+          display: flex;
+          align-self: center;
+          align-items: flex-end;
+        }
+
+        div.meme-visibility > img {
+          height: 40px;
+          width: 40px;
+        }
+
+        div.meme-visibility-tooltip {
+          display: none;
+          margin: 0 5px;
+          font-size: 15px;
+          /*background-color: rgba(255,255,255,0.4);*/
+            background-color: lightgray;
+          padding: 5px;
+          color: black;
+          border-radius: 10px;
+          text-align: center;
+        }
+
+        div.meme-visibility:hover div.meme-visibility-tooltip {
+          display: block;
+        }
+        
+        #post_edit {
+            margin-top: 40px;
+            margin-bottom: 40px;
+
+        }
+
+        #edit_btn {
+            border: none;
+            margin: 5px;
+            padding: 8px 20px;
+            font-size: 15px;
+            background-color: #50c686;
+            font-weight: bold;
+            font-family: Roboto, sans-serif;
+            border-radius: 8px;
+            color: white;
+            cursor: pointer;
+            margin-right: 3%;
+        }
+
+        #delete_btn {
+            border: none;
+            margin: 5px;
+            padding: 8px 20px;
+            font-size: 15px;
+            background-color: #ed8964;
+            font-weight: bold;
+            font-family: Roboto, sans-serif;
+            border-radius: 8px;
+            color: white;
+            cursor: pointer;
+            margin-left: 3%;
         }
 
     </style>
@@ -156,30 +209,40 @@
 
     <div id="content">
         <div class="content">
-            <div id="top">
-                <div id="info" class="meme-title">We love you miss</div>
+            <div style="align-self: flex-start"id="top">
+                <div id="info" class="meme-title"><!--{{meme-title}}-->we love u miss</div>
+                
+                {{#if visibility}}
+                    <div class="meme-visibility">
+                      <div class="meme-visibility-tooltip">
+                        Private
+                      </div>
+                      <img src="lock.png">
+                    </div>
+                {{/if}}
             </div>
 
-            <img id="meme" src="meme1.jpg">
+            <img id="meme" src={{meme_image}}>
 
-            <a style="cursor: pointer; color: dimgray" id="info">By limesapphire</a>
+            <a style="cursor: pointer; color: dimgray" href={{owner_page}} id="info">By me{{owner_name}}</a>
 
-            <a id="description" style="color:#b9b4b4;">Haha I haven't been sleeping for 3 days. Please give us mercy po :) </a>
+            <a id="description" style="color:#b9b4b4;">{{description}} </a>
 
-            <!--
-            <div id = "share">
-                <img id = "fb" src="fb.png">
-            </div>
-            -->
+  
 
             <div id="tag_btn">
+                <!--
                 <input id="btn" type="button" value="#BestProfEver">
                 <input id="btn" type="button" value="#HaveMercyPls">
-
+                -->
+                
+                {{#each tags}}
+                    <input id="tag" type="button" style="align-self: flex-start" value = "#{{tag_name}}">
+                {{/each}}
             </div>
+            
         </div>
-
-
+        
     </div>
 
 
