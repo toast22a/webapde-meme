@@ -12,6 +12,7 @@ const app = express()
 mongoose.connect("mongodb://localhost:27017/memedata", {
     useNewUrlParser : true
 })
+
 mongoose.Promise = global.Promise
 
 function printError(err, functionName){
@@ -145,7 +146,6 @@ function createTag(tagString,meme){
 }
 
 
-
 function addMemeToTag(tag_id,meme){
     let _id = tag_id
     let pseudoMeme = {}
@@ -161,6 +161,7 @@ function addMemeToTag(tag_id,meme){
     });
 }
 
+]
 function deleteMemeFromTag(tag_id, meme){
     let m_id = meme.meme_id
     Tag.findById(tag_id, "_id tags description owned_memes", (err, doc)=>{
@@ -177,6 +178,7 @@ function deleteMemeFromTag(tag_id, meme){
       }
     })
 }
+
 
 function readTag(tag){
     if (tag._id) {

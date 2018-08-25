@@ -33,6 +33,7 @@ mongoose.connect("mongodb://memeadmin:memepassword1@ds215502.mlab.com:15502/meme
 })
 mongoose.Promise = global.Promise
 
+//homepage
 app.get("/",(req,res,next)=>{
     console.log("GET /")
     var username = req.session.username
@@ -57,7 +58,7 @@ app.get("/",(req,res,next)=>{
 //
 //})
 
-
+//meme
 app.get("/searchByTag_guest",urlencoder,(req,res)=>{
     console.log("GET /searchByTag_guest")
 
@@ -71,6 +72,7 @@ app.get("/guestViewMeme", (req,res)=>{
     res.render("guestViewMeme.hbs")
 })
 
+//user
 app.post("/login", urlencoder, (req, res) => {
 
     console.log("POST /login")
@@ -92,6 +94,7 @@ app.post("/login", urlencoder, (req, res) => {
         }
 })
 
+//user
 app.post("/register",urlencoder,(req,res)=>{
     console.log("POST /register")
      var username = req.body.signUser;
@@ -110,6 +113,7 @@ app.post("/register",urlencoder,(req,res)=>{
     }
 })
 
+//user
 app.get("/logout", (req, res) => {
     console.log("GET /logout")
     console.log("User " + req.session.username + " logged out")
@@ -124,6 +128,7 @@ app.get("/logout", (req, res) => {
     res.render("index.hbs")
 })
 
+//meme
 app.get("/searchByTag",urlencoder,(req,res)=>{
     console.log("GET /searchByTag")
     var searched = req.query.searchText
@@ -133,6 +138,7 @@ app.get("/searchByTag",urlencoder,(req,res)=>{
     res.render("searchByTag.hbs",{tagUsername:username ,searchTag:searched})
 })
 
+//meme
 app.get("/privateViewMeme",(req,res)=>{
     console.log("GET /privateViewMeme")
      var username = req.session.username
@@ -140,7 +146,7 @@ app.get("/privateViewMeme",(req,res)=>{
 })
 
 
-
+//meme
 app.get("/viewUser",urlencoder,(req,res)=>{
     console.log("GET /viewUser")
     var username = req.session.username
@@ -153,6 +159,7 @@ app.get("/viewUser",urlencoder,(req,res)=>{
 
 })
 
+//meme
 app.post("/deleteMeme",urlencoder,(req,res)=>{
     console.log("GET /deleteMeme")
     console.log("meme has been deleted")
@@ -161,14 +168,14 @@ app.post("/deleteMeme",urlencoder,(req,res)=>{
      res.render("homepage.hbs",{hUsername:username})
 })
 
-
+//meme
 app.post("/editMeme",urlencoder,(req,res)=>{
     console.log("POST /editMeme")
     console.log("meme has been edited")
     var username = req.session.username
     res.render("privateViewMeme.hbs",{Username : username})
 })
-
+//meme
 app.post("/addMeme",urlencoder,(req,res)=>{
     console.log("POST  /addMeme")
     var pic = req.body.pic
