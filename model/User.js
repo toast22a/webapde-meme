@@ -11,11 +11,8 @@ var UserSchema = mongoose.Schema({
         required : true,
         minlength : 6,
         trim : true, //remove whitespace
-        unique : true,
-        collation : {
-          locale : 'en_US',
-          strength : 1
-        }
+        unique: true,
+        collation: {locale: "en_US", strength: 1}
     },
     password : {
         type : String, //type == required property
@@ -94,7 +91,6 @@ UserSchema.pre("save", function(next){
   bcrypt.hash(user.password, saltRounds, function(err, hash){
     if(!err){
       user.password = hash
-      console.log("hi")
       return next()
     }
   })
