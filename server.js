@@ -23,7 +23,7 @@ app.use(session({
 }))
 
 app.set("view-engine", "hbs")
-hbs.registerPartials(path.join)
+hbs.registerPartials(path.join(__dirname, "views", "partials"))
 
 app.use(express.static(path.join(__dirname, "public")))
 
