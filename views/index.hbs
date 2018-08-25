@@ -112,100 +112,9 @@
 
 <body>
 
-  <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-hidden="true">
-      <div class="modal-dialog" role="documen">
-          <div class="modal-content">
-             <form action="login" method="post">
-              <div class="modal-header modal-part-borderless">
-                  <h5 class="modal-title">Login</h5>
-                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-              </div>
-              <div class="modal-body login-body">
+  {{> topbar this}}
 
-                  <div>
-                      <h5>Username</h5>
-                      <input type="text" id="lUser" class="login-input" name="loginUser" >
-                  </div>
-                  <div>
-                      <h5>Password</h5>
-                      <input type="password" id="lPassword" class="login-input" name="loginPassword">
-                  </div>
-
-              </div>
-              <div class="modal-footer login-footer modal-part-borderless">
-                  <div class="text-link" data-toggle="modal" data-target="#signUpModal">
-                      Don't have an account?
-                  </div>
-                  <button type="submit" class="btn btn-primary" id="lButton">Login</button>
-              </div>
-              </form>
-          </div>
-      </div>
-  </div>
-  <div>
-
-      <div class="modal fade" id="signUpModal" tabindex="-1" role="dialog" aria-hidden="true">
-          <div class="modal-dialog" role="documen">
-              <div class="modal-content">
-                 <form action="register" method="post">
-                  <div class="modal-header">
-                      <h5 class="modal-title">Sign Up</h5>
-                      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                  </div>
-
-                  <div class="modal-body">
-
-                      <div>
-                              <h5>Name</h5>
-                              <input type="text" id="sUser" name="signUser">
-                          </div>
-                          <div>
-                              <h5>Password</h5>
-                              <input type="password" id="sPassword" name="signPassword">
-                          </div>
-                          <div>
-                              <h5>Description</h5>
-                              <textarea rows="4" cols="50" id='description' name ="signDescription"></textarea>
-                          </div>
-
-                  <div class="modal-footer">
-                      <button type="submit" class="btn btn-primary mr-auto" id="sButton">Sign Up</button>
-                      </div>
-                  </div>
-              </form>
-          </div>
-      </div>
-  </div>
-    </div>
-
-  <nav class="navbar navbar-expand-sm">
-<!--    <span class="navbar-brand"><form action="/" method ="get"><a style="text-decoration : none; color : white;" >168GAG</a></form></span>-->
-    <span class="navbar-brand"><a href="/" >168GAG</a></span>
-    <ul class="navbar-nav ml-auto align-items-center">
-      <li class="nav-item">
-        <button class="btn btn-sharp login-button" type="button"  data-toggle="modal" data-target="#loginModal" data-dismiss="modal">Login</button>
-      </li>
-    </ul>
-  </nav>
-
-  <div class="container-fluid">
-    <div class="row">
-      <div class="col-sm-1"></div>
-      <div class="col-sm-10">
-        <div class="form-group search-bar">
-         <form action="searchByTag_guest" method="get" class="search">
-          <input class="form-control search-bar-text" type="text" placeholder="Search for memes by tag" name ="searchText">
-          <button class="btn btn-sharp search-bar-button" type="submit">
-            <img class="search-bar-button-image" id="search_icon" src="search.png">
-          </button>
-          </form>
-      </div>
-    </div>
-    <div class="col-sm-1"></div>
-  </div>
-  </div>
-
-
+  {{> search this}}
 
   <div class="container-fluid public-div">
 
@@ -217,10 +126,6 @@
   </div>
 
   <script>
-
-/*  $(".search-bar-button").click(function() {
-            location.href = "searchByTag_guest"
-        })*/
 
   var memeNames = ["We love you miss", "Me @ Jollibee", "wow haha", "loool"]
   function loadMemes(){

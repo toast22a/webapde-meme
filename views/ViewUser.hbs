@@ -105,68 +105,32 @@
             font-size: 20px;
             margin: 30px auto;
         }
-        
+
         #profile_pic{
             height : 40px;
             width : 40px;
         }
-        
+
         #search_icon{
             height : 25px;
-            width : 25px;   
+            width : 25px;
         }
-        
+
         form{
             display: flex;
             flex-direction: row;
         }
-        
-        
+
+
     </style>
     <meta charset="UTF-8">
     <title>Document</title>
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-sm">
-        <span class="navbar-brand"><a style="text-decoration : none; color : white;" href="/">168GAG</a></span>
-        <ul class="navbar-nav ml-auto align-items-center">
-            <li class="nav-item mr-2">
-                <div class="d-flex align-items-center">
-                    <img src="profile_pic.jpg" id = "profile_pic" class="mr-1 nav-profile-pic rounded-circle">
-                    <div class="media-body">
-                        
-                            <!-- Your Form -->
-                            <a href="viewUser" style="color:white;">{{viewUsername}}</a>
-                        
-                    </div>
-                </div>
-            </li>
-            <li class="nav-item">
-                <form action="logout" method="get">
-                    <button class="btn btn-sharp logout-button" type="submit">Logout</button>
-                </form>
-            </li>
-        </ul>
-    </nav>
+  {{> topbar this}}
 
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-sm-1"></div>
-            <div class="col-sm-10">
-                <div class="form-group search-bar">
-                    <form action="searchByTag" method="get" class="search">
-                        <input class="form-control search-bar-text" type="text" placeholder="Search for memes by tag" name ="searchText">
-                        <button class="btn btn-sharp search-bar-button" type="submit">
-                    
-            <img class="search-bar-button-image" id = "search_icon" src="search.png">
-          </button>
-                    </form>
-                </div>
-            </div>
-            <div class="col-sm-1"></div>
-        </div>
-    </div>
+  {{> search this}}
 
     <div class="container-fluid">
         <div class="row">
@@ -177,8 +141,8 @@
                     <a class="name" href="viewUser" style="color:white;font-size:30px;font-weight:bold;text-align:center;">{{viewUsername}}</a>
                     <!-- add an if else for empty-->
                     <div class="description" style="color:white;text-align:center;">{{viewDescription}}</div>
-                     
-                   
+
+
                     <div class="socialMedia"></div>
                 </div>
             </div>
@@ -215,7 +179,7 @@
         })
     </script>
 
-    
+
 </body>
 
 </html>
