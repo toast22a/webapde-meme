@@ -27,7 +27,7 @@ let sampleCreateUserBody = {
 }
 
 let sampleReadUserBody = {
-  username : "limesapphire"
+  username : "limeSapphire"
 }
 
 let sampleUpdateUserBody = {
@@ -40,6 +40,7 @@ let sampleValidateLoginBody = {
   password : "jenny.mochi"
 }
 
+// OK
 function createUser(body) {
   return new Promise(
     function (resolve, reject) {
@@ -53,7 +54,7 @@ function createUser(body) {
         console.log("User " + username + " created successfully")
         resolve(doc)
       },(err)=>{
-        printError(err)
+        printError(err, "createUser")
         reject(err)
       })
     }
@@ -61,21 +62,29 @@ function createUser(body) {
 }
 
 function readUser(body) {
-  if (body._id) {
-    let _id = body._id
-    User.findById(_id, "_id username description owned_memes", (err, doc)=>{
-      if (err) printError(err)
-      else if (doc) console.log(JSON.stringify(doc))
-      else console.log("User@" + _id + " not found")
-    })
-  } else {
-    let username = body.username
-    User.findOne({username}, "_id username description owned_memes", (err, doc)=>{
-      if (err) printError(err)
-      else if (doc) console.log(JSON.stringify(doc))
-      else console.log("User " + username + " not found")
-    }).collation({locale : "en_US", strength : 1})
-  }
+  return new Promise(
+    function(resolve, reject){
+      if (body._id) {
+        let _id = body._id
+        User.findById(_id, "_id username description owned_memes").then((doc)=>{
+          if (doc) resolve(doc)
+          else reject("User@" + _id + " not found")
+        }, (err)=>{
+          printError(err, "readUser")
+          reject(err)
+        })
+      } else {
+        let username = body.username
+        User.findOne({username}, "_id username description owned_memes").collation({locale : "en_US", strength : 1}).then((doc)=>{
+          if (doc) resolve(doc)
+          else reject("User " + username + " not found")
+        }, (err)=>{
+          printError(err, "readUser")
+          reject(err)
+        })
+      }
+    }
+  )
 }
 
 function updateUser(body) {
@@ -84,17 +93,23 @@ function updateUser(body) {
   if (body.description) toUpdate.description = body.description
   if (body._id) {
     let _id = body._id
-    User.findByIdAndUpdate(_id, {$set : toUpdate}, {new : true}, (err, doc)=>{
-      if (err) printError(err)
-      else console.log("User " + doc.username + " updated successfully")
+    User.findByIdAndUpdate(_id, {$set : toUpdate}, {new : true}).then((doc)=>{
+      console.log("User " + doc.username + " updated successfully")
+      resolve(doc)
+    }, (err)=>{
+      printError(err, "updateUser")
+      reject(err)
     })
   }
   else {
     let username = body.username
-    User.findOne({username}, {$set : toUpdate}, {new : true}, (err, doc)=>{
-      if (err) printError(err)
-      else console.log("User " + doc.username + " updated successfully")
-    }).collation({locale : "en_US", strength : 1})
+    User.findOne({username}, {$set : toUpdate}, {new : true}).collation({locale : "en_US", strength : 1}).then((doc)=>{
+      console.log("User " + doc.username + " updated successfully")
+      resolve(doc)
+    }, (err)=>{
+      printError(err, "updateUser")
+      reject(err)
+    })
   }
 }
 
@@ -236,6 +251,9 @@ function updateMeme(body) {
   if (body.tags) updateDict.tags = body.tags
   if (body.shared_with) updateDict.shared_with = body.shared_with
   Meme.findByIdAndUpdate(_id, {$set : updateDict}, {new : true}).then((doc)=>{
+    doc.tags.forEach(function(tagString){
+
+    })
     console.log("Meme '" + doc.name + "' updated successfully")
   }, (err)=>{
     printError(err)
@@ -244,18 +262,6 @@ function updateMeme(body) {
 
 function deleteMeme(body) {
   let _id = body._id
-  /*Meme.findByIdAndDelete(_id).then((result)=>{
-    console.log(result.deletedCount + " memes successfully deleted")
-    doc.tags.forEach(function(tagString){
-      Tag.findOne({name : tagString}).then((tagEntry)=>{
-        tagEntry.memes.pull({meme_id : doc._id})
-      }, (err)=>{
-        printError(err, "deleteMeme")
-      })
-    })
-  }, (err)=>{
-    printError(err, "updateMeme")
-  })*/
   Meme.findById(_id).then((doc)=>{
     doc.tags.forEach(function(tagString){
       Tag.findOne({name : tagString}).then((tagDoc)=>{
@@ -275,6 +281,16 @@ function deleteMeme(body) {
 }
 
 
-createUser(sampleCreateUserBody)
+//createUser(sampleCreateUserBody)
 //createMeme(sampleCreateMemeBody)
 //deleteMeme(sampleDeleteMemeBody)
+
+createUser(sampleCreateUserBody).then((doc)=>{
+  readUser(sampleReadUserBody).then((doc)=>{
+    console.log(doc.username)
+  }, (err)=>{
+    console.log(err)
+  })
+}, (err)=>{
+  console.log(err)
+})

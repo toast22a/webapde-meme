@@ -16,10 +16,6 @@ app.use(session({
     name: "MissCourtneyIsTheBest",
     resave: true,
     saveUninitialized: true,
-    // store: new mongostore({
-    //   mongooseConnection:mongoose.connection,
-    //   ttl : 60*60*24
-    // })
     cookie: {
       maxAge: 1000*60*60*24*7*3
     }
@@ -29,11 +25,13 @@ app.set("view-engine", "hbs")
 
 app.use(express.static(__dirname + "/public"))
 
-mongoose.connect("mongodb://localhost:27017/memedata", {
+/*mongoose.connect("mongodb://localhost:27017/memedata", {
+    useNewUrlParser : true
+})*/
+mongoose.connect("mongodb://memeadmin:memepassword1@ds215502.mlab.com:15502/memedata", {
     useNewUrlParser : true
 })
 mongoose.Promise = global.Promise
-
 
 app.get("/",(req,res,next)=>{
     console.log("GET /")
