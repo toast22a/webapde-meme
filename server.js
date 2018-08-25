@@ -3,14 +3,15 @@ const bodyparser = require("body-parser")
 const mongoose = require("mongoose")
 const hbs = require("hbs")
 const session = require("express-session")
+const path = require("path")
 const app = express();
 
 const urlencoder = bodyparser.urlencoded({
     extended: false
 })
 
-app.use(express.static(__dirname + "/public"))
-app.set('views', __dirname + '/views');
+app.use(express.static(path.join(__dirname, "public")))
+app.set('views', path.join(__dirname, "views"));
 app.use(session({
     secret: "SuperSecretQuatro",
     name: "MissCourtneyIsTheBest",
@@ -22,8 +23,9 @@ app.use(session({
 }))
 
 app.set("view-engine", "hbs")
+hbs.registerPartials(path.join)
 
-app.use(express.static(__dirname + "/public"))
+app.use(express.static(path.join(__dirname, "public")))
 
 /*mongoose.connect("mongodb://localhost:27017/memedata", {
     useNewUrlParser : true
