@@ -112,9 +112,9 @@
 
 <body>
 
-  {{> topbar}}
+  {{> topbar this}}
 
-  {{> search}}
+  {{> search this}}
 
   <div class="container-fluid public-div">
 
@@ -126,10 +126,6 @@
   </div>
 
   <script>
-
-/*  $(".search-bar-button").click(function() {
-            location.href = "searchByTag_guest"
-        })*/
 
   var memeNames = ["We love you miss", "Me @ Jollibee", "wow haha", "loool"]
   function loadMemes(){

@@ -39,8 +39,7 @@ app.get("/",(req,res,next)=>{
     console.log("GET /")
     var username = req.session.username
     if(username){
-        res.render("homepage.hbs",{
-                hUsername:username})
+        res.render("homepage.hbs",{username})
        }else{
         res.render("index.hbs")
        }
@@ -52,7 +51,7 @@ app.get("/",(req,res,next)=>{
 //    var username = req.session.username
 //    if(username){
 //        res.render("homepage.hbs",{
-//                hUsername:username})
+//                username})
 //       }else{
 //        res.render("index.hbs")
 //       }
@@ -84,10 +83,9 @@ app.post("/login", urlencoder, (req, res) => {
 
     if(username && pass)
         {
-            console.log(username+"has logged in")
+            console.log(username+" has logged in")
             req.session.username=username
-            res.render("homepage.hbs",{
-                hUsername:username})
+            res.render("homepage.hbs",{username})
         }else{
             console.log("missing entry log in failed")
             res.render("index.hbs")
@@ -104,8 +102,7 @@ app.post("/register",urlencoder,(req,res)=>{
         console.log(username +"has signed up")
         req.session.username=username
         req.session.description=username
-        res.render("homepage.hbs",{
-        hUsername:username})
+        res.render("homepage.hbs",{username})
     }else{
         console.log("missing entry sign up failed")
         res.render("index.hbs")
@@ -132,13 +129,13 @@ app.get("/searchByTag",urlencoder,(req,res)=>{
     console.log(searched)
     var username = req.session.username
     console.log(username);
-    res.render("searchByTag.hbs",{tagUsername:username ,searchTag:searched})
+    res.render("searchByTag.hbs",{username ,searchTag:searched})
 })
 
 app.get("/privateViewMeme",(req,res)=>{
     console.log("GET /privateViewMeme")
      var username = req.session.username
-    res.render("privateViewMeme.hbs",{Username : username})
+    res.render("privateViewMeme.hbs",{username})
 })
 
 
@@ -148,9 +145,9 @@ app.get("/viewUser",urlencoder,(req,res)=>{
     var username = req.session.username
     var desc = req.session.description
     if(desc){
-         res.render("ViewUser.hbs",{viewUsername : username,viewDescription:desc })
+         res.render("ViewUser.hbs",{username ,viewDescription:desc })
     }else{
-         res.render("ViewUser.hbs",{viewUsername : username,viewDescription: "I love memes as much as i love food."})
+         res.render("ViewUser.hbs",{username ,viewDescription: "I love memes as much as i love food."})
     }
 
 })
@@ -160,7 +157,7 @@ app.post("/deleteMeme",urlencoder,(req,res)=>{
     console.log("meme has been deleted")
     var username = req.session.username
     var desc = req.session.description
-     res.render("homepage.hbs",{hUsername:username})
+     res.render("homepage.hbs",{username})
 })
 
 
@@ -168,7 +165,7 @@ app.post("/editMeme",urlencoder,(req,res)=>{
     console.log("POST /editMeme")
     console.log("meme has been edited")
     var username = req.session.username
-    res.render("privateViewMeme.hbs",{Username : username})
+    res.render("privateViewMeme.hbs",{username})
 })
 
 app.post("/addMeme",urlencoder,(req,res)=>{
@@ -188,7 +185,7 @@ app.post("/addMeme",urlencoder,(req,res)=>{
     if(pic && tags && sharedto && visibility)
         {
             console.log("uploaded successfully")
-            res.render("privateViewMeme.hbs",{Username : username})
+            res.render("privateViewMeme.hbs",{username})
         }else{
             console.log("missing inputs")
         }
