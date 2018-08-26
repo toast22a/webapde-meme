@@ -119,6 +119,18 @@ function validateLogin(body){
     
 }
 
+function addMemeToUser(body){
+
+}
+
+function UpdateMemeToUser(body){
+
+}
+
+function DeleteMemeToUser(body){
+
+}
+
 
 module.exports = {
     User
