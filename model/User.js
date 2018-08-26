@@ -1,8 +1,9 @@
 //create mongoose document ticket
 const mongoose = require("mongoose")
 const bcrypt = require("bcrypt")
+const {User} = require(path.join(__dirname, "model", "User.js"))
 
-const saltRounds = 2 // not secure -- change later
+const saltRounds = 10 // not secure -- change later
 
 //schema == structure of the mongodb document
 var UserSchema = mongoose.Schema({
@@ -99,7 +100,26 @@ UserSchema.pre("save", function(next){
 //something you can access, is a persistent object
 var User = mongoose.model("user", UserSchema)
 
-//a Ticket object will be given back if others call require("ticket.js")
+
+
+function createUser(body){
+    
+}
+
+function readUser(body){
+    
+}
+
+function updateUser(body){
+    
+}
+
+//not sure kase sa example ni miss courtney nasa middleware yung validate login
+function validateLogin(body){
+    
+}
+
+
 module.exports = {
     User
 }

@@ -1,3 +1,4 @@
+var user = require('../model/User');
 module.exports.controller = function (app) {
 
     app.post("/login", urlencoder, (req, res) => {

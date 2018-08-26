@@ -21,6 +21,8 @@
 //
 //}
 
+var user = require('../model/Meme');
+
 module.exports.controller = function (app) {
 
     app.get("/searchByTag_guest", urlencoder, (req, res) => {
