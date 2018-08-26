@@ -13,7 +13,7 @@ var MemeSchema = mongoose.Schema({
   },
   owner : {
     _id : {type : mongoose.Schema.Types.ObjectId, required : true, unique : true, sparse : true},
-    username: {
+    username : {
         type: String, //type == required property
         required: true,
         minlength: 6,
@@ -27,9 +27,12 @@ var MemeSchema = mongoose.Schema({
     }
   },
   tags : [{
-    type : String,
-    minlength : 1,
-    trim : true
+    _id : {type : mongoose.Schema.Types.ObjectId, required : true, unique : true, sparse : true},
+    name : {
+      type : String,
+      minlength : 1,
+      trim : true
+    }
   }],
   shared_with : [{
     _id : {type : mongoose.Schema.Types.ObjectId, required : true},

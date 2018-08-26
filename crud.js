@@ -252,8 +252,9 @@ function updateMeme(body) {
   if (body.shared_with) updateDict.shared_with = body.shared_with
   Meme.findById(_id).then((meme)=>{
     Meme.findByIdAndUpdate(_id, {$set : updateDict}, {new : true}).then((newMeme)=>{
-      newMeme.tags.forEach(function(tagString){
-        deleteMemeFromTag(meme._id)
+      newMeme.tags.forEach(function(newTagString){
+        if (meme.tags.filter(oldTagString=>oldTagString==newTagString).length==0)
+          deleteMemeFromTag(meme)
       })
       console.log("Meme '" + newMeme.name + "' updated successfully")
     }, (err)=>{
