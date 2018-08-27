@@ -62,18 +62,27 @@ module.exports.controller = function (router) {
         console.log(searched)
         var username = req.session.username
         console.log(username);
-        res.render("searchByTag.hbs", {
+        if(username){
+             res.render("searchByTag.hbs", {
             username: username,
             searchTag: searched
-        })
+        })}else{
+                 res.render("index.hbs");
+             }
+
     })
 
     router.get("/privateViewMeme", (req, res) => {
         console.log("GET /privateViewMeme")
         var username = req.session.username
-        res.render("privateViewMeme.hbs", {
+        if(username){
+            res.render("privateViewMeme.hbs", {
             username: username
         })
+        }else{
+            res.render("index.hbs")
+        }
+
     })
 
     router.get("/viewUser", urlencoder, (req, res) => {
@@ -85,11 +94,13 @@ module.exports.controller = function (router) {
                 username: username,
                 viewDescription: desc
             })
-        } else {
+        } else if(username){
             res.render("ViewUser.hbs", {
                 username: username,
                 viewDescription: "I love memes as much as i love food."
             })
+        }else if(!username){
+              res.render("index.hbs")
         }
 
     })
@@ -99,18 +110,28 @@ module.exports.controller = function (router) {
         console.log("meme has been deleted")
         var username = req.session.username
         var desc = req.session.description
-        res.render("homepage.hbs", {
+        if(username){
+             res.render("homepage.hbs", {
             username: username
-        })
+             })
+        }else{
+             res.render("index.hbs")
+        }
+
     })
 
     router.post("/editMeme", urlencoder, (req, res) => {
         console.log("POST /editMeme")
         console.log("meme has been edited")
         var username = req.session.username
-        res.render("privateViewMeme.hbs", {
+        if(username){
+             res.render("privateViewMeme.hbs", {
             username: username
         })
+        }else{
+            res.render("index.hbs")
+        }
+
     })
 
     router.post("/addMeme", urlencoder, (req, res) => {
@@ -126,15 +147,19 @@ module.exports.controller = function (router) {
         console.log(tags)
         console.log(sharedto)
         console.log(visibility)
-
-        if (pic && tags && sharedto && visibility) {
-            console.log("uploaded successfully")
-            res.render("privateViewMeme.hbs", {
-                username: username
-            })
-        } else {
-            console.log("missing inputs")
+        if(username){
+                if (pic && tags && sharedto && visibility) {
+                console.log("uploaded successfully")
+                res.render("privateViewMeme.hbs", {
+                    username: username
+                })
+            } else {
+                console.log("missing inputs")
+            }
+        }else{
+            res.render("index.hbs");
         }
+
 
     })
 }
