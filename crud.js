@@ -492,51 +492,17 @@ async function getPublicMemes(limit, base=0){
 
 async function getSharedMemesFor(user, limit, base=0){
   user = await readUser({_id : user._id})
-  let memes = user.shared_memes
-  return memes.slice(base, limit)
+  return user.shared_memes.slice(base, limit)
+}
+
+async function getTaggedPublicMemes(tag, limit, base=0){
+  tag = await readTag({name : tag.name})
+  return tag.memes.slice(base, limit)
 }
 
 //createUser(sampleCreateUserBody)
 //createMeme(sampleCreateMemeBody)
 //deleteMeme(sampleDeleteMemeBody)
-
-/*createUser(sampleCreateUserBody).then((user1)=>{
-  createUser(sampleCreateUserBody2).then((user2)=>{
-    createMeme({
-      name : "Sample meme name",
-      description : "Sample meme description",
-      owner : {username : "limesapphire"},
-      tags : ["funny", "lol"],
-      shared_with : ["itsoverhere"]
-    }).then((doc)=>{
-      updateMeme({
-        _id : doc._id,
-        name : "Updated meme name",
-        description : "Updated meme description",
-        tags : ["lol", "shakalaka"],
-        shared_with : ["itsoverhere"]
-      }).then((doc)=>{
-        getPublicMemes(10).then((memes)=>{
-          getSharedMemesFor(user2).then((memes2)=>{
-            console.log(memes.concat(memes2))
-          }, (err)=>{
-            console.log(err)
-          })
-        }, (err)=>{
-          console.log(err)
-        })
-      }, (err)=>{
-        console.log(err)
-      })
-    }, (err)=>{
-      console.log(err)
-    })
-  }, (err)=>{
-    console.log(err)
-  })
-}, (err)=>{
-  console.log(err)
-})*/
 
 (async function(){
   try {
@@ -569,6 +535,9 @@ async function getSharedMemesFor(user, limit, base=0){
     let memes2 = await getSharedMemesFor(user2)
 
     console.log(memes1.concat(memes2))
+
+    let memes3 = await getTaggedPublicMemes({name : "haha"}, 10)
+    console.log("Memes with tag 'haha': " + memes3)
 
   } catch (err) {
     console.log(err)
