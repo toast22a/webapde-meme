@@ -27,6 +27,12 @@ let sampleCreateUserBody = {
   description : "programmer who dreams to be a programmer who can program the world"
 }
 
+let sampleCreateUserBody2 = {
+  username : "itsoverhere",
+  password : "schnauzer",
+  description : "wahaw node js"
+}
+
 let sampleReadUserBody = {
   username : "limeSapphire"
 }
@@ -55,7 +61,6 @@ function createUser(body) {
         console.log("User " + username + " created successfully")
         resolve(doc)
       },(err)=>{
-        printError(err, "createUser")
         reject(err)
       })
     }
@@ -67,20 +72,18 @@ function readUser(body) {
     function(resolve, reject){
       if (body._id) {
         let _id = body._id
-        User.findById(_id, "_id username description owned_memes").then((doc)=>{
+        User.findById(_id, "_id username description owned_memes shared_memes").then((doc)=>{
           if (doc) resolve(doc)
-          else reject("User@" + _id + " not found")
+          else reject(Error("User@" + _id + " not found"))
         }, (err)=>{
-          printError(err, "readUser")
           reject(err)
         })
       } else {
         let username = body.username
-        User.findOne({username}, "_id username description owned_memes").collation({locale : "en_US", strength : 1}).then((doc)=>{
+        User.findOne({username}, "_id username description owned_memes shared_memes").collation({locale : "en_US", strength : 1}).then((doc)=>{
           if (doc) resolve(doc)
-          else reject("User " + username + " not found")
+          else reject(Error("User " + username + " not found"))
         }, (err)=>{
-          printError(err, "readUser")
           reject(err)
         })
       }
@@ -89,112 +92,240 @@ function readUser(body) {
 }
 
 function updateUser(body) {
-  let toUpdate = {}
-  if (body.password) toUpdate.password = body.password
-  if (body.description) toUpdate.description = body.description
-  if (body._id) {
-    let _id = body._id
-    User.findByIdAndUpdate(_id, {$set : toUpdate}, {new : true}).then((doc)=>{
-      console.log("User " + doc.username + " updated successfully")
-      resolve(doc)
-    }, (err)=>{
-      printError(err, "updateUser")
-      reject(err)
-    })
-  }
-  else {
-    let username = body.username
-    User.findOne({username}, {$set : toUpdate}, {new : true}).collation({locale : "en_US", strength : 1}).then((doc)=>{
-      console.log("User " + doc.username + " updated successfully")
-      resolve(doc)
-    }, (err)=>{
-      printError(err, "updateUser")
-      reject(err)
-    })
-  }
+  return new Promise(function(resolve, reject){
+    let toUpdate = {}
+    if (body.password) toUpdate.password = body.password
+    if (body.description) toUpdate.description = body.description
+    if (body._id) {
+      let _id = body._id
+      User.findByIdAndUpdate(_id, {$set : toUpdate}, {new : true}).then((doc)=>{
+        console.log("User " + doc.username + " updated successfully")
+        resolve(doc)
+      }, (err)=>{
+        reject(err)
+      })
+    }
+    else {
+      let username = body.username
+      User.findOne({username}, {$set : toUpdate}, {new : true}).collation({locale : "en_US", strength : 1}).then((doc)=>{
+        console.log("User " + doc.username + " updated successfully")
+        resolve(doc)
+      }, (err)=>{
+        reject(err)
+      })
+    }
+  })
 }
 
 function validateLogin(body) {
-  let username = body.username
-  let password = body.password
-  User.findOne({username}, "password", (err, doc)=>{
-    if (err) printError(err)
-    else if (doc) {
-      bcrypt.compare(password, doc.password, (err, res)=>{
-        if (err) printError(err)
-        else if (res) console.log("Login successful")
-        else console.log("Login failed : wrong password")
+  return new Promise(function(resolve, reject){
+    let username = body.username
+    let password = body.password
+    User.findOne({username}, "password").then((doc)=>{
+      bcrypt.compare(password, doc.password).then((res)=>{
+        if (res) resolve(res)
+        else reject(Error("Invalid credentials"))
+      }, (err)=>{
+        reject(err)
       })
-    }
-    else console.log("User " + username + " not found")
-  }).collation({locale : "en_US", strength : 1})
+    }, (err)=>{
+      reject(err)
+    }).collation({locale : "en_US", strength : 1})
+  })
+}
+
+function addMemeToOwnedMemes(user, meme){
+  return new Promise(function(resolve, reject){
+    let miniMeme = {}
+    miniMeme._id = meme._id
+    miniMeme.name = meme.name
+    miniMeme.shared_with = meme.shared_with
+    User.findByIdAndUpdate(user._id, {$push : {owned_memes : miniMeme}}, {new : true}).then((doc)=>{
+      resolve(doc)
+    }, (err)=>{
+      reject(err)
+    })
+  })
+}
+
+function updateMemeInOwnedMemes(meme){
+  return new Promise(function(resolve, reject){
+    let miniMeme = {}
+    miniMeme._id = meme._id
+    miniMeme.name = meme.name
+    miniMeme.shared_with = meme.shared_with
+    User.update({"owned_memes._id" : meme._id}, {$set : {"owned_memes.$" : miniMeme}}, {new : true}).then((result)=>{
+      resolve(result)
+    }, (err)=>{
+      reject(err)
+    })
+  })
+}
+
+function deleteMemeFromOwnedMemes(meme){
+  /*return new Promise(function(resolve, reject){
+    User.findByIdAndUpdate(user._id, {$pull : {owned_memes : {_id : meme._id}}}, {new : true}).then((doc)=>{
+      resolve(doc)
+    }, (err)=>{
+      reject(err)
+    })
+  })*/
+  return new Promise(function(resolve, reject){
+    User.update({"owned_memes._id", meme._id}, {$pull : "owned_memes.$"}, {new : true}).then((result)=>{
+      resolve(result)
+    }, (err)=>{
+      reject(err)
+    })
+  })
+}
+
+function addMemeToSharedMemes(user, meme){
+  return new Promise(function(resolve, reject){
+    let miniMeme = {}
+    miniMeme._id = meme._id
+    miniMeme.name = meme.name
+    miniMeme.owner = meme.owner
+    User.findByIdAndUpdate(user._id, {$push : {shared_memes : miniMeme}}, {new : true}).then((doc)=>{
+      resolve(doc)
+    }, (err)=>{
+      reject(err)
+    })
+  })
+}
+
+function updateMemeInSharedMemes(meme){
+  return new Promise(function(resolve, reject){
+    let miniMeme = {}
+    miniMeme._id = meme._id
+    miniMeme.name = meme.name
+    miniMeme.owner = meme.owner
+    User.update({"shared_memes._id" : meme._id}, {$set : {"shared_memes.$" : miniMeme}}, {new : true}).then((result)=>{
+      resolve(result)
+    }, (err)=>{
+      reject(err)
+    })
+  })
+}
+
+function deleteMemeFromSharedMemes(user, meme){
+  return new Promise(function(resolve, reject){
+    User.findByIdAndUpdate(user._id, {$pull : {shared_memes : {_id : meme._id}}}, {new : true}).then((doc)=>{
+      resolve(doc)
+    }, (err)=>{
+      reject(err)
+    })
+  })
+}
+
+function deleteMemeFromAllSharedMemes(meme){
+  return new Promise(function(resolve, reject){
+    User.update({"shared_memes._id", meme._id}, {$pull : "shared_memes.$"}, {new : true}).then((result)=>{
+      resolve(result)
+    }, (err)=>{
+      reject(err)
+    })
+  })
 }
 
 // ========== TAG ==========
 
-function createTag(tagString,meme){
-    let name = tagString
-    let t =new Tag({
+function createTag(body){
+  return new Promise(function(resolve, reject){
+    let name = body.name
+    let t = new Tag({
         name
     })
     t.save().then((doc)=>{
-        console.log("Tag '" + doc.name + "' created successfully")
-        addMemeToTag(doc._id, meme)
+      resolve(doc)
     },(err)=>{
-        printError(err, "createTag")
+      reject(err)
     })
+  })
 }
 
 
-function addMemeToTag(tag_id,meme){
-    let _id = tag_id
-    let pseudoMeme = {}
-    pseudoMeme._id = meme._id
-    pseudoMeme.name = meme.name
-    pseudoMeme.owner = meme.owner
-    pseudoMeme.shared_with = meme.shared_with
-
-    Tag.findByIdAndUpdate(_id, {$push: {memes: pseudoMeme}}, {new : true}).then((doc)=>{
-      console.log("Meme '" + pseudoMeme.name + "' added successfully to tag '" + doc.name + "'")
-    },(err)=>{
-      printError(err, "addMemeToTag")
-    });
-}
-
-function deleteMemeFromTag(t_id, meme){
-    let m_id = meme._id
-    Tag.findById(t_id, "_id tags description owned_memes", (err, doc)=>{
-      if (err) printError(err)
-      else if (doc) {
-        doc.memes.pull({_id: m_id})
-        if (doc.memes.length == 0) {
-          Tag.findByIdAndDelete(t_id).then((result)=>{
-            console.log("Tag " + doc.name + " deleted successfully")
-          }, (err)=>{
-            printError(err)
-          })
-        }
-      }
-    })
-}
-
-
-function readTag(tag){
-    if (tag._id) {
+function addMemeToTag(tag, meme){
+  return new Promise(function(resolve, reject){
     let _id = tag._id
-    Tag.findById(_id, "_id tags description owned_memes", (err, doc)=>{
-      if (err) printError(err)
-      else if (doc) console.log("Found tag '" + doc.name + "'")
-      else console.log("Tag@" + _id + " not found")
+    let miniMeme = {}
+    miniMeme._id = meme._id
+    miniMeme.name = meme.name
+    miniMeme.owner = meme.owner
+    miniMeme.shared_with = meme.shared_with
+
+    Tag.findByIdAndUpdate(_id, {$push: {memes: miniMeme}}, {new : true}).then((doc)=>{
+      resolve(doc)
+    },(err)=>{
+      reject(err)
     })
-  }else {
-    let name = tag.name
-    Tag.findOne({name}, "_id tag name description owned_memes", (err, doc)=>{
-      if (err) printError(err)
-      else if (doc) console.log("Found tag '" + doc.name + "'")
-      else console.log("Tag '" + name + "' not found")
-    }).collation({locale : "en_US", strength : 1})
-  }
+  })
+}
+
+function updateMemeInTags(meme){
+  return new Promise(function(resolve, reject){
+    let miniMeme = {}
+    miniMeme.name = meme.name
+    miniMeme.owner = meme.owner
+    miniMeme.shared_with = meme.shared_with
+
+    Tag.update({"memes._id" : meme._id}, {$set : {"memes.$" : miniMeme}}).then((result)=>{
+      resolve(result)
+    }, (err)=>{
+      reject(err)
+    })
+  })
+}
+
+function deleteMemeFromTag(tag, meme){
+  return new Promise(function(resolve, reject){
+    Tag.findByIdAndUpdate(tag._id, {$pull : {memes : {_id : meme._id}}}, {new : true}).then((doc)=>{
+      if (doc.memes.length == 0) {
+        Tag.findByIdAndDelete(doc._id).then((result)=>{
+          resolve(result)
+        }, (err)=>{
+          reject(err)
+        })
+      }
+    }, (err)=>{
+      reject(err)
+    })
+  })
+}
+
+function deleteMemeFromAllTags(meme){
+  return new Promise(function(resolve, reject){
+    Tag.update({"memes._id", meme._id}, {$pull : "memes.$"}, {new : true}).then((result)=>{
+      Tag.delete({memes : {$size : 0}}).then((result)=>{
+        resolve(result)
+      }, (err)=>{
+        reject(err)
+      })
+    }, (err)=>{
+      reject(err)
+    })
+  })
+}
+
+function readTag(body){
+  return new Promise(function(resolve, reject){
+    if (body._id) {
+      let _id = body._id
+      Tag.findById(_id, "_id name memes").then((doc)=>{
+        if (doc) resolve(doc)
+        else reject(Error("Tag@" + _id + " not found"))
+      }, (err)=>{
+        reject(err)
+      })
+    } else {
+      let name = body.name
+      Tag.findOne({name}, "_id name memes").collation({locale : "en_US", strength : 1}).then((doc)=>{
+        if (doc) resolve(doc)
+        else reject(Error("Tag '" + name + "' not found"))
+      }, (err)=>{
+        reject(err)
+      })
+    }
+  })
 }
 
 
@@ -224,67 +355,195 @@ let sampleDeleteMemeBody = {
   _id : "5b6bab0519bbe997c64adfd2"
 }
 
-function createMeme(body) {
+async function createMeme(body) {
   let createDict = {}
   createDict.name = body.name
   createDict.description = body.description
-  createDict.owner = body.owner
-  if (body.tags) createDict.tags = body.tags
-  if (body.shared_with) createDict.shared_with = body.shared_with
+
+  let owner = await readUser(body.owner)
+  createDict.owner = {_id : owner._id, username : owner.username}
+
+  if (body.shared_with) {
+    let fn = async function(sharedWithName){
+      let realSharedWith = await readUser({username : sharedWithName})
+      return realSharedWith
+    }
+    let realSharedWiths = await Promise.all(body.shared_with.map(fn))
+    createDict.shared_with = realSharedWiths
+  }
+
+  if (body.tags) {
+    let fn = async function(tagName){
+      try {
+        let realTag = await readTag({name : tagName})
+        return realTag
+      } catch (err) {
+        let realTag = await createTag({name : tagName})
+        return realTag
+      }
+    }
+    let realTags = await Promise.all(body.tags.map(fn))
+    createDict.tags = realTags
+  }
+
   let m = new Meme(createDict)
-  m.save().then((doc)=>{
-    console.log("Meme '" + doc.name + "' created successfully")
-    doc.tags.forEach(function(tagString){
-      let tagEntry = readTag({name : tagString})
-      if (tagEntry) addMemeToTag(tagEntry._id, doc)
-      else createTag(tagString, doc)
-    })
-  }, (err)=>{
-    printError(err, "createMeme")
-  })
+  let meme = await m.save()
+
+  let fn = async function(tag){
+    await addMemeToTag(tag, meme)
+  }
+
+  await Promise.all(meme.tags.map(fn))
+
+  await addMemeToOwnedMemes(meme.owner, meme)
+
+  fn = async function(sharedWith){
+    addMemeToSharedMemes(sharedWith, meme)
+  }
+
+  await Promise.all(meme.shared_with.map(fn))
+
+  return meme
 }
 
-function updateMeme(body) {
-  let _id = body._id
-  let updateDict = {}
-  if (body.name) updateDict.name = body.name
-  if (body.description) updateDict.description = body.description
-  if (body.tags) updateDict.tags = body.tags
-  if (body.shared_with) updateDict.shared_with = body.shared_with
-  Meme.findById(_id).then((meme)=>{
-    Meme.findByIdAndUpdate(_id, {$set : updateDict}, {new : true}).then((newMeme)=>{
-      newMeme.tags.forEach(function(newTagString){
-        if (meme.tags.filter(oldTagString=>oldTagString==newTagString).length==0)
-          deleteMemeFromTag(meme)
+/*function updateMeme(body) {
+  return new Promise(function(resolve, reject){
+    // preparing the dict of items to update in the meme
+    let _id = body._id
+    let updateDict = {}
+    if (body.name) updateDict.name = body.name
+    if (body.description) updateDict.description = body.description
+    if (body.tags) {
+      let realTags = []
+      body.tags.forEach(function(tagName){
+        Tag.findOne({name : tagName}, "_id name").collation({locale : "en_US", strength : 1}).then((doc)=>{
+          if (doc) realTags.push(doc)
+          else {
+            createTag({name : tagName}).then((doc)=>{
+              realTags.push({_id : doc._id, name : doc.name})
+            }, (err)=>{
+              reject(err)
+            })
+          }
+        }, (err)=>{
+          reject(err)
+        })
       })
-      console.log("Meme '" + newMeme.name + "' updated successfully")
-    }, (err)=>{
-      printError(err, "updateMeme")
-    })
-  }, (err)=>{
-    printError(err, "updateMeme")
-  })
-
-}
-
-function deleteMeme(body) {
-  let _id = body._id
-  Meme.findById(_id).then((doc)=>{
-    doc.tags.forEach(function(tagString){
-      Tag.findOne({name : tagString}).then((tagDoc)=>{
-        deleteMemeFromTag(tagDoc._id, doc)
+      body.tags = realTags
+    }
+    if (body.shared_with) {
+      let realSharedWith = []
+      body.shared_with.forEach(function(sharedWithName){
+        User.findOne({name : sharedWithName}, "_id username").collation({locale : "en_US", strength : 1}).then((doc)=>{
+          if (doc) realSharedWith.push(doc)
+          else reject(Error("User '" + sharedWithName + "' not found"))
+        }, (err)=>{
+          reject(err)
+        })
+      })
+      body.shared_with = realSharedWith
+    }
+    // updating the meme
+    Meme.findById(_id).then((meme)=>{
+      Meme.findByIdAndUpdate(_id, {$set : updateDict}, {new : true}).then((newMeme)=>{
+        meme.tags.forEach(function(oldTag){
+          if (newMeme.tags.filter(newTag=>oldTag._id==newTag._id).length==0)
+            deleteMemeFromTag(oldTag, meme)
+        })
+        newMeme.tags.forEach(function(newTag){
+          if (meme.tags.filter(oldTag=>oldTag._id==newTag._id).length==0)
+            addMemeToTag(newTag, meme)
+        })
+        meme.shared_with.forEach(function(oldSharedWith){
+          if (newMeme.shared_with.filter(newSharedWith=>oldSharedWith._id==newSharedWith._id).length==0)
+            deleteMemeFromSharedMemes(oldSharedWith, meme)
+        })
+        newMeme.shared_with.forEach(function(newSharedWith){
+          if (meme.shared_with.filter(oldSharedWith=>oldSharedWith._id==newSharedWith._id).length==0)
+            addMemeToSharedMemes(newSharedWith, meme)
+        })
       }, (err)=>{
-        printError(err, "deleteMeme")
+        reject(err)
       })
-    })
-    Meme.findByIdAndDelete(doc._id).then((result)=>{
-      console.log(result.deletedCount + " memes deleted successfully")
     }, (err)=>{
-      printError(err, "deleteMeme")
+      reject(err)
     })
-  }, (err)=>{
-    printError(err, "deleteMeme")
   })
+}*/
+
+async function updateMeme(body) {
+  let updateDict = {}
+  updateDict.name = body.name
+  updateDict.description = body.description
+
+  if (body.shared_with) {
+    let fn = async function(sharedWithName){
+      let realSharedWith = await readUser({username : sharedWithName})
+      return realSharedWith
+    }
+    let realSharedWiths = await Promise.all(body.shared_with.map(fn))
+    updateDict.shared_with = realSharedWiths
+  }
+
+  if (body.tags) {
+    let fn = async function(tagName){
+      try {
+        let realTag = await readTag({name : tagName})
+        return realTag
+      } catch (err) {
+        let realTag = await createTag({name : tagName})
+        return realTag
+      }
+    }
+    let realTags = await Promise.all(body.tags.map(fn))
+    updateDict.tags = realTags
+  }
+
+  let meme = await Meme.findById(body._id)
+  let newMeme = await Meme.findByIdAndUpdate(body._id, {$set : updateDict}, {new : true})
+
+  for (let oldTag of meme.tags) {
+    if (newMeme.tags.filter(newTag=>oldTag._id.equals(newTag._id)).length==0){
+      await deleteMemeFromTag(oldTag, newMeme)
+    }
+  }
+
+  for (let newTag of newMeme.tags) {
+    if (meme.tags.filter(oldTag=>oldTag._id.equals(newTag._id)).length==0){
+      await addMemeToTag(newTag, newMeme)
+    }
+  }
+
+  for (let oldSharedWith of meme.shared_with) {
+    if (newMeme.shared_with.filter(newSharedWith=>oldSharedWith._id.equals(newSharedWith._id)).length==0){
+      await deleteMemeFromSharedMemes(oldSharedWith, newMeme)
+    }
+  }
+
+  for (let newSharedWith of newMeme.shared_with) {
+    if (meme.shared_with.filter(oldSharedWith=>oldSharedWith._id.equals(newSharedWith._id)).length==0){
+      await addMemeToSharedMemes(newSharedWith, newMeme)
+    }
+  }
+
+  await updateMemeInTags(newMeme)
+
+  await updateMemeInSharedMemes(newMeme)
+
+  await updateMemeInOwnedMemes(newMeme)
+
+  return newMeme
+}
+
+async function deleteMeme(body) {
+  let _id = body._id
+  let meme = await Meme.findById(_id)
+
+  await deleteMemeFromAllTags(meme)
+  await deleteMemeFromAllSharedMemes(meme)
+  await deleteMemeFromOwnedMemes(meme)
+
+  await Meme.findByIdAndDelete(_id)
 }
 
 
@@ -293,8 +552,28 @@ function deleteMeme(body) {
 //deleteMeme(sampleDeleteMemeBody)
 
 createUser(sampleCreateUserBody).then((doc)=>{
-  readUser(sampleReadUserBody).then((doc)=>{
-    console.log(doc.username)
+  createUser(sampleCreateUserBody2).then((doc)=>{
+    createMeme({
+      name : "Sample meme name",
+      description : "Sample meme description",
+      owner : {username : "limesapphire"},
+      tags : ["funny", "lol"],
+      shared_with : ["itsoverhere"]
+    }).then((doc)=>{
+      updateMeme({
+        _id : doc._id,
+        name : "Updated meme name",
+        description : "Updated meme description",
+        tags : ["lol", "shakalaka"],
+        shared_with : []
+      }).then((doc)=>{
+        console.log("success")
+      }, (err)=>{
+        console.log(err)
+      })
+    }, (err)=>{
+      console.log(err)
+    })
   }, (err)=>{
     console.log(err)
   })

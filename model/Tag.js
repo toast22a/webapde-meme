@@ -1,5 +1,5 @@
 const mongoose = require("mongoose")
-const {Tag} = require(path.join(__dirname, "model", "Tag.js"))
+//const {Tag} = require(path.join(__dirname, "model", "Tag.js"))
 
 var TagSchema = mongoose.Schema({
   name : {
@@ -16,11 +16,11 @@ var TagSchema = mongoose.Schema({
     }
   },
   memes : [{
-    meme_id : {
+    _id : {
       type : mongoose.Schema.Types.ObjectId,
       required : true,
-      unique : true,
-      sparse : true
+      //unique : true,
+      //sparse : true
     },
     name : {
       type : String,
@@ -58,9 +58,9 @@ var TagSchema = mongoose.Schema({
 })
 
 var Tag = mongoose.model("tag", TagSchema)
-
+/*
 function readTag(tag){
-   
+
 }
 
 
@@ -70,18 +70,18 @@ function createTag(tagString,meme){
 
 //if meme gets edited the meme in tag should be updated
 function updateMemeToTag(tag_id,meme){
-    
+
 }
 
 function addMemeToTag(tag_id,meme){
-  
+
 }
 
 function deleteMemeFromTag(tag_id, meme){
 
 }
 
-
+*/
 
 module.exports = {
   Tag
