@@ -1,4 +1,4 @@
-//----------------Sample-------------------// 
+//----------------Sample-------------------//
 //var mongoose = require('mongoose')
 //var Video = require('../models/user');
 //module.exports.controller = function(router) {
@@ -21,17 +21,32 @@
 //
 //}
 
-var user = require('../model/Meme');
+var meme = require('../models/Meme');
+//const router = express.Router();
+//const app = express();
+const express = require("express")
+const fs = require("fs")
+const path = require("path")
+const bodyparser = require("body-parser")
+const mongoose = require("mongoose")
+const hbs = require("hbs")
+const app = express();
+const router = express.Router()
+const urlencoder = bodyparser.urlencoded({
+    extended: false
+})
 
+router.use(urlencoder)
 
 module.exports.controller = function (router) {
 
     router.get("/searchByTag_guest", urlencoder, (req, res) => {
         console.log("GET /searchByTag_guest")
-
+        var username = req.session.username
         var searched = req.query.searchText
         console.log(searched)
         res.render("searchByTag_guest.hbs", {
+            username:username,
             searchTag: searched
         })
     })
@@ -48,7 +63,7 @@ module.exports.controller = function (router) {
         var username = req.session.username
         console.log(username);
         res.render("searchByTag.hbs", {
-            tagUsername: username,
+            username: username,
             searchTag: searched
         })
     })
@@ -57,7 +72,7 @@ module.exports.controller = function (router) {
         console.log("GET /privateViewMeme")
         var username = req.session.username
         res.render("privateViewMeme.hbs", {
-            Username: username
+            username: username
         })
     })
 
@@ -67,12 +82,12 @@ module.exports.controller = function (router) {
         var desc = req.session.description
         if (desc) {
             res.render("ViewUser.hbs", {
-                viewUsername: username,
+                username: username,
                 viewDescription: desc
             })
         } else {
             res.render("ViewUser.hbs", {
-                viewUsername: username,
+                username: username,
                 viewDescription: "I love memes as much as i love food."
             })
         }
@@ -85,7 +100,7 @@ module.exports.controller = function (router) {
         var username = req.session.username
         var desc = req.session.description
         res.render("homepage.hbs", {
-            hUsername: username
+            username: username
         })
     })
 
@@ -94,7 +109,7 @@ module.exports.controller = function (router) {
         console.log("meme has been edited")
         var username = req.session.username
         res.render("privateViewMeme.hbs", {
-            Username: username
+            username: username
         })
     })
 
@@ -115,7 +130,7 @@ module.exports.controller = function (router) {
         if (pic && tags && sharedto && visibility) {
             console.log("uploaded successfully")
             res.render("privateViewMeme.hbs", {
-                Username: username
+                username: username
             })
         } else {
             console.log("missing inputs")
@@ -123,3 +138,4 @@ module.exports.controller = function (router) {
 
     })
 }
+

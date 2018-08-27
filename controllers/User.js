@@ -1,20 +1,39 @@
-var user = require('../model/User');
+//var user = require('../model/User');
+const express = require("express")
+const fs = require("fs")
+const path = require("path")
+const bodyparser = require("body-parser")
+const mongoose = require("mongoose")
+const hbs = require("hbs")
+
+const app = express();
+const router = express.Router()
+//const router = express.Router();
+//const app = express();
+const urlencoder = bodyparser.urlencoded({
+    extended: false
+})
+
+router.use(urlencoder)
+
 module.exports.controller = function (router) {
 
     router.post("/login", urlencoder, (req, res) => {
 
         console.log("POST /login")
-        var username = req.body.loginUser;
-        var pass = req.body.loginPassword;
 
+        var user = {
+            username: req.body.loginUser,
+            password: req.body.loginPassword
+        }
 
-        console.log(pass)
+        console.log(user.password)
 
-        if (username && pass) {
-            console.log(username + "has logged in")
-            req.session.username = username
+        if (user.username && user.password) {
+            console.log(user.username + "has logged in")
+            req.session.username = user.username
             res.render("homepage.hbs", {
-                hUsername: username
+                username: user.username
             })
         } else {
             console.log("missing entry log in failed")
@@ -33,7 +52,7 @@ module.exports.controller = function (router) {
             req.session.username = username
             req.session.description = username
             res.render("homepage.hbs", {
-                hUsername: username
+                username: username
             })
         } else {
             console.log("missing entry sign up failed")

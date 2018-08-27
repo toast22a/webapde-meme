@@ -1,107 +1,110 @@
 {{#if username}}
 
-  <div class="modal fade" id="uploadModal" tabindex="-1" role="dialog" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-          <div class="modal-content">
+<div class="modal fade" id="uploadModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
 
-              <div class="modal-header">
-                  <h5 class="modal-title">Upload Meme</h5>
-                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-              </div>
-              <form action="addMeme" method="post">
-              <div class="modal-body">
-  <!--                    <form action="/action_page.php">-->
-                     <h5>Name</h5>
-                      <input type="text"  name="tagName">
-                      <br>
-                      <input type="file" name="pic" accept="image/*" >
-                      <h5>Description</h5>
-                      <br>
-                      <textarea rows="4" cols="50" name ="description"></textarea>
-                      <h5>tags</h5>
-                      <div class="tags-input" data-name="tags-input" id='tags' name="memeTags">
-                          <!--<span class="tag">CSS<span class="close"></span></span>
+            <div class="modal-header">
+                <h5 class="modal-title">Upload Meme</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            </div>
+            <form action="addMeme" method="post">
+                <div class="modal-body">
+                    <!--                    <form action="/action_page.php">-->
+                    <h5>Name</h5>
+                    <input type="text" name="tagName">
+                    <br>
+                    <input type="file" name="pic" accept="image/*">
+                    <h5>Description</h5>
+                    <br>
+                    <textarea rows="4" cols="50" name="description"></textarea>
+                    <h5>tags</h5>
+                    <div class="tags-input" data-name="tags-input" id='tags' name="memeTags">
+                        <!--<span class="tag">CSS<span class="close"></span></span>
                             <span class="tag">JavaScript<span class="close"></span></span>
                             <span class="tag">HTML<span class="close"></span></span><-->
-                      </div>
-                      <h5>Shared to</h5>
-                      <div class="tags-input" data-name="tags-input" id="sharedUser" Value="@user," name="shared">
-                          <!--<span class="tag">CSS<span class="close"></span></span>
-                            <span class="tag">JavaScript<span class="close"></span></span>
-                            <span class="tag">HTML<span class="close"></span></span><-->
-                      </div>
-                      <h5>Visibility</h5>
-
-                          <input type="radio" name="visibility" value="public">Public
-                          <input type="radio" name="visibility" value="private" class="radioBox" checked="checked">Private<br>
-
-
-
-              </div>
-              <div class="modal-footer">
-                  <input type="submit" class="btn btn-primary" id="uButton" data-toggle="modal" data-target="#descriptionModal">
-              </div>
-              </form>
-          </div>
-      </div>
-  </div>
-
-
-
-    <nav class="navbar navbar-expand-sm">
-        <span class="navbar-brand"><a href="/" >168GAG</a></span>
-        <ul class="navbar-nav">
-            <li class="nav-item">
-                <button class="btn btn-sharp upload-button" type="button" data-toggle="modal" data-target="#uploadModal">Upload a meme</button>
-            </li>
-        </ul>
-        <ul class="navbar-nav ml-auto align-items-center">
-            <li class="nav-item mr-2">
-                <div class="d-flex align-items-center">
-                    <img id = "profile_pic" src="profile_pic.jpg" class="mr-1 nav-profile-pic rounded-circle">
-
-
-                    <div class="media-body">
-
-                            <!-- Your Form -->
-                            <!--<a href="javascript:{}" onclick="document.getElementById('userForm').submit(); return false;">--><a href="ViewUser">{{username}}</a>
-
                     </div>
+                    <h5>Shared to</h5>
+                    <div class="tags-input" data-name="tags-input" id="sharedUser" Value="@user," name="shared">
+                        <!--<span class="tag">CSS<span class="close"></span></span>
+                            <span class="tag">JavaScript<span class="close"></span></span>
+                            <span class="tag">HTML<span class="close"></span></span><-->
+                    </div>
+                    <h5>Visibility</h5>
+
+                    <input type="radio" name="visibility" value="public">Public
+                    <input type="radio" name="visibility" value="private" class="radioBox" checked="checked">Private<br>
+
+
+
                 </div>
-            </li>
-            <li class="nav-item">
-                <button class="btn btn-sharp logout-button" type="button">Logout</button>
-            </li>
-        </ul>
-    </nav>
+                <div class="modal-footer">
+                    <input type="submit" class="btn btn-primary" id="uButton" data-toggle="modal" data-target="#descriptionModal">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+<nav class="navbar navbar-expand-sm">
+    <span class="navbar-brand"><a href="/" >168GAG</a></span>
+    <ul class="navbar-nav">
+        <li class="nav-item">
+            <button class="btn btn-sharp upload-button" type="button" data-toggle="modal" data-target="#uploadModal">Upload a meme</button>
+        </li>
+    </ul>
+    <ul class="navbar-nav ml-auto align-items-center">
+        <li class="nav-item mr-2">
+            <div class="d-flex align-items-center">
+                <img id="profile_pic" src="profile_pic.jpg" class="mr-1 nav-profile-pic rounded-circle">
+
+
+                <div class="media-body">
+
+                    <!-- Your Form -->
+                    <!--<a href="javascript:{}" onclick="document.getElementById('userForm').submit(); return false;">--><a href="ViewUser">{{username}}</a>
+
+                </div>
+            </div>
+        </li>
+        <li class="nav-item">
+            <form action="logout">
+                <input class="btn btn-sharp logout-button" type="submit" value="logout">
+            </form>
+
+        </li>
+    </ul>
+</nav>
 
 {{else}}
 <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog" role="documen">
         <div class="modal-content">
-           <form action="login" method="post">
-            <div class="modal-header modal-part-borderless">
-                <h5 class="modal-title">Login</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-            </div>
-            <div class="modal-body login-body">
+            <form action="login" method="post">
+                <div class="modal-header modal-part-borderless">
+                    <h5 class="modal-title">Login</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                </div>
+                <div class="modal-body login-body">
 
-                <div>
-                    <h5>Username</h5>
-                    <input type="text" id="lUser" class="login-input" name="loginUser" >
-                </div>
-                <div>
-                    <h5>Password</h5>
-                    <input type="password" id="lPassword" class="login-input" name="loginPassword">
-                </div>
+                    <div>
+                        <h5>Username</h5>
+                        <input type="text" id="lUser" class="login-input" name="loginUser">
+                    </div>
+                    <div>
+                        <h5>Password</h5>
+                        <input type="password" id="lPassword" class="login-input" name="loginPassword">
+                    </div>
 
-            </div>
-            <div class="modal-footer login-footer modal-part-borderless">
-                <div class="text-link" data-toggle="modal" data-target="#signUpModal">
-                    Don't have an account?
                 </div>
-                <button type="submit" class="btn btn-primary" id="lButton">Login</button>
-            </div>
+                <div class="modal-footer login-footer modal-part-borderless">
+                    <div class="text-link" data-toggle="modal" data-target="#signUpModal">
+                        Don't have an account?
+                    </div>
+                    <button type="submit" class="btn btn-primary" id="lButton">Login</button>
+                </div>
             </form>
         </div>
     </div>
@@ -111,15 +114,15 @@
     <div class="modal fade" id="signUpModal" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog" role="documen">
             <div class="modal-content">
-               <form action="register" method="post">
-                <div class="modal-header">
-                    <h5 class="modal-title">Sign Up</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                </div>
+                <form action="register" method="post">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Sign Up</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    </div>
 
-                <div class="modal-body">
+                    <div class="modal-body">
 
-                    <div>
+                        <div>
                             <h5>Name</h5>
                             <input type="text" id="sUser" name="signUser">
                         </div>
@@ -129,25 +132,25 @@
                         </div>
                         <div>
                             <h5>Description</h5>
-                            <textarea rows="4" cols="50" id='description' name ="signDescription"></textarea>
+                            <textarea rows="4" cols="50" id='description' name="signDescription"></textarea>
                         </div>
 
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary mr-auto" id="sButton">Sign Up</button>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary mr-auto" id="sButton">Sign Up</button>
+                        </div>
                     </div>
-                </div>
-            </form>
+                </form>
+            </div>
         </div>
     </div>
 </div>
-  </div>
 
 <nav class="navbar navbar-expand-sm">
-  <span class="navbar-brand"><a href="/" >168GAG</a></span>
-  <ul class="navbar-nav ml-auto align-items-center">
-    <li class="nav-item">
-      <button class="btn btn-sharp login-button" type="button"  data-toggle="modal" data-target="#loginModal" data-dismiss="modal">Login</button>
-    </li>
-  </ul>
+    <span class="navbar-brand"><a href="/" >168GAG</a></span>
+    <ul class="navbar-nav ml-auto align-items-center">
+        <li class="nav-item">
+            <button class="btn btn-sharp login-button" type="button" data-toggle="modal" data-target="#loginModal" data-dismiss="modal">Login</button>
+        </li>
+    </ul>
 </nav>
 {{/if}}
