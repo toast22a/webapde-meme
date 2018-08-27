@@ -36,6 +36,7 @@ const urlencoder = bodyparser.urlencoded({
     extended: false
 })
 
+router.use(urlencoder)
 
 module.exports.controller = function (router) {
 
@@ -70,7 +71,7 @@ module.exports.controller = function (router) {
         console.log("GET /privateViewMeme")
         var username = req.session.username
         res.render("privateViewMeme.hbs", {
-            Username: username
+            username: username
         })
     })
 
@@ -80,12 +81,12 @@ module.exports.controller = function (router) {
         var desc = req.session.description
         if (desc) {
             res.render("ViewUser.hbs", {
-                viewUsername: username,
+                username: username,
                 viewDescription: desc
             })
         } else {
             res.render("ViewUser.hbs", {
-                viewUsername: username,
+                username: username,
                 viewDescription: "I love memes as much as i love food."
             })
         }
@@ -98,7 +99,7 @@ module.exports.controller = function (router) {
         var username = req.session.username
         var desc = req.session.description
         res.render("homepage.hbs", {
-            hUsername: username
+            username: username
         })
     })
 
@@ -107,7 +108,7 @@ module.exports.controller = function (router) {
         console.log("meme has been edited")
         var username = req.session.username
         res.render("privateViewMeme.hbs", {
-            Username: username
+            username: username
         })
     })
 
@@ -128,7 +129,7 @@ module.exports.controller = function (router) {
         if (pic && tags && sharedto && visibility) {
             console.log("uploaded successfully")
             res.render("privateViewMeme.hbs", {
-                Username: username
+                username: username
             })
         } else {
             console.log("missing inputs")

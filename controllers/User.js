@@ -14,6 +14,8 @@ const urlencoder = bodyparser.urlencoded({
     extended: false
 })
 
+router.use(urlencoder)
+
 module.exports.controller = function (router) {
 
     router.post("/login", urlencoder, (req, res) => {
@@ -31,7 +33,7 @@ module.exports.controller = function (router) {
             console.log(user.username + "has logged in")
             req.session.username = user.username
             res.render("homepage.hbs", {
-                hUsername: user.username
+                username: user.username
             })
         } else {
             console.log("missing entry log in failed")
@@ -50,7 +52,7 @@ module.exports.controller = function (router) {
             req.session.username = username
             req.session.description = username
             res.render("homepage.hbs", {
-                hUsername: username
+                username: username
             })
         } else {
             console.log("missing entry sign up failed")

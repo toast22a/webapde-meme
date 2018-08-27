@@ -23,10 +23,9 @@ app.set('port', process.env.PORT || 3000);
 app.set('views', __dirname + '/views');
 app.set("view-engine", "hbs");
 
-hbs.registerPartials(__dirname + '/views/partials');
-
-app.use(express.static(__dirname + "/public"))
-
+app.use(express.static(path.join(__dirname, "public")))
+app.set('views', path.join(__dirname, "views"));
+hbs.registerPartials(path.join(__dirname, "views", "partials"))
 
 app.use(session({
     secret: "SuperSecretQuatro",
@@ -38,6 +37,8 @@ app.use(session({
     }
 }))
 
+//router.use("/meme", require("./Meme"))
+//router.use("/user", require("./User"))
 
 //app.use(express.favicon());
 //app.use(express.logger('dev'));
