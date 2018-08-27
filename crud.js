@@ -15,11 +15,6 @@ mongoose.connect("mongodb://localhost:27017/memedata", {
 
 mongoose.Promise = global.Promise
 
-function printError(err, functionName){
-  if (functionName) console.log("["+functionName+"] An error occurred : " + err)
-  else console.log("An error occurred : " + err)
-}
-
 // ========== USER ==========
 let sampleCreateUserBody = {
   username : "limesapphire",
@@ -154,7 +149,7 @@ function updateMemeInOwnedMemes(meme){
     miniMeme._id = meme._id
     miniMeme.name = meme.name
     miniMeme.shared_with = meme.shared_with
-    User.update({"owned_memes._id" : meme._id}, {$set : {"owned_memes.$" : miniMeme}}, {new : true}).then((result)=>{
+    User.update({"owned_memes._id" : meme._id}, {$set : {"owned_memes.$" : miniMeme}}).then((result)=>{
       resolve(result)
     }, (err)=>{
       reject(err)
@@ -171,7 +166,7 @@ function deleteMemeFromOwnedMemes(meme){
     })
   })*/
   return new Promise(function(resolve, reject){
-    User.update({"owned_memes._id", meme._id}, {$pull : "owned_memes.$"}, {new : true}).then((result)=>{
+    User.update({"owned_memes._id" : meme._id}, {$pull : "owned_memes.$"}).then((result)=>{
       resolve(result)
     }, (err)=>{
       reject(err)
@@ -199,7 +194,7 @@ function updateMemeInSharedMemes(meme){
     miniMeme._id = meme._id
     miniMeme.name = meme.name
     miniMeme.owner = meme.owner
-    User.update({"shared_memes._id" : meme._id}, {$set : {"shared_memes.$" : miniMeme}}, {new : true}).then((result)=>{
+    User.update({"shared_memes._id" : meme._id}, {$set : {"shared_memes.$" : miniMeme}}).then((result)=>{
       resolve(result)
     }, (err)=>{
       reject(err)
@@ -219,7 +214,7 @@ function deleteMemeFromSharedMemes(user, meme){
 
 function deleteMemeFromAllSharedMemes(meme){
   return new Promise(function(resolve, reject){
-    User.update({"shared_memes._id", meme._id}, {$pull : "shared_memes.$"}, {new : true}).then((result)=>{
+    User.update({"shared_memes._id" : meme._id}, {$pull : "shared_memes.$"}).then((result)=>{
       resolve(result)
     }, (err)=>{
       reject(err)
@@ -294,7 +289,7 @@ function deleteMemeFromTag(tag, meme){
 
 function deleteMemeFromAllTags(meme){
   return new Promise(function(resolve, reject){
-    Tag.update({"memes._id", meme._id}, {$pull : "memes.$"}, {new : true}).then((result)=>{
+    Tag.update({"memes._id" : meme._id}, {$pull : "memes.$"}).then((result)=>{
       Tag.delete({memes : {$size : 0}}).then((result)=>{
         resolve(result)
       }, (err)=>{
@@ -310,7 +305,7 @@ function readTag(body){
   return new Promise(function(resolve, reject){
     if (body._id) {
       let _id = body._id
-      Tag.findById(_id, "_id name memes").then((doc)=>{
+      Tag.findById(_id).then((doc)=>{
         if (doc) resolve(doc)
         else reject(Error("Tag@" + _id + " not found"))
       }, (err)=>{
@@ -318,7 +313,7 @@ function readTag(body){
       })
     } else {
       let name = body.name
-      Tag.findOne({name}, "_id name memes").collation({locale : "en_US", strength : 1}).then((doc)=>{
+      Tag.findOne({name}).collation({locale : "en_US", strength : 1}).then((doc)=>{
         if (doc) resolve(doc)
         else reject(Error("Tag '" + name + "' not found"))
       }, (err)=>{
@@ -327,8 +322,6 @@ function readTag(body){
     }
   })
 }
-
-
 
 // ========== MEME ==========
 let sampleCreateMemeBody = {
@@ -406,71 +399,6 @@ async function createMeme(body) {
   return meme
 }
 
-/*function updateMeme(body) {
-  return new Promise(function(resolve, reject){
-    // preparing the dict of items to update in the meme
-    let _id = body._id
-    let updateDict = {}
-    if (body.name) updateDict.name = body.name
-    if (body.description) updateDict.description = body.description
-    if (body.tags) {
-      let realTags = []
-      body.tags.forEach(function(tagName){
-        Tag.findOne({name : tagName}, "_id name").collation({locale : "en_US", strength : 1}).then((doc)=>{
-          if (doc) realTags.push(doc)
-          else {
-            createTag({name : tagName}).then((doc)=>{
-              realTags.push({_id : doc._id, name : doc.name})
-            }, (err)=>{
-              reject(err)
-            })
-          }
-        }, (err)=>{
-          reject(err)
-        })
-      })
-      body.tags = realTags
-    }
-    if (body.shared_with) {
-      let realSharedWith = []
-      body.shared_with.forEach(function(sharedWithName){
-        User.findOne({name : sharedWithName}, "_id username").collation({locale : "en_US", strength : 1}).then((doc)=>{
-          if (doc) realSharedWith.push(doc)
-          else reject(Error("User '" + sharedWithName + "' not found"))
-        }, (err)=>{
-          reject(err)
-        })
-      })
-      body.shared_with = realSharedWith
-    }
-    // updating the meme
-    Meme.findById(_id).then((meme)=>{
-      Meme.findByIdAndUpdate(_id, {$set : updateDict}, {new : true}).then((newMeme)=>{
-        meme.tags.forEach(function(oldTag){
-          if (newMeme.tags.filter(newTag=>oldTag._id==newTag._id).length==0)
-            deleteMemeFromTag(oldTag, meme)
-        })
-        newMeme.tags.forEach(function(newTag){
-          if (meme.tags.filter(oldTag=>oldTag._id==newTag._id).length==0)
-            addMemeToTag(newTag, meme)
-        })
-        meme.shared_with.forEach(function(oldSharedWith){
-          if (newMeme.shared_with.filter(newSharedWith=>oldSharedWith._id==newSharedWith._id).length==0)
-            deleteMemeFromSharedMemes(oldSharedWith, meme)
-        })
-        newMeme.shared_with.forEach(function(newSharedWith){
-          if (meme.shared_with.filter(oldSharedWith=>oldSharedWith._id==newSharedWith._id).length==0)
-            addMemeToSharedMemes(newSharedWith, meme)
-        })
-      }, (err)=>{
-        reject(err)
-      })
-    }, (err)=>{
-      reject(err)
-    })
-  })
-}*/
-
 async function updateMeme(body) {
   let updateDict = {}
   updateDict.name = body.name
@@ -546,13 +474,34 @@ async function deleteMeme(body) {
   await Meme.findByIdAndDelete(_id)
 }
 
+function readMeme(body){
+  return new Promise(function(resolve, reject){
+    let _id = body._id
+    Meme.findById(_id).then((doc)=>{
+      resolve(doc)
+    }, (err)=>{
+      reject(err)
+    })
+  })
+}
+
+async function getPublicMemes(limit, base=0){
+  let memes = await Meme.find({shared_with : {$size : 0}}).skip(base).limit(limit)
+  return memes
+}
+
+async function getSharedMemesFor(user, limit, base=0){
+  user = await readUser({_id : user._id})
+  let memes = user.shared_memes
+  return memes.slice(base, limit)
+}
 
 //createUser(sampleCreateUserBody)
 //createMeme(sampleCreateMemeBody)
 //deleteMeme(sampleDeleteMemeBody)
 
-createUser(sampleCreateUserBody).then((doc)=>{
-  createUser(sampleCreateUserBody2).then((doc)=>{
+/*createUser(sampleCreateUserBody).then((user1)=>{
+  createUser(sampleCreateUserBody2).then((user2)=>{
     createMeme({
       name : "Sample meme name",
       description : "Sample meme description",
@@ -565,9 +514,17 @@ createUser(sampleCreateUserBody).then((doc)=>{
         name : "Updated meme name",
         description : "Updated meme description",
         tags : ["lol", "shakalaka"],
-        shared_with : []
+        shared_with : ["itsoverhere"]
       }).then((doc)=>{
-        console.log("success")
+        getPublicMemes(10).then((memes)=>{
+          getSharedMemesFor(user2).then((memes2)=>{
+            console.log(memes.concat(memes2))
+          }, (err)=>{
+            console.log(err)
+          })
+        }, (err)=>{
+          console.log(err)
+        })
       }, (err)=>{
         console.log(err)
       })
@@ -579,4 +536,41 @@ createUser(sampleCreateUserBody).then((doc)=>{
   })
 }, (err)=>{
   console.log(err)
-})
+})*/
+
+(async function(){
+  try {
+    let user1 = await createUser(sampleCreateUserBody)
+    let user2 = await createUser(sampleCreateUserBody2)
+
+    let meme = await createMeme({
+      name : "Sample meme name",
+      description : "Sample meme description",
+      owner : {username : "limesapphire"},
+      tags : ["funny", "lol"],
+      shared_with : ["itsoverhere"]
+    })
+
+    meme = await updateMeme({
+      _id : meme._id,
+      name : "Updated meme name",
+      description : "Updated meme description",
+      tags : ["lol", "shakalaka"],
+      shared_with : ["itsoverhere"]
+    })
+
+    let meme2 = await createMeme({
+      name : "Haha funny meme",
+      owner : {username : "limesapphire"},
+      tags : ["haha", "lol"],
+    })
+
+    let memes1 = await getPublicMemes(10)
+    let memes2 = await getSharedMemesFor(user2)
+
+    console.log(memes1.concat(memes2))
+
+  } catch (err) {
+    console.log(err)
+  }
+})()
