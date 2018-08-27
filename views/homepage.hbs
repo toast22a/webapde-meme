@@ -186,6 +186,14 @@
             $("#uButton").click(() => {
 
                 if($('form input[type=radio]:checked').val()!=''&& $('#upload').val()!='' &&  $("#tagName").val() !="" && $("#description").val()!=""){
+
+                    $("div#tags").children().each(function(index){
+                         console.log( index + ": " + $( this ).text() )
+                    });
+
+                    $("div#shared").children().each(function(index){
+                         console.log( index + ": " + $( this ).text() )
+                    });
                     alert('you have successfully uploaded a meme')
 
                 } else {

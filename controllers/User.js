@@ -5,6 +5,7 @@ const path = require("path")
 const bodyparser = require("body-parser")
 const mongoose = require("mongoose")
 const hbs = require("hbs")
+const multer = require("multer")
 
 const app = express();
 const router = express.Router()
