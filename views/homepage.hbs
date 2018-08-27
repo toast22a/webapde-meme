@@ -85,6 +85,14 @@
         .upload-button{
             margin-left: 12%;
         }
+        
+        .lock{
+            height: 20px;
+            display: inline-block;
+            position: relative;
+            bottom: 5px;
+            left: 5px;
+        }
 
     </style>
 
@@ -128,6 +136,11 @@
                 var postText2 = document.createElement("div")
                 var img = document.createElement("img")
                 var img2 = document.createElement("img")
+                
+                var privateIcon = document.createElement("img")
+                privateIcon.src = "lock.png"
+                privateIcon.className = "lock"
+
 
                 var j = Math.floor(Math.random() * 4) + 1
 
@@ -140,7 +153,9 @@
                 postText.className = "post-text"
                 postText2.className = "post-text"
                 $(postText).text(memeNames[j - 1])
+                
                 $(postText2).text(memeNames[j - 1])
+                $(postText2).append( privateIcon)
                 img.src = "meme" + j + ".png"
                 img.className = "post-image"
                 img2.src = "meme" + j + ".png"
