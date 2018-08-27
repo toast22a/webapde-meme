@@ -72,37 +72,34 @@
             color: black;
         }
 
-        #profile_pic{
-            height : 40px;
-            width : 40px;
+        #profile_pic {
+            height: 40px;
+            width: 40px;
         }
 
-        #search_icon{
-            height : 25px;
-            width : 25px;
+        #search_icon {
+            height: 25px;
+            width: 25px;
         }
 
-        .upload-button{
+        .upload-button {
             margin-left: 12%;
         }
-        
-        .lock{
+
+        .lock {
             height: 20px;
             display: inline-block;
             position: relative;
             bottom: 5px;
             left: 5px;
         }
-
     </style>
 
 </head>
 
 <body>
 
-  {{> topbar this}}
-
-  {{> search this}}
+    {{> topbar this}} {{> search this}}
 
     <div class="container-fluid">
         <div class="row">
@@ -121,9 +118,9 @@
 
     <script>
         /* $(".search-bar-button").click(function() {
-                                    window.location.href = "searchByTag"
-                                })
-                        */
+                                            window.location.href = "searchByTag"
+                                        })
+                                */
         var memeNames = ["We love you miss", "Me @ Jollibee", "wow haha", "loool"]
 
         function loadMemes() {
@@ -136,7 +133,7 @@
                 var postText2 = document.createElement("div")
                 var img = document.createElement("img")
                 var img2 = document.createElement("img")
-                
+
                 var privateIcon = document.createElement("img")
                 privateIcon.src = "lock.png"
                 privateIcon.className = "lock"
@@ -153,9 +150,9 @@
                 postText.className = "post-text"
                 postText2.className = "post-text"
                 $(postText).text(memeNames[j - 1])
-                
+
                 $(postText2).text(memeNames[j - 1])
-                $(postText2).append( privateIcon)
+                $(postText2).append(privateIcon)
                 img.src = "meme" + j + ".png"
                 img.className = "post-image"
                 img2.src = "meme" + j + ".png"
@@ -184,16 +181,46 @@
         $(document).ready(() => {
 
             $("#uButton").click(() => {
+                var tagsA = []
+                var sharedA = []
 
-                if($('form input[type=radio]:checked').val()!=''&& $('#upload').val()!='' &&  $("#tagName").val() !="" && $("#description").val()!=""){
+                if ($('form input[type=radio]:checked').val() != '' && $('#input[name=pic]').val() != '' && $("div#tags").children().text() != '' && $("div#shared").children().text() != '' && $("#description").val() != "") {
 
-                    $("div#tags").children().each(function(index){
-                         console.log( index + ": " + $( this ).text() )
+                    $("div#tags").children().each(function(index) {
+                        console.log(index + ": " + $(this).text())
+                        tagsA.push($(this).text())
                     });
 
-                    $("div#shared").children().each(function(index){
-                         console.log( index + ": " + $( this ).text() )
+                    $("div#shared").children().each(function(index) {
+                        console.log(index + ": " + $(this).text())
+                        sharedA.push($(this).text())
                     });
+
+
+//                    $.ajax({
+//                        type: 'POST',
+//                        url: url,
+//                        data: postedData,
+//                        dataType: 'json',
+//                        success: callback
+//                    });
+//
+//                    $.ajax({
+//                        url: "addMeme",
+//                        method: "POST",
+//                        data: {
+//                            tags: tagsA,
+//                            shared: sharedA
+//                        },
+//                        success: function(result) {
+//                            if (result === "Success") {
+//                                alert("Successfully added")
+//                                //$("div[data-id="+id+"]").remove()
+//                            } else {
+//                                alert("Something went wrong")
+//                            }
+//                        }
+//                    });
                     alert('you have successfully uploaded a meme')
 
                 } else {

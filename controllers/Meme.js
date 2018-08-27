@@ -37,6 +37,22 @@ const urlencoder = bodyparser.urlencoded({
 })
 
 router.use(urlencoder)
+const multer = require("multer")
+
+
+
+const UPLOAD_PATH = path.resolve(__dirname, "D:\\Desktop\\webapde-meme\\uploads\\" )
+
+const upload = multer({
+  dest: UPLOAD_PATH,
+    filename: function(req, file, cb){
+    cb(null,file.originalname + path.extname(file.originalname));
+  },
+  limits: {
+    fileSize : 10000000,
+    files : 2
+  }
+})
 
 module.exports.controller = function (router) {
 
@@ -134,21 +150,30 @@ module.exports.controller = function (router) {
 
     })
 
-    router.post("/addMeme", urlencoder, (req, res) => {
+
+    router.post("/addMeme", upload.single("pic"), (req, res) => {
         console.log("POST  /addMeme")
-        var pic = req.body.pic
+
+
+
         var desc = req.body.description
-        var tags = req.body.memeTags
+        var tags = req.body.tags
         var sharedto = req.body.shared
         var visibility = req.body.visibility
         var username = req.session.username
-        console.log(pic)
-        console.log(desc)
-        console.log(tags)
-        console.log(sharedto)
-        console.log(visibility)
+        //console.log("pic " + pic)
+        console.log("description " + desc)
+        console.log("tags " + tags)
+        console.log("sharedto " + sharedto)
+        console.log("visibility " + visibility)
+        //console.log(req.body.title)
+        console.log(req.file.originalname)
+
+
         if(username){
-                if (pic && tags && sharedto && visibility) {
+
+                if ( tags && sharedto && visibility) {
+
                 console.log("uploaded successfully")
                 res.render("privateViewMeme.hbs", {
                     username: username
@@ -157,7 +182,7 @@ module.exports.controller = function (router) {
                 console.log("missing inputs")
             }
         }else{
-            res.render("index.hbs");
+
         }
 
 
