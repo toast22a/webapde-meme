@@ -1,4 +1,4 @@
-//----------------Sample-------------------// 
+//----------------Sample-------------------//
 //var mongoose = require('mongoose')
 //var Video = require('../models/user');
 //module.exports.controller = function(router) {
@@ -21,7 +21,20 @@
 //
 //}
 
-var user = require('../model/Meme');
+var meme = require('../models/Meme');
+//const router = express.Router();
+//const app = express();
+const express = require("express")
+const fs = require("fs")
+const path = require("path")
+const bodyparser = require("body-parser")
+const mongoose = require("mongoose")
+const hbs = require("hbs")
+const app = express();
+const router = express.Router()
+const urlencoder = bodyparser.urlencoded({
+    extended: false
+})
 
 
 module.exports.controller = function (router) {
@@ -123,3 +136,4 @@ module.exports.controller = function (router) {
 
     })
 }
+

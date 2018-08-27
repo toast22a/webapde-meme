@@ -1,5 +1,6 @@
 const mongoose = require("mongoose")
-const {Meme} = require(path.join(__dirname, "model", "Meme.js"))
+
+//const {Meme} = require(path.join(__dirname, "model", "Meme.js"))
 
 var MemeSchema = mongoose.Schema({
   name : {
@@ -56,7 +57,7 @@ var MemeSchema = mongoose.Schema({
 
 
 function createMeme(body) {
- 
+
 }
 
 // changes in meme can be
@@ -65,11 +66,11 @@ function createMeme(body) {
 // removing a user to sharable
 // adding a user  sa sharable
 function updateMeme(body) {
- 
+
 }
 
 function deleteMeme(body) {
- 
+
 }
 
 module.exports = {

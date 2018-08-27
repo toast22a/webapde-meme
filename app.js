@@ -7,9 +7,10 @@ const hbs = require("hbs")
 const session = require("express-session")
 const app = express();
 const router = express.Router()
+const http = require('http');
 
 // database connection
-var mongoose = require('mongoose');
+//var mongoose = require('mongoose');
 mongoose.connect("mongodb://memeadmin:memepassword1@ds215502.mlab.com:15502/memedata", {
     useNewUrlParser : true
 })
@@ -22,7 +23,21 @@ app.set('port', process.env.PORT || 3000);
 app.set('views', __dirname + '/views');
 app.set("view-engine", "hbs");
 
+hbs.registerPartials(__dirname + '/views/partials');
+
 app.use(express.static(__dirname + "/public"))
+
+
+app.use(session({
+    secret: "SuperSecretQuatro",
+    name: "MissCourtneyIsTheBest",
+    resave: true,
+    saveUninitialized: true,
+    cookie: {
+      maxAge: 1000*60*60*24*7*3
+    }
+}))
+
 
 //app.use(express.favicon());
 //app.use(express.logger('dev'));

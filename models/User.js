@@ -1,7 +1,7 @@
 //create mongoose document ticket
 const mongoose = require("mongoose")
 const bcrypt = require("bcrypt")
-const {User} = require(path.join(__dirname, "model", "User.js"))
+//const {User} = require(path.join(__dirname, "model", "User.js"))
 
 const saltRounds = 10 // not secure -- change later
 
@@ -103,20 +103,20 @@ var User = mongoose.model("user", UserSchema)
 
 
 function createUser(body){
-    
+
 }
 
 function readUser(body){
-    
+
 }
 
 function updateUser(body){
-    
+
 }
 
 //not sure kase sa example ni miss courtney nasa middleware yung validate login
 function validateLogin(body){
-    
+
 }
 
 function addMemeToUser(body){
