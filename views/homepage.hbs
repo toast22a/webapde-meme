@@ -9,7 +9,8 @@
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<!--    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>-->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
 
 
@@ -187,16 +188,20 @@
                 if ($('form input[type=radio]:checked').val() != '' && $('#input[name=pic]').val() != '' && $("div#tags").children().text() != '' && $("div#shared").children().text() != '' && $("#description").val() != "") {
 
                     $("div#tags").children().each(function(index) {
-                        console.log(index + ": " + $(this).text())
-                        tagsA.push($(this).text())
+                       if($(this).text()!=''){
+                            tagsA.push($(this).text())
+                       }
+
                     });
 
                     $("div#shared").children().each(function(index) {
-                        console.log(index + ": " + $(this).text())
-                        sharedA.push($(this).text())
+                        if($(this).text()!=''){
+                            sharedA.push($(this).text())
+                        }
                     });
 
-
+                    console.log(tagsA);
+                    console.log(sharedA);
 //                    $.ajax({
 //                        type: 'POST',
 //                        url: url,
@@ -205,22 +210,23 @@
 //                        success: callback
 //                    });
 //
-//                    $.ajax({
-//                        url: "addMeme",
-//                        method: "POST",
-//                        data: {
-//                            tags: tagsA,
-//                            shared: sharedA
-//                        },
-//                        success: function(result) {
-//                            if (result === "Success") {
-//                                alert("Successfully added")
-//                                //$("div[data-id="+id+"]").remove()
-//                            } else {
-//                                alert("Something went wrong")
-//                            }
-//                        }
-//                    });
+                    $.ajax({
+                        url: "/addMeme",
+                        method: "POST",
+                        data: {
+                            tags: tagsA,
+                            shared: sharedA
+                        },
+                        success: function(result) {
+                            if (result === "Success") {
+                                alert("Successfully added")
+                                //$("div[data-id="+id+"]").remove()
+                            } else {
+                                alert("Something went wrong")
+                            }
+                        }
+                    });
+
                     alert('you have successfully uploaded a meme')
 
                 } else {

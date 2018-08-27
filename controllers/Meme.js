@@ -150,11 +150,11 @@ module.exports.controller = function (router) {
 
     })
 
+//sa homepage(line 202) may tagsA and sharedA nandun na yung missing to ceate a meme problem lang is
+// idk how to send sa server side nakakaerror yung ajax na ginawa ko
 
     router.post("/addMeme", upload.single("pic"), (req, res) => {
         console.log("POST  /addMeme")
-
-
 
         var desc = req.body.description
         var tags = req.body.tags
