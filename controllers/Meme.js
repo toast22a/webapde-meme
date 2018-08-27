@@ -42,10 +42,11 @@ module.exports.controller = function (router) {
 
     router.get("/searchByTag_guest", urlencoder, (req, res) => {
         console.log("GET /searchByTag_guest")
-
+        var username = req.session.username
         var searched = req.query.searchText
         console.log(searched)
         res.render("searchByTag_guest.hbs", {
+            username:username,
             searchTag: searched
         })
     })
@@ -62,7 +63,7 @@ module.exports.controller = function (router) {
         var username = req.session.username
         console.log(username);
         res.render("searchByTag.hbs", {
-            tagUsername: username,
+            username: username,
             searchTag: searched
         })
     })
