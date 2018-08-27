@@ -84,5 +84,5 @@ function deleteMemeFromTag(tag_id, meme){
 
 
 module.exports = {
-  Tag
+  readTag,createTag,updateMemeToTag,addMemeToTag,deleteMemeFromTag
 }

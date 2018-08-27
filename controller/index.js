@@ -1,6 +1,6 @@
 module.exports.controller = function(app) {
     
-    app.get("/",(req,res,next)=>{
+    router.get("/",(req,res,next)=>{
     console.log("GET /")
     var username = req.session.username
     if(username){

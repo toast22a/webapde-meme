@@ -1,7 +1,7 @@
 var user = require('../model/User');
-module.exports.controller = function (app) {
+module.exports.controller = function (router) {
 
-    app.post("/login", urlencoder, (req, res) => {
+    router.post("/login", urlencoder, (req, res) => {
 
         console.log("POST /login")
         var username = req.body.loginUser;
@@ -22,7 +22,7 @@ module.exports.controller = function (app) {
         }
     })
 
-    app.post("/register", urlencoder, (req, res) => {
+    router.post("/register", urlencoder, (req, res) => {
         console.log("POST /register")
         var username = req.body.signUser;
         var pass = req.body.signPassword;
@@ -41,7 +41,7 @@ module.exports.controller = function (app) {
         }
     })
 
-    app.get("/logout", (req, res) => {
+    router.get("/logout", (req, res) => {
         console.log("GET /logout")
         console.log("User " + req.session.username + " logged out")
 

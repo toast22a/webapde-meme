@@ -1,12 +1,12 @@
 //----------------Sample-------------------// 
 //var mongoose = require('mongoose')
 //var Video = require('../models/user');
-//module.exports.controller = function(app) {
+//module.exports.controller = function(router) {
 //
 ///**
 // * a home page route
 // */
-//  app.get('/signup', function(req, res) {
+//  router.get('/signup', function(req, res) {
 //      // any logic goes here
 //      res.render('users/signup')
 //  });
@@ -14,7 +14,7 @@
 ///**
 // * About page route
 // */
-//  app.get('/login', function(req, res) {
+//  router.get('/login', function(req, res) {
 //      // any logic goes here
 //      res.render('users/login')
 //  });
@@ -23,9 +23,10 @@
 
 var user = require('../model/Meme');
 
-module.exports.controller = function (app) {
 
-    app.get("/searchByTag_guest", urlencoder, (req, res) => {
+module.exports.controller = function (router) {
+
+    router.get("/searchByTag_guest", urlencoder, (req, res) => {
         console.log("GET /searchByTag_guest")
 
         var searched = req.query.searchText
@@ -35,12 +36,12 @@ module.exports.controller = function (app) {
         })
     })
 
-    app.get("/guestViewMeme", (req, res) => {
+    router.get("/guestViewMeme", (req, res) => {
         console.log("GET /guestViewMeme")
         res.render("guestViewMeme.hbs")
     })
 
-    app.get("/searchByTag", urlencoder, (req, res) => {
+    router.get("/searchByTag", urlencoder, (req, res) => {
         console.log("GET /searchByTag")
         var searched = req.query.searchText
         console.log(searched)
@@ -52,7 +53,7 @@ module.exports.controller = function (app) {
         })
     })
 
-    app.get("/privateViewMeme", (req, res) => {
+    router.get("/privateViewMeme", (req, res) => {
         console.log("GET /privateViewMeme")
         var username = req.session.username
         res.render("privateViewMeme.hbs", {
@@ -60,7 +61,7 @@ module.exports.controller = function (app) {
         })
     })
 
-    app.get("/viewUser", urlencoder, (req, res) => {
+    router.get("/viewUser", urlencoder, (req, res) => {
         console.log("GET /viewUser")
         var username = req.session.username
         var desc = req.session.description
@@ -78,7 +79,7 @@ module.exports.controller = function (app) {
 
     })
 
-    app.post("/deleteMeme", urlencoder, (req, res) => {
+    router.post("/deleteMeme", urlencoder, (req, res) => {
         console.log("GET /deleteMeme")
         console.log("meme has been deleted")
         var username = req.session.username
@@ -88,7 +89,7 @@ module.exports.controller = function (app) {
         })
     })
 
-    app.post("/editMeme", urlencoder, (req, res) => {
+    router.post("/editMeme", urlencoder, (req, res) => {
         console.log("POST /editMeme")
         console.log("meme has been edited")
         var username = req.session.username
@@ -97,7 +98,7 @@ module.exports.controller = function (app) {
         })
     })
 
-    app.post("/addMeme", urlencoder, (req, res) => {
+    router.post("/addMeme", urlencoder, (req, res) => {
         console.log("POST  /addMeme")
         var pic = req.body.pic
         var desc = req.body.description

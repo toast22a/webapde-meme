@@ -6,6 +6,7 @@ const mongoose = require("mongoose")
 const hbs = require("hbs")
 const session = require("express-session")
 const app = express();
+const router = express.Router()
 
 // database connection
 var mongoose = require('mongoose');
@@ -14,6 +15,7 @@ mongoose.connect("mongodb://memeadmin:memepassword1@ds215502.mlab.com:15502/meme
 })
 
 mongoose.Promise = global.Promise
+
 
 // some environment variables
 app.set('port', process.env.PORT || 3000);
