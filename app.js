@@ -9,14 +9,14 @@ const app = express();
 const router = express.Router()
 const http = require("http")
 
+const dburl = "mongodb://localhost:27017/memedata"
+//const dburl = "mongodb://memeadmin:memepassword1@ds215502.mlab.com:15502/memedata"
+
 // database connection
-//var mongoose = require('mongoose');
-mongoose.connect("mongodb://memeadmin:memepassword1@ds215502.mlab.com:15502/memedata", {
+mongoose.connect(dburl, {
     useNewUrlParser : true
 })
-
 mongoose.Promise = global.Promise
-
 
 // some environment variables
 app.set('port', process.env.PORT || 3000);
@@ -53,7 +53,7 @@ app.use(session({
 
 
 // dynamically include routes (Controller)
-fs.readdirSync('./controllers').forEach(function (file) {
+fs.readdirSync('./controllers').forEach(function(file) {
   if(file.substr(-3) == '.js') {
       route = require('./controllers/' + file);
       route.controller(app);
