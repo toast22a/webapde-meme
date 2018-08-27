@@ -83,6 +83,30 @@ function deleteMemeFromTag(tag_id, meme){
 
 */
 
+function readTag(tag){
+
+}
+
+
+function createTag(tagString,meme){
+
+}
+
+//if meme gets edited the meme in tag should be updated
+function updateMemeToTag(tag_id,meme){
+
+}
+
+function addMemeToTag(tag_id,meme){
+
+}
+
+function deleteMemeFromTag(tag_id, meme){
+
+}
+
+
+
 module.exports = {
-  Tag
+  readTag,createTag,updateMemeToTag,addMemeToTag,deleteMemeFromTag
 }

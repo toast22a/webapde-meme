@@ -6,21 +6,40 @@ const mongoose = require("mongoose")
 const hbs = require("hbs")
 const session = require("express-session")
 const app = express();
+const router = express.Router()
+const http = require("http")
 
 // database connection
-var mongoose = require('mongoose');
+//var mongoose = require('mongoose');
 mongoose.connect("mongodb://memeadmin:memepassword1@ds215502.mlab.com:15502/memedata", {
     useNewUrlParser : true
 })
 
 mongoose.Promise = global.Promise
 
+
 // some environment variables
 app.set('port', process.env.PORT || 3000);
 app.set('views', __dirname + '/views');
 app.set("view-engine", "hbs");
 
-app.use(express.static(__dirname + "/public"))
+app.use(express.static(path.join(__dirname, "public")))
+app.set('views', path.join(__dirname, "views"));
+hbs.registerPartials(path.join(__dirname, "views", "partials"))
+//app.use(require("./controllers"))
+
+app.use(session({
+    secret: "SuperSecretQuatro",
+    name: "MissCourtneyIsTheBest",
+    resave: true,
+    saveUninitialized: true,
+    cookie: {
+      maxAge: 1000*60*60*24*7*3
+    }
+}))
+
+//router.use("/meme", require("./Meme"))
+//router.use("/user", require("./User"))
 
 //app.use(express.favicon());
 //app.use(express.logger('dev'));

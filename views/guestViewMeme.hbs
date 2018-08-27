@@ -14,7 +14,8 @@
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<!--    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>-->
+   <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="style.css">
 
@@ -100,7 +101,7 @@
             margin-top: 5px;
             margin-right: 5px;
             cursor: pointer;
-            
+
 
         }
 
@@ -133,8 +134,8 @@
             justify-content: space-between;
             align-self: flex-start;
         }
-        
-        
+
+
         div.meme-visibility {
           display: flex;
           align-self: center;
@@ -161,7 +162,7 @@
         div.meme-visibility:hover div.meme-visibility-tooltip {
           display: block;
         }
-        
+
         #post_edit {
             margin-top: 40px;
             margin-bottom: 40px;
@@ -211,7 +212,7 @@
         <div class="content">
             <div style="align-self: flex-start"id="top">
                 <div id="info" class="meme-title"><!--{{meme-title}}-->we love u miss</div>
-                
+
                 {{#if visibility}}
                     <div class="meme-visibility">
                       <div class="meme-visibility-tooltip">
@@ -222,27 +223,27 @@
                 {{/if}}
             </div>
 
-            <img id="meme" src={{meme_image}}>
+            <img src= "meme1.png" id="meme" <!--{{meme_image}}--> >
 
-            <a style="cursor: pointer; color: dimgray" href={{owner_page}} id="info">By me{{owner_name}}</a>
+            <a style="cursor: pointer; color: dimgray" href={{owner_page}} id = "info">By me<!--{{owner_name}}--></a>
 
             <a id="description" style="color:#b9b4b4;">{{description}} </a>
 
-  
+
 
             <div id="tag_btn">
                 <!--
                 <input id="btn" type="button" value="#BestProfEver">
                 <input id="btn" type="button" value="#HaveMercyPls">
                 -->
-                
+
                 {{#each tags}}
                     <input id="tag" type="button" style="align-self: flex-start" value = "#{{tag_name}}">
                 {{/each}}
             </div>
-            
+
         </div>
-        
+
     </div>
 
 

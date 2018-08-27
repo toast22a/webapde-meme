@@ -101,7 +101,7 @@ UserSchema.pre("save", function(next){
 //something you can access, is a persistent object
 var User = mongoose.model("user", UserSchema)
 
-/*
+
 
 function createUser(body){
 
@@ -132,7 +132,7 @@ function DeleteMemeToUser(body){
 
 }
 
-*/
+
 module.exports = {
     User
 }

@@ -9,7 +9,8 @@
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<!--    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>-->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
 
 
@@ -72,29 +73,34 @@
             color: black;
         }
 
-        #profile_pic{
-            height : 40px;
-            width : 40px;
+        #profile_pic {
+            height: 40px;
+            width: 40px;
         }
 
-        #search_icon{
-            height : 25px;
-            width : 25px;
+        #search_icon {
+            height: 25px;
+            width: 25px;
         }
 
-        .upload-button{
+        .upload-button {
             margin-left: 12%;
         }
 
+        .lock {
+            height: 20px;
+            display: inline-block;
+            position: relative;
+            bottom: 5px;
+            left: 5px;
+        }
     </style>
 
 </head>
 
 <body>
 
-  {{> topbar this}}
-
-  {{> search this}}
+    {{> topbar this}} {{> search this}}
 
     <div class="container-fluid">
         <div class="row">
@@ -113,9 +119,9 @@
 
     <script>
         /* $(".search-bar-button").click(function() {
-                                    window.location.href = "searchByTag"
-                                })
-                        */
+                                            window.location.href = "searchByTag"
+                                        })
+                                */
         var memeNames = ["We love you miss", "Me @ Jollibee", "wow haha", "loool"]
 
         function loadMemes() {
@@ -129,6 +135,11 @@
                 var img = document.createElement("img")
                 var img2 = document.createElement("img")
 
+                var privateIcon = document.createElement("img")
+                privateIcon.src = "lock.png"
+                privateIcon.className = "lock"
+
+
                 var j = Math.floor(Math.random() * 4) + 1
 
                 a.href = "privateViewMeme"
@@ -140,7 +151,9 @@
                 postText.className = "post-text"
                 postText2.className = "post-text"
                 $(postText).text(memeNames[j - 1])
+
                 $(postText2).text(memeNames[j - 1])
+                $(postText2).append(privateIcon)
                 img.src = "meme" + j + ".png"
                 img.className = "post-image"
                 img2.src = "meme" + j + ".png"
@@ -169,8 +182,51 @@
         $(document).ready(() => {
 
             $("#uButton").click(() => {
+                var tagsA = []
+                var sharedA = []
 
-                if($('form input[type=radio]:checked').val()!=''&& $('#upload').val()!='' &&  $("#tagName").val() !="" && $("#description").val()!=""){
+                if ($('form input[type=radio]:checked').val() != '' && $('#input[name=pic]').val() != '' && $("div#tags").children().text() != '' && $("div#shared").children().text() != '' && $("#description").val() != "") {
+
+                    $("div#tags").children().each(function(index) {
+                       if($(this).text()!=''){
+                            tagsA.push($(this).text())
+                       }
+
+                    });
+
+                    $("div#shared").children().each(function(index) {
+                        if($(this).text()!=''){
+                            sharedA.push($(this).text())
+                        }
+                    });
+
+                    console.log(tagsA);
+                    console.log(sharedA);
+//                    $.ajax({
+//                        type: 'POST',
+//                        url: url,
+//                        data: postedData,
+//                        dataType: 'json',
+//                        success: callback
+//                    });
+//
+                    $.ajax({
+                        url: "/addMeme",
+                        method: "POST",
+                        data: {
+                            tags: tagsA,
+                            shared: sharedA
+                        },
+                        success: function(result) {
+                            if (result === "Success") {
+                                alert("Successfully added")
+                                //$("div[data-id="+id+"]").remove()
+                            } else {
+                                alert("Something went wrong")
+                            }
+                        }
+                    });
+
                     alert('you have successfully uploaded a meme')
 
                 } else {

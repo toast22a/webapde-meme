@@ -13,8 +13,7 @@ const urlencoder = bodyparser.urlencoded({
     extended: false
 })
 
-app.use(express.static(path.join(__dirname, "public")))
-app.set('views', path.join(__dirname, "views"));
+
 app.use(session({
     secret: "SuperSecretQuatro",
     name: "MissCourtneyIsTheBest",
@@ -26,9 +25,12 @@ app.use(session({
 }))
 
 app.set("view-engine", "hbs")
-hbs.registerPartials(path.join(__dirname, "views", "partials"))
 
 app.use(express.static(path.join(__dirname, "public")))
+app.set('views', path.join(__dirname, "views"));
+hbs.registerPartials(path.join(__dirname, "views", "partials"))
+
+
 
 mongoose.connect(dburl, {
     useNewUrlParser : true
