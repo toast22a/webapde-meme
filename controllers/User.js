@@ -15,7 +15,7 @@ const urlencoder = bodyparser.urlencoded({
     extended: false
 })
 
-const User = require(path.join(_dirname, "..", "models", "User.js"))
+const User = require(path.join(__dirname, "..", "models", "User.js"))
 
 router.use(urlencoder)
 
