@@ -205,8 +205,15 @@ async function getTaggedPublicMemes(tag, limit, base=0){
   return tag.memes.slice(base, limit)
 }
 
+async function isMemeAllowedFor(user, meme){
+  user = await User.readUser({_id : user._id})
+  meme = await Meme.readMeme({_id : meme._id})
+
+  return (!meme.shared_with || meme.shared_with.length==0 || meme.shared_with.filter((sharedWith)=>{user._id.equals(sharedWith._id)}).length>0)
+}
+
 module.exports = {
   createMeme, updateMeme, deleteMeme,
   getPublicMemes, getSharedMemesFor,
-  getTaggedPublicMemes
+  getTaggedPublicMemes, isMemeAllowedFor
 }
