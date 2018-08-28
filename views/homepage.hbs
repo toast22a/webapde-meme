@@ -187,6 +187,10 @@
 
                 if ($('form input[type=radio]:checked').val() != '' && $('#input[name=pic]').val() != '' && $("div#tags").children().text() != '' && $("div#shared").children().text() != '' && $("#description").val() != "") {
 
+                    var name = $("#input[name=tagName]").val()
+                    var image = $("#pic").val()
+                    var description = $("#description").val()
+                    
                     $("div#tags").children().each(function(index) {
                        if($(this).text()!=''){
                             tagsA.push($(this).text())
@@ -214,6 +218,7 @@
                         url: "/addMeme",
                         method: "POST",
                         data: {
+                            name, pic : image, description,
                             tags: tagsA,
                             shared: sharedA
                         },

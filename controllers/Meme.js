@@ -153,14 +153,16 @@ module.exports.controller = function (router) {
 
 //sa homepage(line 202) may tagsA and sharedA nandun na yung missing to ceate a meme problem lang is
 // idk how to send sa server side nakakaerror yung ajax na ginawa ko
-
+//req.file.filename
     router.post("/addMeme", upload.single("pic"), (req, res) => {
         console.log("POST  /addMeme")
 
+        var name = req.body.name
         var desc = req.body.description
         var tags = req.body.tags
         var sharedto = req.body.shared
-        var visibility = req.body.visibility
+        var filename = req.file.filename
+        //var visibility = req.body.visibility
         var username = req.session.username
         //console.log("pic " + pic)
         console.log("description " + desc)
@@ -168,12 +170,12 @@ module.exports.controller = function (router) {
         console.log("sharedto " + sharedto)
         console.log("visibility " + visibility)
         //console.log(req.body.title)
-        console.log(req.file.originalname)
-
+        console.log(req.file.filename)
+        
 
         if(username){
 
-                if ( tags && sharedto && visibility) {
+                if (name && desc && /* tags && sharedto && visibility*/) {
 
                 console.log("uploaded successfully")
                 res.render("privateViewMeme.hbs", {

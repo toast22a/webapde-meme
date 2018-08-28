@@ -9,8 +9,9 @@ const app = express();
 const router = express.Router()
 const http = require("http")
 
-const dburl = "mongodb://localhost:27017/memedata"
-//const dburl = "mongodb://memeadmin:memepassword1@ds215502.mlab.com:15502/memedata"
+//const dburl = "mongodb://localhost:27017/memedata"
+const dburl = "mongodb://memeadmin:memepassword1@ds215502.mlab.com:15502/memedata"
+// mongo ds215502.mlab.com:15502/memedata -u memeadmin -p memepassword1
 
 // database connection
 mongoose.connect(dburl, {
@@ -40,7 +41,6 @@ app.use(session({
 
 //router.use("/meme", require("./Meme"))
 //router.use("/user", require("./User"))
-
 //app.use(express.favicon());
 //app.use(express.logger('dev'));
 //app.use(express.bodyParser());
