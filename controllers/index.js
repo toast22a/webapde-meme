@@ -18,11 +18,10 @@ module.exports.controller = function(app) {
     var username = req.session.username
 
     if(username){
-        res.render("homepage.hbs",{
-                username:username })
-       }else{
-        res.render("index.hbs")
-       }
+      res.render("homepage.hbs", {username})
+    } else {
+      res.render("index.hbs")
+    }
 
 
 
@@ -32,5 +31,3 @@ module.exports.controller = function(app) {
 
     //module.exports = router;
 }
-
-
