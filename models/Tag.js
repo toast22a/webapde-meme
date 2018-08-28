@@ -1,7 +1,7 @@
 const mongoose = require("mongoose")
-
-const User = require(path.join(__dirname, "model", "User.js"))
-const Meme = require(path.join(__dirname, "model", "Meme.js"))
+const path = require("path")
+const User = require(path.join(__dirname, "User.js"))
+const Meme = require(path.join(__dirname, "Meme.js"))
 
 let TagSchema = mongoose.Schema({
   name : {
