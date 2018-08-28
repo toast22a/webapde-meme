@@ -225,17 +225,17 @@
 
             <img src= "meme1.png" id="meme" <!--{{meme_image}}--> >
 
-            <a style="cursor: pointer; color: dimgray" href={{owner_page}} id = "info">By me<!--{{owner_name}}--></a>
+            <a style="cursor: pointer; color: dimgray" href="ViewUser.hbs" <!--{{owner_page}}--> id = "info">By me<!--{{owner_name}}--></a>
 
-            <a id="description" style="color:#b9b4b4;">{{description}} </a>
+            <a id="description" style="color:#b9b4b4;"><!--{{description}}--> HUHU sadness</a>
 
 
 
             <div id="tag_btn">
-                <!--
+                
                 <input id="btn" type="button" value="#BestProfEver">
                 <input id="btn" type="button" value="#HaveMercyPls">
-                -->
+            
 
                 {{#each tags}}
                     <input id="tag" type="button" style="align-self: flex-start" value = "#{{tag_name}}">
