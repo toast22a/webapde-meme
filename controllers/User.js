@@ -15,6 +15,8 @@ const urlencoder = bodyparser.urlencoded({
     extended: false
 })
 
+const User = require(path.join(_dirname, "..", "models", "User.js"))
+
 router.use(urlencoder)
 
 module.exports.controller = function (router) {
@@ -28,16 +30,16 @@ module.exports.controller = function (router) {
             password: req.body.loginPassword
         }
 
-        console.log(user.password)
+        //console.log(user.password)
 
-        if (user.username && user.password) {
+        if (user.username && user.password && User.validateLogin(user.username, user.password)) {
             console.log(user.username + "has logged in")
             req.session.username = user.username
             res.render("homepage.hbs", {
                 username: user.username
             })
         } else {
-            console.log("missing entry log in failed")
+            console.log("missing entry -- log in failed")
             res.render("index.hbs")
         }
     })

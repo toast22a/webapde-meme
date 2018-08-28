@@ -3,7 +3,9 @@
 const express = require("express")
 const router = express.Router()
 const app = express()
-const Meme = require("../models/Meme")
+const path = require("path")
+//const User = require(path.join(_dirname, "..", "models", "User.js"))
+//const Meme = require("../models/Meme.js")
 
 
 //router.use("/meme", require("./meme"))
