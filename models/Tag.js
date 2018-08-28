@@ -1,5 +1,6 @@
 const mongoose = require("mongoose")
 const path = require("path")
+
 const User = require(path.join(__dirname, "User.js"))
 const Meme = require(path.join(__dirname, "Meme.js"))
 
