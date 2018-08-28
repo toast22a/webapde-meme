@@ -41,7 +41,8 @@ const multer = require("multer")
 
 
 
-const UPLOAD_PATH = path.resolve(__dirname, "D:\\Desktop\\webapde-meme\\uploads\\" )
+//const UPLOAD_PATH = path.resolve(__dirname, "D:\\Desktop\\webapde-meme\\uploads\\" )
+const UPLOAD_PATH = path.join(__dirname, "..", "uploads")
 
 const upload = multer({
   dest: UPLOAD_PATH,
@@ -188,4 +189,3 @@ module.exports.controller = function (router) {
 
     })
 }
-
