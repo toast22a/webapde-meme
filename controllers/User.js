@@ -15,6 +15,8 @@ const urlencoder = bodyparser.urlencoded({
     extended: false
 })
 
+const User = require(path.join(__dirname, "..", "models", "User.js"))
+
 router.use(urlencoder)
 
 module.exports.controller = function (router) {
@@ -28,18 +30,29 @@ module.exports.controller = function (router) {
             password: req.body.loginPassword
         }
 
-        console.log(user.password)
+        //console.log(user.password)
 
-        if (user.username && user.password) {
+        /*if (user.username && user.password) {
             console.log(user.username + "has logged in")
             req.session.username = user.username
             res.render("homepage.hbs", {
                 username: user.username
             })
         } else {
-            console.log("missing entry log in failed")
+            console.log("missing entry -- log in failed")
             res.render("index.hbs")
-        }
+        }*/
+
+        User.validateLogin({username : user.username, password : user.password}).then((result)=>{
+          console.log(user.username + "has logged in")
+          req.session.username = user.username
+          res.render("homepage.hbs", {
+              username: user.username
+          })
+        }, (err)=>{
+          console.log(err)
+          res.render("index.hbs")
+        })
     })
 
     router.post("/register", urlencoder, (req, res) => {
@@ -48,17 +61,18 @@ module.exports.controller = function (router) {
         var pass = req.body.signPassword;
         var desc = req.body.signDescription;
 
-        if (username && pass) {
-            console.log(username + "has signed up")
-            req.session.username = username
-            req.session.description = username
-            res.render("homepage.hbs", {
-                username: username
-            })
-        } else {
-            console.log("missing entry sign up failed")
-            res.render("index.hbs")
-        }
+        User.createUser({
+          username, password : pass, description : desc
+        }).then((doc)=>{
+          console.log(username + " has signed up")
+          req.session.username = doc.username
+          //req.session.description = username
+          res.render("homepage.hbs", {username : req.session.username})
+        }, (err)=>{
+          console.log("missing entry sign up failed")
+          console.log(err)
+          res.render("index.hbs")
+        })
     })
 
     router.get("/logout", (req, res) => {

@@ -173,6 +173,7 @@ function validateLogin(body) {
     let username = body.username
     let password = body.password
     User.findOne({username}, "password").then((doc)=>{
+      if (!doc) reject(Error("User not found"))
       bcrypt.compare(password, doc.password).then((res)=>{
         if (res) resolve(res)
         else reject(Error("Invalid credentials"))
@@ -181,7 +182,7 @@ function validateLogin(body) {
       })
     }, (err)=>{
       reject(err)
-    }).collation({locale : "en_US", strength : 1})
+    })
   })
 }
 
