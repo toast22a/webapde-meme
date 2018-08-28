@@ -36,6 +36,9 @@ const urlencoder = bodyparser.urlencoded({
     extended: false
 })
 
+const User = require(path.join(__dirname, "..", "models", "User.js"))
+const Meme = require(path.join(__dirname, "..", "models", "Meme.js"))
+
 router.use(urlencoder)
 const multer = require("multer")
 
@@ -189,5 +192,23 @@ module.exports.controller = function (router) {
         }
 
 
+    })
+
+    router.get("/meme/:id/image", (req, res)=>{
+      console.log("GET /meme/" + req.params.id + "/image")
+
+      User.readUser({username : req.session.username})
+      .then((user)=>{
+        return Meme.readMeme({_id : req.params.id})
+      })
+      .then((meme)=>{
+        return getMemeImageFor(user, meme)
+      })
+      .then((imgPath)=>{
+        res.sendFile(imgPath)
+      })
+      .catch((err)=>{
+        res.sendFile(path.join(__dirname, "..", "public", "access_denied.png"))
+      })
     })
 }

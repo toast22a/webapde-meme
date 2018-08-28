@@ -1,5 +1,6 @@
 const mongoose = require("mongoose")
 const path = require("path")
+const fs = require("fs")
 
 const User = require(path.join(__dirname, "User.js"))
 const Tag = require(path.join(__dirname, "Tag.js"))
@@ -205,8 +206,39 @@ async function getTaggedPublicMemes(tag, limit, base=0){
   return tag.memes.slice(base, limit)
 }
 
+async function isMemeAllowedFor(user, meme){
+  try {
+    user = await User.readUser({_id : user._id})
+    meme = await Meme.readMeme({_id : meme._id})
+
+    return (!meme.shared_with || meme.shared_with.length==0 || meme.shared_with.filter((sharedWith)=>{user._id.equals(sharedWith._id)}).length>0)
+  } catch (err) {
+    console.log(err)
+    return false
+  }
+}
+
+async function getMemeImageFor(user, meme){
+  try{
+    user = await User.readUser({_id : user._id})
+    meme = await Meme.readMeme({_id : meme._id})
+
+    if (await isMemeAllowedFor(user, meme)){
+      let images = fs.readdirSync(path.join(__dirname, "..", "uploads")).filter(filename=>filename.startsWith(meme._id.toString()))
+      if (images.length==1) return path.join(__dirname, "..", "uploads", images[0])
+    } else {
+      throw Error("User not allowed to see this meme")
+    }
+    throw Error("Something went wrong")
+
+  } catch (err) {
+    console.log(err)
+    return path.join(__dirname, "..", "public", "access_denied.png")
+  }
+}
+
 module.exports = {
   createMeme, updateMeme, deleteMeme,
   getPublicMemes, getSharedMemesFor,
-  getTaggedPublicMemes
+  getTaggedPublicMemes, isMemeAllowedFor
 }

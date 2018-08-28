@@ -3,7 +3,9 @@
 const express = require("express")
 const router = express.Router()
 const app = express()
-const Meme = require("../models/Meme")
+const path = require("path")
+//const User = require(path.join(_dirname, "..", "models", "User.js"))
+//const Meme = require("../models/Meme.js")
 
 
 //router.use("/meme", require("./meme"))
@@ -18,11 +20,10 @@ module.exports.controller = function(app) {
     var username = req.session.username
 
     if(username){
-        res.render("homepage.hbs",{
-                username:username })
-       }else{
-        res.render("index.hbs")
-       }
+      res.render("homepage.hbs", {username})
+    } else {
+      res.render("index.hbs")
+    }
 
 
 
@@ -32,5 +33,3 @@ module.exports.controller = function(app) {
 
     //module.exports = router;
 }
-
-

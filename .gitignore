@@ -1,3 +1,4 @@
 node_modules
 MongodbData
 .DS_Store
+.tern-project
