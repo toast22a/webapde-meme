@@ -1,5 +1,6 @@
 const mongoose = require("mongoose")
 const bcrypt = require("bcrypt")
+const path = require("path")
 
 const Meme = require(path.join(__dirname, "Meme.js"))
 const Tag = require(path.join(__dirname, "Tag.js"))
