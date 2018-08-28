@@ -40,7 +40,6 @@ app.use(session({
 
 //router.use("/meme", require("./Meme"))
 //router.use("/user", require("./User"))
-
 //app.use(express.favicon());
 //app.use(express.logger('dev'));
 //app.use(express.bodyParser());
